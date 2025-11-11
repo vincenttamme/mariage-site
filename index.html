@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mariage — Léa & Vincent</title>
+  <title>Mariage de Léa et Vincent — Domaine de Baldassé</title>
   <meta name="description" content="Le site officiel de notre mariage — programme, lieu, RSVP, infos pratiques." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     :root{
       /* Palette DA blanc & or */
@@ -109,6 +109,16 @@
     .hero-video .date{color:#e5e7eb;letter-spacing:.06em;text-transform:uppercase}
     .overlay .cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
     .overlay #countdown .cd-box{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);backdrop-filter:blur(4px);color:#fff}
+      /* ====== Calligraphie pour le titre ====== */
+    .script{font-family:'Great Vibes', cursive; font-weight:400; letter-spacing:.5px}
+    .hero-video .names.script{font-size:clamp(42px,6.8vw,92px);line-height:1.02}
+
+    /* ====== Header centré sur toute la largeur ====== */
+    .header-inner{display:flex;align-items:center;justify-content:center;padding:14px 24px;position:relative}
+    .site-header .brand{position:absolute;left:24px;top:50%;transform:translateY(-50%);}
+    .site-header .nav{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:22px;align-items:center}
+    .site-header .nav a{color:#fff}
+    .site-header.scrolled .nav a{color:var(--txt)}
   </style>
 </head>
 <body>
@@ -129,8 +139,8 @@
     <iframe src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&controls=0&loop=1&playlist=i6GbH-MuiWU" title="Vidéo d'accueil Léa & Vincent" allow="autoplay; fullscreen" loading="eager"></iframe>
     <div class="overlay">
       <p class="pill" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff">Vous êtes invités ✨</p>
-      <h1 class="names">Léa &amp; Vincent</h1>
-      <p class="date">Domaine de Baldassé · Aveyron</p>
+      <h1 class="names script">Mariage de Léa &amp; Vincent</h1>
+      <p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
       <div class="countdown" id="countdown" aria-live="polite"></div>
       <div class="cta">
         <a class="btn" href="#rsvp">RSVP</a>
@@ -313,7 +323,8 @@
   <script>
     // --------- Compte à rebours (modifiez la date/heure ci‑dessous) ---------
     // TODO: remplace par ta vraie date (ex: '2026-06-20T14:00:00+02:00')
-    const target = new Date('2026-06-20T14:00:00+02:00'); // ← remplacez par votre date
+    // TODO: remplace par ta vraie heure de début si besoin
+    const target = new Date('2027-07-30T14:00:00+02:00'); // ← remplacez par votre date
     const el = document.getElementById('countdown');
     function pad(n){return String(n).padStart(2,'0')}
     function tick(){
