@@ -7,19 +7,29 @@
   <meta name="description" content="Le site officiel de notre mariage — programme, lieu, RSVP, infos pratiques." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg:#fffdf9; --txt:#1f2937; --muted:#6b7280; --brand:#7c3aed; --brand-2:#a78bfa; --card:#ffffff; --accent:#f5f3ff;
+      /* Palette DA blanc & or */
+      --bg:#ffffff;         /* blanc */
+      --txt:#172338;        /* bleu nuit élégant */
+      --muted:#6b7280;      /* gris neutre */
+      --brand:#D1AE6F;      /* or */
+      --brand-2:#b89252;    /* or plus soutenu (hover) */
+      --card:#ffffff;       /* cartes blanches */
+      --accent:#fff7e6;     /* voile ivoire très léger */
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--txt);font-family:Mulish,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;scroll-behavior:smooth}
     a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
     img{max-width:100%;display:block}
     .container{width:100%;max-width:1100px;margin:0 auto;padding:24px}
-    .btn{display:inline-block;padding:12px 18px;border-radius:999px;background:var(--brand);color:#fff;font-weight:600;transition:.2s;}
+    .btn{display:inline-block;padding:12px 18px;border-radius:999px;background:var(--brand);border:1px solid var(--brand);color:#fff;font-weight:700;letter-spacing:.02em;transition:.2s;}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(209,174,111,.25);background:var(--brand-2);border-color:var(--brand-2)}
     .btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px rgba(124,58,237,.25)}
     .btn-outline{background:#fff;border:1px solid var(--brand);color:var(--brand)}
+    .btn-outline:hover{background:var(--accent)}
     header.hero{position:relative;overflow:hidden}
     .hero-bg{position:absolute;inset:0;background:radial-gradient(1200px 600px at 80% -20%, var(--accent), transparent),radial-gradient(800px 400px at 10% 10%, #e0e7ff55, transparent)}
     .hero-inner{position:relative;z-index:1;display:grid;gap:20px;align-items:center;min-height:70vh;grid-template-columns:1.2fr 1fr}
@@ -31,9 +41,10 @@
     .grid.cols-2{grid-template-columns:1fr 1fr}
     @media (max-width:800px){.grid.cols-2{grid-template-columns:1fr}}
     section{padding:56px 0}
-    h2{font-family:"Playfair Display",serif;font-size:clamp(28px,3.6vw,40px);margin:0 0 16px}
+    h2{font-family:"Playfair Display",serif;font-size:clamp(28px,3.6vw,40px);margin:0 0 16px;position:relative}
+    h2::after{content:"";display:block;width:60px;height:2px;background:var(--brand);margin-top:10px;border-radius:2px;opacity:.85}
     .muted{color:var(--muted)}
-    .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--accent);border:1px solid #ede9fe;color:#5b21b6;font-weight:600;font-size:14px}
+    .pill{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--accent);border:1px solid #f3e4c4;color:#7a5a1a;font-weight:700;font-size:14px}
     .timeline{display:grid;gap:12px}
     .timeline .item{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start}
     .time{font-weight:700}
@@ -67,12 +78,33 @@
     .lightbox .close{position:absolute;top:16px;right:16px;background:#fff;border:1px solid #eee;border-radius:999px;padding:6px 10px;font-weight:700}
 
     /* ---- Toast discret ---- */
-    .toast{position:fixed;left:50%;top:110px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .3s ease;z-index:60}
+    .toast{position:fixed;left:50%;top:110px;transform:translateX(-50%);background:#172338;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .3s ease;z-index:60;border:1px solid rgba(209,174,111,.45)}
     .toast.show{opacity:1}
       /* ====== Hero vidéo cinématique ====== */
     .hero-video{position:relative;width:100%;height:100vh;min-height:520px;overflow:hidden}
     .hero-video iframe{position:absolute;top:50%;left:50%;width:120vw;height:120vh;transform:translate(-50%,-50%);object-fit:cover;pointer-events:none;border:0}
-    .hero-video .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.25) 30%,rgba(0,0,0,.35));padding:24px}
+    .hero-video .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.15) 30%,rgba(0,0,0,.28));padding:24px}
+    .hero-video .names{color:#fff;text-shadow:0 6px 28px rgba(0,0,0,.45)}
+    .hero-video .date{color:#e5e7eb;letter-spacing:.06em;text-transform:uppercase}
+    .overlay .cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .overlay #countdown .cd-box{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);backdrop-filter:blur(4px);color:#fff}
+      /* ====== Header transparent ====== */
+    .site-header{position:fixed;z-index:80;left:0;right:0;top:0;background:transparent;transition:background .25s ease, box-shadow .25s ease, border-color .25s ease;border-bottom:1px solid transparent}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
+    .site-header .brand{font-family:"Playfair Display",serif;font-weight:700;color:#fff}
+    .site-header .nav{display:flex;gap:18px;align-items:center}
+    .site-header .nav a{color:#fff}
+    .site-header.scrolled{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(209,174,111,.35)}
+    .site-header.scrolled .nav a{color:var(--txt)}
+    .site-header.scrolled .brand{color:var(--txt)}
+
+    /* ====== Hero vidéo cinématique (cover via JS, pas d'object-fit) ====== */
+    .hero-video{position:relative;width:100%;height:100vh;min-height:520px;overflow:hidden}
+    .hero-video iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:56.25vw; /* 16:9 responsive base */}
+    @media (max-aspect-ratio:16/9){
+      .hero-video iframe{width:177.78vh;height:100vh} /* élargir pour couvrir en mode portrait */
+    }
+    .hero-video .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.15) 30%,rgba(0,0,0,.28));padding:24px}
     .hero-video .names{color:#fff;text-shadow:0 6px 28px rgba(0,0,0,.45)}
     .hero-video .date{color:#e5e7eb;letter-spacing:.06em;text-transform:uppercase}
     .overlay .cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
@@ -80,6 +112,19 @@
   </style>
 </head>
 <body>
+  <!-- Header global transparent -->
+  <header class="site-header" role="navigation" aria-label="Navigation principale">
+    <div class="container header-inner">
+      <a href="#top" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+      <nav class="nav">
+        <a href="#programme">Programme</a>
+        <a href="#lieu">Lieu</a>
+        <a href="#infos">Infos</a>
+        <a href="#galerie">Galerie</a>
+        <a class="btn btn-outline" href="#rsvp">RSVP</a>
+      </nav>
+    </div>
+  </header>
   <section class="hero-video" aria-label="Accueil vidéo">
     <iframe src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&controls=0&loop=1&playlist=i6GbH-MuiWU" title="Vidéo d'accueil Léa & Vincent" allow="autoplay; fullscreen" loading="eager"></iframe>
     <div class="overlay">
@@ -371,6 +416,99 @@
       }
     });
   </script>
+  <script>
+    // --------- Compte à rebours (modifiez la date/heure ci‑dessous) ---------
+    // TODO: remplace par ta vraie date (ex: '2026-06-20T14:00:00+02:00')
+    const target = new Date('2026-06-20T14:00:00+02:00');
+    const el = document.getElementById('countdown');
+    function pad(n){return String(n).padStart(2,'0')}
+    function tick(){
+      const now = new Date();
+      let ms = target - now;
+      if(ms < 0){el.innerHTML = '<span class="pill">C\'est le grand jour ! 🎉</span>';return}
+      const d = Math.floor(ms/86400000); ms -= d*86400000;
+      const h = Math.floor(ms/3600000); ms -= h*3600000;
+      const m = Math.floor(ms/60000); ms -= m*60000;
+      const s = Math.floor(ms/1000);
+      const soon = (d <= 30);
+      el.style.filter = soon ? 'saturate(1.1)' : 'none';
+      el.innerHTML = `
+        <div class=\"cd-box\"><div class=\"num\">${d}</div><div>jours</div></div>
+        <div class=\"cd-box\"><div class=\"num\">${pad(h)}</div><div>heures</div></div>
+        <div class=\"cd-box\"><div class=\"num\">${pad(m)}</div><div>min</div></div>
+        <div class=\"cd-box\"><div class=\"num\">${pad(s)}</div><div>sec</div></div>`;
+    }
+    tick(); setInterval(tick,1000);
+    // année dynamique en pied de page
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --------- Header : changement d'état au scroll ---------
+    const header = document.querySelector('.site-header');
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, {passive:true});
+
+    // --------- Timeline reveal (IntersectionObserver) ---------
+    const items = document.querySelectorAll('.timeline .item');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('revealed'); io.unobserve(e.target); } });
+    }, {threshold: .15});
+    items.forEach(i=>io.observe(i));
+
+    // --------- Lightbox minimaliste pour la galerie ---------
+    const lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML = '<button class="close" aria-label="Fermer">Fermer ✕</button><img alt=""/>';
+    document.body.appendChild(lb);
+    const lbImg = lb.querySelector('img');
+    lb.addEventListener('click', e=>{ if(e.target===lb || e.target.classList.contains('close')) lb.classList.remove('open'); });
+    document.querySelectorAll('.gallery img').forEach(img=>{
+      img.loading = 'lazy';
+      img.style.cursor = 'zoom-in';
+      img.addEventListener('click', ()=>{ lbImg.src = img.src; lb.classList.add('open'); });
+    });
+
+    // --------- RSVP via Formspree (POST FormData) ---------
+    const rsvpForm = document.getElementById('rsvp-form');
+    const rsvpSubmit = document.getElementById('rsvp-submit');
+    const rsvpNote = document.getElementById('rsvp-note');
+    const fsEndpoint = document.getElementById('fs-endpoint')?.value; // peut ne pas être défini tant que non remplacé
+    const ring = document.getElementById('ring');
+    const toast = document.getElementById('toast');
+
+    if(rsvpForm){
+      rsvpForm.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        rsvpSubmit.disabled = true;
+        const formData = new FormData(rsvpForm);
+        formData.append('_subject', 'RSVP Mariage — Nouvelle réponse');
+        try{
+          if(!fsEndpoint) throw new Error('Endpoint Formspree manquant');
+          const res = await fetch(fsEndpoint, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
+          if(!res.ok) throw new Error('Erreur envoi');
+          rsvpSubmit.classList.add('success');
+          rsvpSubmit.querySelector('.check').textContent = '✓';
+          ring.classList.add('show');
+          toast.classList.add('show');
+          rsvpNote.style.display = 'block';
+          setTimeout(()=>{ toast.classList.remove('show'); }, 2200);
+          setTimeout(()=>{ rsvpSubmit.disabled = false; }, 800);
+          rsvpForm.reset();
+        }catch(err){
+          toast.textContent = "Oups, impossible d'envoyer. Réessayez ou contactez-nous.";
+          toast.classList.add('show');
+          setTimeout(()=>toast.classList.remove('show'), 2600);
+          rsvpSubmit.disabled = false;
+        }finally{
+          ring.classList.remove('show');
+          ring.offsetHeight; // reflow pour relancer l'anim
+          ring.classList.add('show');
+          setTimeout(()=> ring.classList.remove('show'), 1200);
+        }
+      });
+    }
+  </script>
 </body>
+</html>
 </html>
 </html>
