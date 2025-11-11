@@ -20,10 +20,10 @@ h2::after{content:"";display:block;width:60px;height:2px;background:var(--brand)
 .footer{padding:36px 0;color:var(--muted);text-align:center;border-top:1px solid #eee}
 /* Header */
 .site-header{position:fixed;z-index:80;left:0;right:0;top:0;background:transparent;transition:background .25s ease, box-shadow .25s ease, border-color .25s ease;border-bottom:1px solid transparent}
-.header-inner{display:flex;align-items:center;justify-content:center;padding:14px 24px;position:relative}
+.header-inner{display:flex;align-items:center;justify-content:center;padding:22px 48px;position:relative}
 .site-header .brand{position:absolute;left:24px;top:50%;transform:translateY(-50%);font-family:"Playfair Display",serif;font-weight:700;color:#fff}
 .site-header .nav{position:absolute;left:50%;transform:translateX(-50%);display:flex;gap:22px;align-items:center}
-.site-header .nav a{color:#D1AE6F}.site-header .nav a.active{text-decoration:underline;text-underline-offset:6px}
+.site-header .nav a{color:#D1AE6F}.site-header .nav a.active{text-decoration:underline;text-underline-offset:6px;font-size: 1.1rem;font-weight: 600;}
 .site-header.scrolled{background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border-bottom:1px solid rgba(209,174,111,.35)}
 .site-header.scrolled .nav a,.site-header.scrolled .brand{color:var(--txt)}
 /* Hero vidéo */
