@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Notre mariage — Alice & Marc</title>
+  <title>Mariage — Léa & Vincent</title>
   <meta name="description" content="Le site officiel de notre mariage — programme, lieu, RSVP, infos pratiques." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,27 +69,30 @@
     /* ---- Toast discret ---- */
     .toast{position:fixed;left:50%;top:110px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.25);opacity:0;transition:opacity .3s ease;z-index:60}
     .toast.show{opacity:1}
+      /* ====== Hero vidéo cinématique ====== */
+    .hero-video{position:relative;width:100%;height:100vh;min-height:520px;overflow:hidden}
+    .hero-video iframe{position:absolute;top:50%;left:50%;width:120vw;height:120vh;transform:translate(-50%,-50%);object-fit:cover;pointer-events:none;border:0}
+    .hero-video .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,.25) 30%,rgba(0,0,0,.35));padding:24px}
+    .hero-video .names{color:#fff;text-shadow:0 6px 28px rgba(0,0,0,.45)}
+    .hero-video .date{color:#e5e7eb;letter-spacing:.06em;text-transform:uppercase}
+    .overlay .cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .overlay #countdown .cd-box{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.28);backdrop-filter:blur(4px);color:#fff}
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-bg"></div>
-    <div class="container hero-inner">
-      <div>
-        <p class="pill">Vous êtes invités ✨</p>
-        <h1 class="names">Alice & Marc</h1>
-        <p class="date">Samedi 20 juin 2026 · Lyon</p>
-        <div class="countdown" id="countdown" aria-live="polite"></div>
-        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
-          <a class="btn" href="#rsvp">RSVP</a>
-          <a class="btn btn-outline" href="#infos">Infos pratiques</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.unsplash.com/photo-1519744346369-3bddf2b1996a?q=80&w=1600&auto=format&fit=crop" alt="Photo romantique" style="border-radius:12px"/>
+  <section class="hero-video" aria-label="Accueil vidéo">
+    <iframe src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&controls=0&loop=1&playlist=i6GbH-MuiWU" title="Vidéo d'accueil Léa & Vincent" allow="autoplay; fullscreen" loading="eager"></iframe>
+    <div class="overlay">
+      <p class="pill" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff">Vous êtes invités ✨</p>
+      <h1 class="names">Léa &amp; Vincent</h1>
+      <p class="date">Domaine de Baldassé · Aveyron</p>
+      <div class="countdown" id="countdown" aria-live="polite"></div>
+      <div class="cta">
+        <a class="btn" href="#rsvp">RSVP</a>
+        <a class="btn btn-outline" href="#programme" style="background:rgba(255,255,255,.85)">Programme</a>
       </div>
     </div>
-  </header>
+  </section>
 
   <main>
     <section id="histoire">
@@ -111,12 +114,14 @@
 
     <section id="programme" style="background:linear-gradient(#fff, #fafaff)">
       <div class="container">
-        <h2>Programme de la journée</h2>
-        <div class="card timeline">
-          <div class="item"><div class="time">14:00</div><div><strong>Cérémonie</strong><br><span class="muted">Mairie du 2e, Place Gailleton</span></div></div>
-          <div class="item"><div class="time">16:00</div><div><strong>Vin d'honneur</strong><br><span class="muted">Jardin du Domaine de Miribel</span></div></div>
-          <div class="item"><div class="time">19:30</div><div><strong>Dîner</strong><br><span class="muted">Salle du Domaine</span></div></div>
-          <div class="item"><div class="time">23:00</div><div><strong>Soirée</strong><br><span class="muted">DJ jusqu'à tard ✨</span></div></div>
+        <h2>Programme du week‑end</h2>
+        $1
+          <div class="item"><div class="time">Vendredi — 19:00</div><div><strong>Accueil & verre de bienvenue</strong><br><span class="muted">Rencontre informelle pour ceux qui arrivent la veille</span></div></div>
+          <div class="item"><div class="time">Samedi — 14:00</div><div><strong>Cérémonie</strong><br><span class="muted">Domaine de Baldassé</span></div></div>
+          <div class="item"><div class="time">Samedi — 16:00</div><div><strong>Vin d'honneur</strong><br><span class="muted">Terrasse du domaine</span></div></div>
+          <div class="item"><div class="time">Samedi — 19:30</div><div><strong>Dîner</strong><br><span class="muted">Salle du domaine</span></div></div>
+          <div class="item"><div class="time">Samedi — 23:00</div><div><strong>Soirée</strong><br><span class="muted">DJ jusqu'à tard ✨</span></div></div>
+          <div class="item"><div class="time">Dimanche — 11:30</div><div><strong>Brunch</strong><br><span class="muted">Au domaine, tenue décontractée</span></div></div>
         </div>
       </div>
     </section>
@@ -125,14 +130,13 @@
       <div class="container grid cols-2">
         <div>
           <h2>Lieu</h2>
-          <p class="muted">Domaine de Miribel — 123 Chemin des Cèdres, 01700 Miribel</p>
+          <p class="muted">Domaine de Baldassé — adresse à préciser</p>
           <p>Parking gratuit sur place. Merci de privilégier le covoiturage. Des navettes seront organisées au départ de Lyon Part‑Dieu (18h & 01h).</p>
           <div class="notice">Allergies alimentaires ? Dites‑le dans le formulaire RSVP.</div>
         </div>
         <div class="card">
           <!-- Remplacez l'URL de la carte par celle du vrai lieu (Google Maps > Partager > Intégrer une carte) -->
-          <iframe class="map" loading="lazy" allowfullscreen
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22280.929842383676!2d4.876!3d45.825!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47f4b5f3c2a1b1b5%3A0x0!2sParc%20de%20Miribel-Jonage!5e0!3m2!1sfr!2sfr!4v1717171717171"></iframe>
+          <iframe class="map" loading="lazy" allowfullscreen src="https://www.google.com/maps?q=Domaine%20de%20Baldass%C3%A9&output=embed"></iframe>
         </div>
       </div>
     </section>
@@ -142,19 +146,43 @@
         <div class="card">
           <h2>Hébergements & trajets</h2>
           <ul>
-            <li>Hôtels conseillés : <a href="#">Hôtel A</a>, <a href="#">Hôtel B</a>, <a href="#">Hôtel C</a></li>
-            <li>Gare la plus proche : Lyon Part‑Dieu</li>
-            <li>Aéroport : Lyon‑Saint Exupéry (LYS)</li>
+            <li>Hôtels & gîtes à proximité : <a href="#">suggestions à venir</a></li>
+            <li>Gare la plus proche : à préciser</li>
+            <li>Aéroport : à préciser</li>
             <li>Covoiturage : créez/joignez un trajet <a href="#">ici</a></li>
           </ul>
         </div>
         <div class="card">
           <h2>Tenue & petite FAQ</h2>
           <ul>
-            <li>Code vestimentaire : chic décontracté (pas d'obligation de cravate)</li>
-            <li>Enfants bienvenus (coin jeux & baby‑sitters sur place)</li>
-            <li>Photos : oui ! Partagez avec le hashtag <strong>#AliceMarc2026</strong></li>
+            <li>Style : élégant sobre</li>
+            <li>Enfants bienvenus (coin jeux)</li>
+            <li>Photos : oui ! Partagez avec <strong>#LeaVincent</strong></li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="galerie">
+      <div class="container">
+        <h2>Galerie</h2>
+        <p class="muted">Quelques images & une mini‑vidéo (teaser). Vous pourrez ajouter vos photos après l'événement.</p>
+        <div class="grid cols-2">
+          <div class="card">
+            <div class="gallery">
+              <img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Souvenir 1"/>
+              <img src="https://images.unsplash.com/photo-1482575832494-771f74bf6857?q=80&w=1200&auto=format&fit=crop" alt="Souvenir 2"/>
+              <img src="https://images.unsplash.com/photo-1456327102063-fb5054efe647?q=80&w=1200&auto=format&fit=crop" alt="Souvenir 3"/>
+            </div>
+          </div>
+          <div class="card">
+            <video controls preload="metadata" style="width:100%;border-radius:12px">
+              <!-- Remplace par ton fichier MP4 (H.264) ou un lien YouTube/Vimeo intégré -->
+              <source src="" type="video/mp4" />
+              Votre navigateur ne supporte pas la lecture vidéo.
+            </video>
+            <p class="muted" style="margin:8px 0 0">Mini‑vidéo teaser (30–60 s).</p>
+          </div>
         </div>
       </div>
     </section>
@@ -232,13 +260,14 @@
 
   <footer class="footer">
     <div class="container">
-      <p>© 2026 Alice & Marc · Merci d'être à nos côtés ❤️</p>
-      <p class="muted">Besoin d'aide ? Écrivez‑nous : <a href="mailto:aliceetmarc@example.com">aliceetmarc@example.com</a></p>
+      <p>© <span id="year"></span> Léa & Vincent · Merci d'être à nos côtés ❤️</p>
+      <p class="muted">Besoin d'aide ? Écrivez‑nous : <a href="mailto:leaetvincent@example.com">aliceetmarc@example.com</a></p>
     </div>
   </footer>
 
   <script>
     // --------- Compte à rebours (modifiez la date/heure ci‑dessous) ---------
+    // TODO: remplace par ta vraie date (ex: '2026-06-20T14:00:00+02:00')
     const target = new Date('2026-06-20T14:00:00+02:00'); // ← remplacez par votre date
     const el = document.getElementById('countdown');
     function pad(n){return String(n).padStart(2,'0')}
@@ -257,6 +286,8 @@
         <div class="cd-box"><div class="num">${pad(s)}</div><div>sec</div></div>`;
     }
     tick(); setInterval(tick,1000);
+    // année dynamique en pied de page
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
   <script>
     // --------- Compte à rebours (modifiez la date/heure ci‑dessous) ---------
