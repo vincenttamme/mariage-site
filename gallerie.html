@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Galerie — Mariage de Léa et Vincent</title>
+<link rel="stylesheet" href="/mariage-site/style.css">
+</head><body class="page">
+<header class="site-header"><div class="container header-inner">
+<a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+<nav class="nav">
+<a href="/mariage-site/programme.html">Programme</a>
+<a href="/mariage-site/lieu.html">Lieu</a>
+<a href="/mariage-site/infos.html">Infos</a>
+<a class="active" href="/mariage-site/galerie.html">Galerie</a>
+<a class="btn btn-outline" href="/mariage-site/rsvp.html">RSVP</a>
+</nav></div></header>
+
+<section><div class="container grid cols-2">
+<div class="card">
+<h2>Galerie</h2>
+<div class="gallery">
+<img src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop" alt="Souvenir 1"/>
+<img src="https://images.unsplash.com/photo-1482575832494-771f74bf6857?q=80&w=1200&auto=format&fit=crop" alt="Souvenir 2"/>
+<img src="https://images.unsplash.com/photo-1456327102063-fb5054efe647?q=80&w=1200&auto=format&fit=crop" alt="Souvenir 3"/>
+</div>
+</div>
+<div class="card">
+<h2>Mini‑vidéo</h2>
+<video controls preload="metadata" style="width:100%;border-radius:12px">
+<source src="" type="video/mp4" />
+Votre navigateur ne supporte pas la lecture vidéo.
+</video>
+<p class="muted" style="margin:8px 0 0">Ajoute un teaser 30–60 s en MP4 (H.264) dans <code>/assets/teaser.mp4</code> et remplace la source.</p>
+</div>
+</div></section>
+<footer class="footer"><div class="container">© <span id="year"></span> Léa & Vincent</div></footer>
+<script src="/mariage-site/script.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body></html>
