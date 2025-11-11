@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="fr"><head>
+<a href="/mariage-site/lieu.html">Lieu</a>
+<a href="/mariage-site/infos.html">Infos</a>
+<a href="/mariage-site/galerie.html">Galerie</a>
+<a class="btn btn-outline active" href="/mariage-site/rsvp.html">RSVP</a>
+</nav></div></header>
+
+<section><div class="container grid cols-2">
+<div>
+<h2>Confirmer votre présence</h2>
+<p class="muted">Merci de confirmer avant le <strong>1er mai 2027</strong>. Vos données ne sont utilisées que pour l'organisation de l'événement.</p>
+</div>
+<form id="rsvp-form" class="card" autocomplete="on">
+<!-- Remplace l'endpoint par celui de Formspree: https://formspree.io/f/xxxxx -->
+<input type="hidden" id="fs-endpoint" value="https://formspree.io/f/abcdwxyz" />
+<input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+<div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+<label>Prénom<br><input name="prenom" required placeholder="Votre prénom" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px"></label>
+<label>Nom<br><input name="nom" required placeholder="Votre nom" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px"></label>
+<label style="grid-column:1/-1">Email<br><input name="email" type="email" required placeholder="vous@mail.com" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px"></label>
+<label>Présence<br>
+<select name="presence" required style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+<option value="oui">Je viens</option>
+<option value="non">Je ne peux pas venir</option>
+<option value="tbd">Je ne sais pas encore</option>
+</select>
+</label>
+<label>Nombre d'invités<br><input name="nb_invites" type="number" min="1" value="1" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px"></label>
+<label style="grid-column:1/-1">Allergies / régime<br><input name="allergies" placeholder="ex. végétarien, sans gluten…" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px"></label>
+<label>Brunch dimanche<br>
+<select name="brunch" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+<option>Oui</option><option>Non</option><option>Indécis</option>
+</select>
+</label>
+<label>Navette<br>
+<select name="navette" style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+<option>Aller</option><option>Retour</option><option>Aller + Retour</option><option>Pas besoin</option>
+</select>
+</label>
+<button id="rsvp-submit" class="btn" style="grid-column:1/-1"><span class="label">Envoyer</span><span class="check">✓</span></button>
+</div>
+<p id="rsvp-note" class="muted" style="margin:10px 0 0;display:none">Merci, nous avons bien reçu votre réponse.</p>
+</form>
+</div>
+<div id="ring" class="ring" aria-hidden="true"></div>
+<div id="toast" class="toast" role="status" aria-live="polite">Merci ! Votre réponse est enregistrée.</div>
+</section>
+<footer class="footer"><div class="container">© <span id="year"></span> Léa & Vincent</div></footer>
+<script src="/mariage-site/script.js"></script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+// Envoi Formspree
+const form=document.getElementById('rsvp-form');
+if(form){
+const submit=document.getElementById('rsvp-submit');
+const note=document.getElementById('rsvp-note');
+const endpoint=document.getElementById('fs-endpoint').value;
+const ring=document.getElementById('ring');
+const toast=document.getElementById('toast');
+form.addEventListener('submit', async (e)=>{
+e.preventDefault(); submit.disabled=true; const data=new FormData(form); data.append('_subject','RSVP Mariage — Nouvelle réponse');
+try{const res=await fetch(endpoint,{method:'POST',body:data,headers:{'Accept':'application/json'}}); if(!res.ok) throw new Error('Erreur envoi');
+submit.classList.add('success'); toast.classList.add('show'); note.style.display='block'; setTimeout(()=>toast.classList.remove('show'),2200); form.reset();
+}catch(err){toast.textContent="Oups, impossible d'envoyer. Réessayez ou contactez-nous."; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),2600)}
+finally{submit.disabled=false; ring?.classList.remove('show'); ring?.offsetHeight; ring?.classList.add('show'); setTimeout(()=> ring?.classList.remove('show'), 1200)}
+});
+}
+</script>
+</body></html>
