@@ -1,34 +1,181 @@
-<!DOCTYPE html><html lang="fr"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mariage de Léa et Vincent — Accueil</title>
-<link rel="stylesheet" href="/mariage-site/style.css">
-</head><body>
-<header class="site-header" role="navigation" aria-label="Navigation principale">
-<div class="container header-inner">
-<a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
-<nav class="nav">
-<a href="/mariage-site/programme.html">Programme</a>
-<a href="/mariage-site/lieu.html">Lieu</a>
-<a href="/mariage-site/infos.html">Infos</a>
-<a href="/mariage-site/galerie.html">Galerie</a>
-<a class="btn btn-outline" href="/mariage-site/rsvp.html">RSVP</a>
-</nav>
-</div>
-</header>
-<section class="hero-video" aria-label="Accueil vidéo">
-<iframe src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&controls=0&loop=1&playlist=i6GbH-MuiWU" title="Vidéo d'accueil" allow="autoplay; fullscreen" loading="eager"></iframe>
-<div class="overlay">
-<p class="pill" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff">Vous êtes invités ✨</p>
-<h1 class="script">Mariage de Léa &amp; Vincent</h1>
-<p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
-<div id="countdown" class="countdown" aria-live="polite"></div>
-<div class="cta">
-<a class="btn" href="/mariage-site/rsvp.html">Confirmer ma présence</a>
-<a class="btn btn-outline" href="/mariage-site/programme.html">Découvrir le week‑end</a>
-</div>
-</div>
-</section>
-<footer class="footer"><div class="container">© <span id="year"></span> Léa & Vincent</div></footer>
-<script src="/mariage-site/script.js"></script>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
-</body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mariage de Léa et Vincent — Accueil</title>
+  <meta name="description" content="Mariage de Léa et Vincent — 30 juillet au 1er août 2027, Domaine de Baldassé. Programme, lieu, infos pratiques et RSVP.">
+  <link rel="stylesheet" href="/mariage-site/style.css">
+</head>
+<body>
+  <!-- Header global (transparent sur la home) -->
+  <header class="site-header" role="navigation" aria-label="Navigation principale">
+    <div class="container header-inner">
+      <a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+      <nav class="nav">
+        <a href="/mariage-site/#programme">Programme</a>
+        <a href="/mariage-site/lieu.html">Lieu</a>
+        <a href="/mariage-site/infos.html">Infos</a>
+        <a href="/mariage-site/galerie.html">Galerie</a>
+        <a class="btn btn-outline" href="/mariage-site/#rsvp">RSVP</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero vidéo cinématique -->
+  <section class="hero-video" aria-label="Accueil vidéo">
+    <iframe
+      src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&controls=0&loop=1&playlist=i6GbH-MuiWU"
+      title="Vidéo d'accueil"
+      allow="autoplay; fullscreen"
+      loading="eager"></iframe>
+
+    <div class="overlay">
+      <p class="pill" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff">
+        Vous êtes invités ✨
+      </p>
+      <h1 class="script">Mariage de Léa &amp; Vincent</h1>
+      <p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
+
+      <!-- Compteur horizontal -->
+      <div id="countdown" class="countdown" aria-live="polite"></div>
+
+      <div class="cta">
+        <a class="btn" href="/mariage-site/#rsvp">Confirmer ma présence</a>
+        <a class="btn btn-outline" href="/mariage-site/#programme">Découvrir le week-end</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programme sur la home -->
+  <section id="programme">
+    <div class="container">
+      <h2>Programme du week-end</h2>
+      <div class="card timeline">
+        <div class="item">
+          <div class="time">Vendredi — 19:00</div>
+          <div><strong>Accueil & verre de bienvenue</strong><br>
+            <span class="muted">Pour celles et ceux qui arrivent la veille</span></div>
+        </div>
+        <div class="item">
+          <div class="time">Samedi — 14:00</div>
+          <div><strong>Cérémonie</strong><br>
+            <span class="muted">Domaine de Baldassé</span></div>
+        </div>
+        <div class="item">
+          <div class="time">Samedi — 16:00</div>
+          <div><strong>Vin d'honneur</strong><br>
+            <span class="muted">Terrasse du domaine</span></div>
+        </div>
+        <div class="item">
+          <div class="time">Samedi — 19:30</div>
+          <div><strong>Dîner</strong><br>
+            <span class="muted">Salle du domaine</span></div>
+        </div>
+        <div class="item">
+          <div class="time">Samedi — 23:00</div>
+          <div><strong>Soirée</strong><br>
+            <span class="muted">DJ jusqu'à tard ✨</span></div>
+        </div>
+        <div class="item">
+          <div class="time">Dimanche — 11:30</div>
+          <div><strong>Brunch</strong><br>
+            <span class="muted">Tenue décontractée, au domaine</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP sur la home -->
+  <section id="rsvp">
+    <div class="container grid cols-2">
+      <div>
+        <h2>Confirmer votre présence</h2>
+        <p class="muted">
+          Merci de confirmer avant le <strong>1er mai 2027</strong>.
+          Vos données ne sont utilisées que pour l'organisation de l'événement.
+        </p>
+      </div>
+
+      <form id="rsvp-form" class="card" autocomplete="on">
+        <!-- 🔁 Remplace l'endpoint par le tien (Formspree) -->
+        <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/abcdwxyz" />
+        <!-- Anti-bot -->
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+          <label>Prénom<br>
+            <input name="prenom" required placeholder="Votre prénom"
+                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+          </label>
+          <label>Nom<br>
+            <input name="nom" required placeholder="Votre nom"
+                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+          </label>
+          <label style="grid-column:1/-1">Email<br>
+            <input name="email" type="email" required placeholder="vous@mail.com"
+                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+          </label>
+          <label>Présence<br>
+            <select name="presence" required
+                    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              <option value="oui">Je viens</option>
+              <option value="non">Je ne peux pas venir</option>
+              <option value="tbd">Je ne sais pas encore</option>
+            </select>
+          </label>
+          <label>Nombre d'invités<br>
+            <input name="nb_invites" type="number" min="1" value="1"
+                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+          </label>
+          <label style="grid-column:1/-1">Allergies / régime<br>
+            <input name="allergies" placeholder="ex. végétarien, sans gluten…"
+                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+          </label>
+          <label>Brunch dimanche<br>
+            <select name="brunch"
+                    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              <option>Oui</option><option>Non</option><option>Indécis</option>
+            </select>
+          </label>
+          <label>Navette<br>
+            <select name="navette"
+                    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              <option>Aller</option><option>Retour</option><option>Aller + Retour</option><option>Pas besoin</option>
+            </select>
+          </label>
+          <button id="rsvp-submit" class="btn" style="grid-column:1/-1">
+            <span class="label">Envoyer</span><span class="check">✓</span>
+          </button>
+        </div>
+
+        <p id="rsvp-note" class="muted" style="margin:10px 0 0;display:none">
+          Merci, nous avons bien reçu votre réponse.
+        </p>
+      </form>
+    </div>
+
+    <!-- Effets feedback -->
+    <div id="ring" class="ring" aria-hidden="true"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite">Merci ! Votre réponse est enregistrée.</div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">© <span id="year"></span> Léa & Vincent</div>
+  </footer>
+
+  <script src="/mariage-site/script.js"></script>
+  <script>
+    // Année automatique
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mettre actif les liens #programme / #rsvp quand on est sur la home
+    const links = document.querySelectorAll('.site-header .nav a');
+    links.forEach(a => {
+      if (a.getAttribute('href').endsWith('#programme') || a.getAttribute('href').endsWith('#rsvp')) {
+        a.addEventListener('click', () => a.classList.add('active'));
+      }
+    });
+  </script>
+</body>
+</html>
