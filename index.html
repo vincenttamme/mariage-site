@@ -7,8 +7,8 @@
   <meta name="description" content="Mariage de Léa et Vincent — 30 juillet au 1er août 2027, Domaine de Baldassé. Programme, lieu, infos pratiques et RSVP.">
   <link rel="stylesheet" href="/mariage-site/style.css">
 </head>
+
 <body>
-  <!-- Header global (transparent sur la home) -->
   <header class="site-header" role="navigation" aria-label="Navigation principale">
     <div class="container header-inner">
       <a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
@@ -22,12 +22,12 @@
     </div>
   </header>
 
-  <!-- Hero vidéo cinématique -->
+  <!-- HERO VIDEO -->
   <section class="hero-video" aria-label="Accueil vidéo">
     <iframe
-      src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&controls=0&loop=1&playlist=i6GbH-MuiWU"
+      src="https://www.youtube.com/embed/i6GbH-MuiWU?autoplay=1&mute=1&playsinline=1&controls=0&loop=1&playlist=i6GbH-MuiWU&modestbranding=1&rel=0"
       title="Vidéo d'accueil"
-      allow="autoplay; fullscreen"
+      allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
       loading="eager"></iframe>
 
     <div class="overlay">
@@ -37,8 +37,7 @@
       <h1 class="script">Mariage de Léa &amp; Vincent</h1>
       <p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
 
-      <!-- Compteur horizontal -->
-      <div id="countdown" class="countdown" aria-live="polite"></div>
+      <div id="countdown" aria-live="polite"></div>
 
       <div class="cta">
         <a class="btn" href="/mariage-site/#rsvp">Confirmer ma présence</a>
@@ -47,46 +46,40 @@
     </div>
   </section>
 
-  <!-- Programme sur la home -->
+  <!-- PROGRAMME -->
   <section id="programme">
     <div class="container">
       <h2>Programme du week-end</h2>
       <div class="card timeline">
         <div class="item">
           <div class="time">Vendredi — 19:00</div>
-          <div><strong>Accueil & verre de bienvenue</strong><br>
-            <span class="muted">Pour celles et ceux qui arrivent la veille</span></div>
+          <div><strong>Accueil & verre de bienvenue</strong><br><span class="muted">Pour celles et ceux qui arrivent la veille</span></div>
         </div>
         <div class="item">
           <div class="time">Samedi — 14:00</div>
-          <div><strong>Cérémonie</strong><br>
-            <span class="muted">Domaine de Baldassé</span></div>
+          <div><strong>Cérémonie</strong><br><span class="muted">Domaine de Baldassé</span></div>
         </div>
         <div class="item">
           <div class="time">Samedi — 16:00</div>
-          <div><strong>Vin d'honneur</strong><br>
-            <span class="muted">Terrasse du domaine</span></div>
+          <div><strong>Vin d'honneur</strong><br><span class="muted">Terrasse du domaine</span></div>
         </div>
         <div class="item">
           <div class="time">Samedi — 19:30</div>
-          <div><strong>Dîner</strong><br>
-            <span class="muted">Salle du domaine</span></div>
+          <div><strong>Dîner</strong><br><span class="muted">Salle du domaine</span></div>
         </div>
         <div class="item">
           <div class="time">Samedi — 23:00</div>
-          <div><strong>Soirée</strong><br>
-            <span class="muted">DJ jusqu'à tard ✨</span></div>
+          <div><strong>Soirée</strong><br><span class="muted">DJ jusqu'à tard ✨</span></div>
         </div>
         <div class="item">
           <div class="time">Dimanche — 11:30</div>
-          <div><strong>Brunch</strong><br>
-            <span class="muted">Tenue décontractée, au domaine</span></div>
+          <div><strong>Brunch</strong><br><span class="muted">Tenue décontractée, au domaine</span></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- RSVP sur la home -->
+  <!-- RSVP -->
   <section id="rsvp">
     <div class="container grid cols-2">
       <div>
@@ -94,56 +87,64 @@
         <p class="muted">
           Merci de confirmer avant le <strong>1er mai 2027</strong>.
           Vos données ne sont utilisées que pour l'organisation de l'événement.
+          <br><br>
+          <span class="pill">Logement sur place prévu pour tous</span>
         </p>
       </div>
 
       <form id="rsvp-form" class="card" autocomplete="on">
-        <!-- 🔁 Remplace l'endpoint par le tien (Formspree) -->
         <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/abcdwxyz" />
-        <!-- Anti-bot -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
 
         <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
           <label>Prénom<br>
             <input name="prenom" required placeholder="Votre prénom"
-                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
+
           <label>Nom<br>
             <input name="nom" required placeholder="Votre nom"
-                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
+
           <label style="grid-column:1/-1">Email<br>
             <input name="email" type="email" required placeholder="vous@mail.com"
-                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
-          <label>Présence<br>
-            <select name="presence" required
-                    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-              <option value="oui">Je viens</option>
-              <option value="non">Je ne peux pas venir</option>
+
+          <label style="grid-column:1/-1">Votre présence<br>
+            <select id="presence" name="presence" required
+              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              <option value="weekend">Je serai présent(e) tout le week-end</option>
+              <option value="partiel">Je serai présent(e) partiellement</option>
               <option value="tbd">Je ne sais pas encore</option>
+              <option value="non">Je ne pourrai pas être présent(e)</option>
             </select>
           </label>
-          <label>Nombre d'invités<br>
-            <input name="nb_invites" type="number" min="1" value="1"
-                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+
+          <div id="presence-details" style="grid-column:1/-1;display:none">
+            <div class="muted" style="margin-bottom:6px">Je serai présent(e) :</div>
+            <label style="display:block;margin:6px 0">
+              <input type="checkbox" name="jours[]" value="vendredi"> Vendredi (accueil)
+            </label>
+            <label style="display:block;margin:6px 0">
+              <input type="checkbox" name="jours[]" value="samedi"> Samedi (cérémonie + dîner + soirée)
+            </label>
+            <label style="display:block;margin:6px 0">
+              <input type="checkbox" name="jours[]" value="dimanche"> Dimanche (brunch)
+            </label>
+          </div>
+
+          <label>Nombre de personnes<br>
+            <input name="nb_personnes" type="number" min="1" value="1"
+              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
-          <label style="grid-column:1/-1">Allergies / régime<br>
+
+          <label>Allergies / régime<br>
             <input name="allergies" placeholder="ex. végétarien, sans gluten…"
-                   style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
-          <label>Brunch dimanche<br>
-            <select name="brunch"
-                    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-              <option>Oui</option><option>Non</option><option>Indécis</option>
-            </select>
-          </label>
-          <label>Navette<br>
-            <select name="navette"
-                    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-              <option>Aller</option><option>Retour</option><option>Aller + Retour</option><option>Pas besoin</option>
-            </select>
-          </label>
+
           <button id="rsvp-submit" class="btn" style="grid-column:1/-1">
             <span class="label">Envoyer</span><span class="check">✓</span>
           </button>
@@ -155,27 +156,76 @@
       </form>
     </div>
 
-    <!-- Effets feedback -->
     <div id="ring" class="ring" aria-hidden="true"></div>
-    <div id="toast" class="toast" role="status" aria-live="polite">Merci ! Votre réponse est enregistrée.</div>
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      Merci ! Votre réponse est enregistrée.
+    </div>
   </section>
 
   <footer class="footer">
-    <div class="container">© <span id="year"></span> Léa & Vincent</div>
+    <div class="container">© <span id="year"></span> Léa &amp; Vincent</div>
   </footer>
 
   <script src="/mariage-site/script.js"></script>
   <script>
-    // Année automatique
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Mettre actif les liens #programme / #rsvp quand on est sur la home
-    const links = document.querySelectorAll('.site-header .nav a');
-    links.forEach(a => {
-      if (a.getAttribute('href').endsWith('#programme') || a.getAttribute('href').endsWith('#rsvp')) {
-        a.addEventListener('click', () => a.classList.add('active'));
+    // UI présence : affiche les jours uniquement si "partiel"
+    const presence = document.getElementById('presence');
+    const details = document.getElementById('presence-details');
+
+    function updatePresenceUI(){
+      if(!presence || !details) return;
+      if(presence.value === 'partiel'){
+        details.style.display = 'block';
+      } else {
+        details.style.display = 'none';
+        details.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
       }
-    });
+    }
+    presence.addEventListener('change', updatePresenceUI);
+    updatePresenceUI();
+
+    // Envoi Formspree
+    const form = document.getElementById('rsvp-form');
+    if(form){
+      const submit = document.getElementById('rsvp-submit');
+      const note = document.getElementById('rsvp-note');
+      const endpoint = document.getElementById('fs-endpoint').value;
+      const ring = document.getElementById('ring');
+      const toast = document.getElementById('toast');
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        submit.disabled = true;
+
+        const data = new FormData(form);
+        data.append('_subject','RSVP Mariage — Nouvelle réponse');
+
+        try{
+          const res = await fetch(endpoint, { method:'POST', body:data, headers:{'Accept':'application/json'} });
+          if(!res.ok) throw new Error('Erreur envoi');
+
+          toast.textContent = "Merci ! Votre réponse est enregistrée.";
+          toast.classList.add('show');
+          note.style.display = 'block';
+          setTimeout(()=>toast.classList.remove('show'), 2200);
+
+          form.reset();
+          updatePresenceUI();
+        }catch(err){
+          toast.textContent = "Oups, impossible d'envoyer. Réessayez ou contactez-nous.";
+          toast.classList.add('show');
+          setTimeout(()=>toast.classList.remove('show'), 2600);
+        }finally{
+          submit.disabled = false;
+          ring?.classList.remove('show');
+          ring?.offsetHeight;
+          ring?.classList.add('show');
+          setTimeout(()=> ring?.classList.remove('show'), 1200);
+        }
+      });
+    }
   </script>
 </body>
 </html>
