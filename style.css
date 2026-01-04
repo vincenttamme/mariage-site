@@ -322,3 +322,19 @@ h2::after{
   padding:6px 10px;
   font-weight:700;
 }
+@media (max-width: 900px){
+  .header-inner{ padding: 16px 18px; }
+  .site-header .nav{ gap: 18px; }
+  .site-header .nav a{ font-size: 0.95rem; }
+  .site-header .brand{ font-size: 1.25rem; left: 16px; }
+}
+
+@media (max-width: 520px){
+  .site-header .nav{
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: calc(100% - 32px);
+  }
+  .site-header .nav a.btn{ padding: 10px 14px; }
+}
