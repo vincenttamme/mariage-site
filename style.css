@@ -28,11 +28,32 @@ h2::after{content:"";display:block;width:60px;height:2px;background:var(--brand)
 .site-header.scrolled .nav a,.site-header.scrolled .brand{color:var(--txt)}
 .site-header.scrolled .brand { color: var(noir/bleu nuit); 
 /* Hero vidéo */
-.hero-video{position:relative;width:100%;height:100vh;min-height:520px;overflow:hidden}
-.hero-video iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100vw;height:56.25vw}
-@media(max-aspect-ratio:16/9){.hero-video iframe{width:177.78vh;height:100vh}}
-.hero-video .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.15) 30%,rgba(0,0,0,.28));padding:24px}
-.hero-video .date{color:#e5e7eb;letter-spacing:.06em;text-transform:uppercase}
+.hero-video{
+  position:relative;
+  width:100%;
+  height:100vh;
+  min-height:520px;
+  overflow:hidden;
+}
+
+.hero-video iframe{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:100vw;
+  height:56.25vw; /* 16:9 */
+  border:0;
+  pointer-events:none; /* optionnel: empêche de cliquer la vidéo */
+}
+
+/* Si l’écran est “trop haut”, on passe en largeur basée sur la hauteur */
+@media (max-aspect-ratio:16/9){
+  .hero-video iframe{
+    width:177.78vh; /* 16/9 * 100 */
+    height:100vh;
+  }
+}
 .overlay .cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 /* Compteur horizontal (home) */
 #countdown{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}
