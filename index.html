@@ -138,19 +138,20 @@
             </label>
           </div>
 
-          <!-- Adultes / Enfants -->
-          <label>Adultes<br>
-            <input id="adults" name="adultes" type="number" min="0" value="1" required
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
+         <!-- Adultes / Enfants -->
+<label>Adultes<br>
+  <input id="adults" name="adultes" type="number" min="0" value="1" required
+    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+</label>
 
-          <label>Enfants<br>
-            <input id="kids" name="enfants" type="number" min="0" value="0" required
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
+<label>Enfants<br>
+  <input id="kids" name="enfants" type="number" min="0" value="0" required
+    style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+</label>
 
-          <!-- bloc généré en JS: invités -->
-          <div id="guests-wrap" style="grid-column:1/-1;margin-top:6px"></div>
+<!-- Ici le script va injecter Nom/Prénom/Allergies pour chaque invité -->
+<div id="guests-wrap" style="grid-column:1/-1;margin-top:6px"></div>
+
 
           <button id="rsvp-submit" class="btn" style="grid-column:1/-1">
             <span class="label">Envoyer</span><span class="check">✓</span>
