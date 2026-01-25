@@ -83,6 +83,8 @@ document.querySelectorAll('.gallery img').forEach((img) => {
    RSVP helpers (Formspree)
    - Affiche les jours si "partiel"
    - Remplit "presence_detail" (champ caché) pour éviter la perte d'info
+   - Adultes/Enfants -> génère Nom/Prénom/Allergies par invité
+   - Validations (standard RSVP)
    ========================= */
 (function initRSVP() {
   const form = document.getElementById('rsvp-form');
@@ -92,7 +94,12 @@ document.querySelectorAll('.gallery img').forEach((img) => {
   const detailsWrap = document.getElementById('presence-details');
   const dayCheckboxes = form.querySelectorAll('input[name="jours[]"]');
 
-  // Crée le champ hidden si pas présent dans le HTML
+  // Adultes / Enfants + wrapper invités (doivent exister dans ton HTML)
+  const adultsInput = form.querySelector('#adults');
+  const kidsInput = form.querySelector('#kids');
+  const guestsWrap = document.getElementById('guests-wrap');
+
+  // Champ hidden résumé présence partielle
   let presenceDetailInput = form.querySelector('#presence-detail');
   if (!presenceDetailInput) {
     presenceDetailInput = document.createElement('input');
@@ -109,6 +116,12 @@ document.querySelectorAll('.gallery img').forEach((img) => {
     return v;
   };
 
+  function totalGuests() {
+    const a = Math.max(0, parseInt(adultsInput?.value || '0', 10));
+    const k = Math.max(0, parseInt(kidsInput?.value || '0', 10));
+    return { a, k, t: a + k };
+  }
+
   function updatePresenceUI() {
     if (!presenceSelect || !detailsWrap) return;
 
@@ -121,6 +134,13 @@ document.querySelectorAll('.gallery img').forEach((img) => {
       presenceDetailInput.value = '';
     } else {
       buildPresenceDetail(); // recalcul direct
+    }
+
+    // Si "non", on force 0 invités et on masque le bloc invités (logique RSVP)
+    if (presenceSelect.value === 'non') {
+      if (adultsInput) adultsInput.value = '0';
+      if (kidsInput) kidsInput.value = '0';
+      renderGuests();
     }
   }
 
@@ -141,20 +161,132 @@ document.querySelectorAll('.gallery img').forEach((img) => {
       : 'Présence partielle (jours à préciser)';
   }
 
-  // Listeners
+  function renderGuests() {
+    // Si pas de champ invités dans cette page, on ne fait rien
+    if (!guestsWrap || !adultsInput || !kidsInput) return;
+
+    const { a, k, t } = totalGuests();
+
+    // Si présence = non, pas d'invités
+    if (presenceSelect?.value === 'non') {
+      guestsWrap.innerHTML = '';
+      return;
+    }
+
+    // protection saisie absurde
+    if (t > 12) {
+      guestsWrap.innerHTML = `
+        <p class="muted" style="color:#b42318;margin:8px 0 0">
+          Valeur anormale. Merci de nous contacter si vous êtes plus de 12.
+        </p>`;
+      return;
+    }
+
+    if (t === 0) {
+      guestsWrap.innerHTML = `
+        <p class="muted" style="margin:8px 0 0">
+          Merci d’indiquer le nombre d’adultes et d’enfants.
+        </p>`;
+      return;
+    }
+
+    let html = `
+      <div class="muted" style="margin:8px 0 10px"><strong>Détails des invités</strong> (prénom, nom, allergies/régime)</div>
+      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+    `;
+
+    for (let i = 1; i <= t; i++) {
+      const type = (i <= a) ? 'Adulte' : 'Enfant';
+      html += `
+        <div style="grid-column:1/-1;border:1px solid #eee;border-radius:14px;padding:12px 12px 10px">
+          <div class="muted" style="margin-bottom:8px;font-weight:700">Invité ${i} — ${type}</div>
+          <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+            <label>Prénom<br>
+              <input name="invite_${i}_prenom" required
+                placeholder="Prénom"
+                style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+            </label>
+            <label>Nom<br>
+              <input name="invite_${i}_nom" required
+                placeholder="Nom"
+                style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+            </label>
+            <label style="grid-column:1/-1">Allergies / régime / infos<br>
+              <input name="invite_${i}_infos" required
+                placeholder="aucun / végétarien / sans gluten / allergie…"
+                style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+            </label>
+            <input type="hidden" name="invite_${i}_type" value="${type}">
+          </div>
+        </div>
+      `;
+    }
+
+    html += `</div>`;
+    guestsWrap.innerHTML = html;
+  }
+
+  function validateBeforeSubmit() {
+    // 1) Si partiel => au moins 1 jour
+    if (presenceSelect?.value === 'partiel') {
+      const checked = Array.from(dayCheckboxes).some((cb) => cb.checked);
+      if (!checked) {
+        alert("Merci de cocher au moins un jour si vous êtes présent(e) partiellement.");
+        detailsWrap?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return false;
+      }
+    }
+
+    // 2) Si présence != non => au moins 1 invité (adultes+enfants)
+    if (presenceSelect?.value !== 'non' && adultsInput && kidsInput) {
+      const { t } = totalGuests();
+      if (t < 1) {
+        alert("Merci d’indiquer le nombre d’adultes et d’enfants.");
+        adultsInput.focus();
+        return false;
+      }
+    }
+
+    // 3) Si bloc invités présent => tous les required dans guestsWrap remplis
+    if (guestsWrap && presenceSelect?.value !== 'non') {
+      const requiredInputs = guestsWrap.querySelectorAll('input[required]');
+      for (const inp of requiredInputs) {
+        if (!inp.value || !inp.value.trim()) {
+          alert("Merci de renseigner le prénom, nom et allergies/régime pour chaque invité.");
+          inp.focus();
+          inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  // Listeners présence + jours
   presenceSelect?.addEventListener('change', () => {
     updatePresenceUI();
     buildPresenceDetail();
+    renderGuests();
   });
-
   dayCheckboxes.forEach((cb) => cb.addEventListener('change', buildPresenceDetail));
 
-  // Avant envoi, on force la mise à jour (pour être sûr que Formspree reçoive le bon résumé)
-  form.addEventListener('submit', () => {
+  // Listeners adultes/enfants
+  adultsInput?.addEventListener('input', renderGuests);
+  kidsInput?.addEventListener('input', renderGuests);
+
+  // Avant envoi, on force la mise à jour + validations
+  form.addEventListener('submit', (e) => {
     buildPresenceDetail();
+    renderGuests();
+    if (!validateBeforeSubmit()) {
+      e.preventDefault();
+      return;
+    }
   });
 
   // Init
   updatePresenceUI();
   buildPresenceDetail();
+  renderGuests();
 })();
