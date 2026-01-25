@@ -1,3 +1,6 @@
+/* =========================
+   style.css 
+   ========================= */
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap');
 
 :root{
@@ -124,11 +127,10 @@ h2::after{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:22px 48px; /* hauteur du header */
+  padding:22px 48px;
   position:relative;
 }
 
-/* Ancre "Léa & Vincent" à gauche */
 .site-header .brand{
   position:absolute;
   left:24px;
@@ -136,25 +138,24 @@ h2::after{
   transform:translateY(-50%);
   font-family:'Great Vibes',cursive;
   font-weight:400;
-  color:#fff;               /* blanc sur la vidéo */
-  font-size:1.6rem;         /* taille du titre */
+  color:#fff;
+  font-size:1.6rem;
   letter-spacing:.5px;
   text-decoration:none;
 }
 .site-header .brand:hover{opacity:.9}
 
-/* Menu centré */
 .site-header .nav{
   position:absolute;
   left:50%;
   transform:translateX(-50%);
   display:flex;
   align-items:center;
-  gap:72px;                 /* espace entre les menus */
+  gap:72px;
 }
 .site-header .nav a{
   color:#fff;
-  font-size:1.1rem;         /* taille du texte */
+  font-size:1.1rem;
   font-weight:600;
   text-decoration:none;
 }
@@ -164,23 +165,21 @@ h2::after{
   text-underline-offset:6px;
 }
 
-/* Etat blanc (scroll / pages internes) */
 .site-header.scrolled{
   background:rgba(255,255,255,.85);
   backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px); /* Safari */
+  -webkit-backdrop-filter:blur(8px);
   border-bottom:1px solid rgba(209,174,111,.35);
 }
 .site-header.scrolled .nav a,
 .site-header.scrolled .brand{
-  color:var(--txt); /* noir/bleu nuit */
+  color:var(--txt);
 }
 
-/* Pages standard (sans hero) -> laisse de la place au header fixed */
 .page{padding-top:86px}
 
 /* =========================
-   HERO VIDEO (cinématique)
+   HERO VIDEO (AUTO-HÉBERGÉE)
    ========================= */
 .hero-video{
   position:relative;
@@ -190,22 +189,13 @@ h2::after{
   overflow:hidden;
 }
 
-/* IMPORTANT : cover d'une iframe => on gère avec width/height + media query */
-.hero-video iframe{
+.hero-video video{
   position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  width:100vw;
-  height:56.25vw; /* 16:9 */
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
   border:0;
-  pointer-events:none; /* retire si tu veux que les gens cliquent sur la vidéo */
-}
-@media (max-aspect-ratio:16/9){
-  .hero-video iframe{
-    width:177.78vh;
-    height:100vh;
-  }
 }
 
 .hero-video .overlay{
@@ -235,7 +225,7 @@ h2::after{
   justify-content:center;
 }
 
-/* Compteur horizontal (home) */
+/* Compteur */
 #countdown{
   display:flex;
   justify-content:center;
@@ -322,6 +312,10 @@ h2::after{
   padding:6px 10px;
   font-weight:700;
 }
+
+/* =========================
+   Responsive header
+   ========================= */
 @media (max-width: 900px){
   .header-inner{ padding: 16px 18px; }
   .site-header .nav{ gap: 18px; }
