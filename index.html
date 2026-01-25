@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mariage de Léa et Vincent — Accueil</title>
-  <meta name="description" content="Mariage de Léa et Vincent — 30 juillet au 1er août 2027, Domaine de Baldassé. Programme, lieu, infos pratiques et RSVP.">
+  <title>Mariage de Vincent et Léa — Accueil</title>
+  <meta name="description" content="Mariage de Vincent et Léa — 30 juillet au 1er août 2027, Domaine de Baldassé. Programme, lieu, infos pratiques et RSVP.">
   <link rel="stylesheet" href="/mariage-site/style.css">
 </head>
 
 <body>
   <header class="site-header" role="navigation" aria-label="Navigation principale">
     <div class="container header-inner">
-      <a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+      <a href="/mariage-site/" class="brand">Vincent&nbsp;&amp;&nbsp;Léa</a>
       <nav class="nav">
         <a href="/mariage-site/#programme">Programme</a>
         <a href="/mariage-site/lieu.html">Lieu</a>
@@ -34,7 +34,7 @@
       <p class="pill" style="background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.4);color:#fff">
         Vous êtes invités ✨
       </p>
-      <h1 class="script">Mariage de Léa &amp; Vincent</h1>
+      <h1 class="script">Mariage de Vincent &amp; Léa</h1>
       <p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
 
       <div id="countdown" aria-live="polite"></div>
@@ -53,7 +53,7 @@
       <div class="card timeline">
         <div class="item">
           <div class="time">Vendredi — 19:00</div>
-          <div><strong>Accueil & verre de bienvenue</strong><br><span class="muted">Pour celles et ceux qui arrivent la veille</span></div>
+          <div><strong>Accueil &amp; verre de bienvenue</strong><br><span class="muted">Pour celles et ceux qui arrivent la veille</span></div>
         </div>
         <div class="item">
           <div class="time">Samedi — 14:00</div>
@@ -88,15 +88,17 @@
           Merci de confirmer avant le <strong>1er mai 2027</strong>.
           Vos données ne sont utilisées que pour l'organisation de l'événement.
           <br><br>
-          <span class="pill">Logement sur place prévu pour tous</span>
+          <span class="pill">Logement sur place prévu pour tous — tout le monde est invité à tout</span>
         </p>
       </div>
 
       <form id="rsvp-form" class="card" autocomplete="on">
         <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj" />
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="presence_detail" id="presence-detail">
 
         <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+
           <label>Prénom<br>
             <input name="prenom" required placeholder="Votre prénom"
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
@@ -122,6 +124,7 @@
             </select>
           </label>
 
+          <!-- détails jours (si présence partielle) -->
           <div id="presence-details" style="grid-column:1/-1;display:none">
             <div class="muted" style="margin-bottom:6px">Je serai présent(e) :</div>
             <label style="display:block;margin:6px 0">
@@ -135,19 +138,24 @@
             </label>
           </div>
 
-          <label>Nombre de personnes<br>
-            <input name="nb_personnes" type="number" min="1" value="1"
+          <!-- Adultes / Enfants -->
+          <label>Adultes<br>
+            <input id="adults" name="adultes" type="number" min="0" value="1" required
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
 
-          <label>Allergies / régime<br>
-            <input name="allergies" placeholder="ex. végétarien, sans gluten…"
+          <label>Enfants<br>
+            <input id="kids" name="enfants" type="number" min="0" value="0" required
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
-<input type="hidden" name="presence_detail" id="presence-detail">
+
+          <!-- bloc généré en JS: invités -->
+          <div id="guests-wrap" style="grid-column:1/-1;margin-top:6px"></div>
+
           <button id="rsvp-submit" class="btn" style="grid-column:1/-1">
             <span class="label">Envoyer</span><span class="check">✓</span>
           </button>
+
         </div>
 
         <p id="rsvp-note" class="muted" style="margin:10px 0 0;display:none">
@@ -169,63 +177,6 @@
   <script src="/mariage-site/script.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // UI présence : affiche les jours uniquement si "partiel"
-    const presence = document.getElementById('presence');
-    const details = document.getElementById('presence-details');
-
-    function updatePresenceUI(){
-      if(!presence || !details) return;
-      if(presence.value === 'partiel'){
-        details.style.display = 'block';
-      } else {
-        details.style.display = 'none';
-        details.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-      }
-    }
-    presence.addEventListener('change', updatePresenceUI);
-    updatePresenceUI();
-
-    // Envoi Formspree
-    const form = document.getElementById('rsvp-form');
-    if(form){
-      const submit = document.getElementById('rsvp-submit');
-      const note = document.getElementById('rsvp-note');
-      const endpoint = document.getElementById('fs-endpoint').value;
-      const ring = document.getElementById('ring');
-      const toast = document.getElementById('toast');
-
-      form.addEventListener('submit', async (e)=>{
-        e.preventDefault();
-        submit.disabled = true;
-
-        const data = new FormData(form);
-        data.append('_subject','RSVP Mariage — Nouvelle réponse');
-
-        try{
-          const res = await fetch(endpoint, { method:'POST', body:data, headers:{'Accept':'application/json'} });
-          if(!res.ok) throw new Error('Erreur envoi');
-
-          toast.textContent = "Merci ! Votre réponse est enregistrée.";
-          toast.classList.add('show');
-          note.style.display = 'block';
-          setTimeout(()=>toast.classList.remove('show'), 2200);
-
-          form.reset();
-          updatePresenceUI();
-        }catch(err){
-          toast.textContent = "Oups, impossible d'envoyer. Réessayez ou contactez-nous.";
-          toast.classList.add('show');
-          setTimeout(()=>toast.classList.remove('show'), 2600);
-        }finally{
-          submit.disabled = false;
-          ring?.classList.remove('show');
-          ring?.offsetHeight;
-          ring?.classList.add('show');
-          setTimeout(()=> ring?.classList.remove('show'), 1200);
-        }
-      });
-    }
   </script>
 </body>
 </html>
