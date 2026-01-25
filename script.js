@@ -1,3 +1,7 @@
+/* =========================
+   script.js 
+   ========================= */
+
 // Header scroll state
 const header = document.querySelector('.site-header');
 const onScroll = () => header && header.classList.toggle('scrolled', window.scrollY > 12);
