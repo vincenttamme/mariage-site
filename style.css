@@ -1,46 +1,173 @@
 /* =========================
-   DA "EDITORIAL LUXE" (comme ton screenshot)
+   style.css — EDITORIAL LUXE (Vincent & Léa)
    ========================= */
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700&family=Playfair+Display:wght@500;700&family=Great+Vibes&display=swap');
 
-/* 1) Texte signature + fond ivoire */
 :root{
-  --bg:#FFFAF5;
-  --txt:#2a2a2a;            /* plus doux que bleu nuit */
+  /* Palette */
+  --bg:#FFFAF5;                 /* ivoire */
+  --txt:#2a2a2a;                /* texte doux */
   --muted:rgba(42,42,42,.62);
 
   --gold:#D6C29A;
   --gold-2:#C5AE7B;
 
-  --signature:#7A5A5F;      /* bordeaux greige */
+  --signature:#7A5A5F;          /* bordeaux-grège */
   --paper:#ffffff;
 
   --hairline:rgba(122,90,95,.12);
   --shadow-soft: 0 18px 60px rgba(23,35,56,.08);
+
+  --radius-xl:26px;
+  --radius-lg:22px;
 }
 
-/* 2) Layout “cadre” global */
-body{
-  background: var(--bg);
+/* Reset + base */
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  padding:0;
+  background:var(--bg);
+  color:var(--txt);
+  font-family:Mulish,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,sans-serif;
+  scroll-behavior:smooth;
 }
 
+a{color:var(--signature);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.container{
+  width:100%;
+  max-width:860px;   /* editorial, plus étroit */
+  margin:0 auto;
+  padding:24px;
+}
+
+section{padding:64px 0}
+
+/* =========================
+   Shell / cadre global
+   ========================= */
 .site-shell{
   width:min(980px, calc(100% - 32px));
   margin: 18px auto 44px;
   background: rgba(255,255,255,.55);
   border: 1px solid rgba(214,194,154,.22);
-  border-radius: 26px;
+  border-radius: var(--radius-xl);
   box-shadow: var(--shadow-soft);
   overflow:hidden; /* important pour l’hero */
 }
 
-/* Les sections respirent plus */
-section{ padding: 64px 0; }
-.container{ max-width: 860px; }
+/* =========================
+   Typo
+   ========================= */
+h1,h2{margin:0}
+h1.script{
+  font-family:'Great Vibes',cursive;
+  font-weight:400;
+  letter-spacing:.4px;
+  font-size:clamp(44px,6.6vw,92px);
+  line-height:1.02;
+}
+h2{
+  font-family:"Playfair Display",serif;
+  font-size:clamp(26px,3.4vw,40px);
+  position:relative;
+  margin-bottom:16px;
+  color:var(--signature);
+}
+h2::after{
+  content:"";
+  display:block;
+  width:84px;
+  height:1px;
+  background: rgba(214,194,154,.85);
+  margin-top:10px;
+  border-radius:2px;
+  opacity:.95;
+}
+.muted{color:var(--muted)}
 
-/* 3) Header “papier” + typo signature */
+/* Petit tag bijou */
+.pill{
+  display:inline-block;
+  padding:7px 12px;
+  border-radius:999px;
+  background: rgba(214,194,154,.10);
+  border:1px solid rgba(214,194,154,.35);
+  color: rgba(122,90,95,.92);
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:.02em;
+}
+
+/* =========================
+   Layout helpers
+   ========================= */
+.grid{display:grid;gap:18px}
+.grid.cols-2{grid-template-columns:1fr 1fr}
+@media(max-width:800px){.grid.cols-2{grid-template-columns:1fr}}
+
+/* =========================
+   Buttons (CTA = bordeaux-grège)
+   ========================= */
+.btn{
+  display:inline-block;
+  padding:12px 18px;
+  border-radius:999px;
+  background: rgba(255,250,245,.92);
+  color: var(--signature);
+  border: 1px solid rgba(214,194,154,.70);
+  font-weight:650;
+  letter-spacing:.01em;
+  transition: .2s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+}
+.btn:hover{
+  background: rgba(255,250,245,.98);
+  border-color: rgba(214,194,154,.90);
+  transform: translateY(-1px);
+  text-decoration:none;
+}
+
+/* Variante “outline” (sur hero : blanc discret) */
+.btn-outline{
+  background: transparent;
+  color: rgba(255,255,255,.92);
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow:none;
+}
+.btn-outline:hover{
+  background: rgba(255,255,255,.10);
+  text-decoration:none;
+}
+
+/* =========================
+   Cards (papier)
+   ========================= */
+.card{
+  background: rgba(255,255,255,.72);
+  border: 1px solid rgba(214,194,154,.22);
+  border-radius: var(--radius-lg);
+  padding:20px;
+  box-shadow:none;
+}
+
+/* Footer */
+.footer{
+  padding:32px 0;
+  color: rgba(122,90,95,.62);
+  text-align:center;
+  border-top:1px solid rgba(214,194,154,.20);
+}
+
+/* =========================
+   HEADER (papier, sticky)
+   ========================= */
 .site-header{
-  position: sticky; /* au lieu de fixed pour coller au rendu */
-  top: 0;
+  position: sticky;
+  top:0;
+  z-index:80;
   background: rgba(255,250,245,.78);
   backdrop-filter: blur(10px) saturate(1.1);
   -webkit-backdrop-filter: blur(10px) saturate(1.1);
@@ -48,23 +175,44 @@ section{ padding: 64px 0; }
 }
 
 .header-inner{
-  padding: 18px 26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px 26px;
+  position:relative;
 }
 
 .site-header .brand{
+  position:absolute;
+  left:24px;
+  top:50%;
+  transform:translateY(-50%);
+  font-family:'Great Vibes',cursive;
+  font-weight:400;
   color: var(--signature);
+  font-size:1.55rem;
+  letter-spacing:.4px;
+  text-decoration:none;
 }
+.site-header .brand:hover{opacity:.9}
 
+.site-header .nav{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:40px;
+}
 .site-header .nav a{
   color: rgba(122,90,95,.88);
-  font-weight: 500;
+  font-weight:500;
+  font-size:1rem;
+  text-decoration:none;
 }
-.site-header .nav a:hover{
-  color: var(--signature);
-  opacity:.9;
-}
+.site-header .nav a:hover{color:var(--signature);opacity:.92}
 
-/* Bouton nav RSVP bijou */
+/* Bouton RSVP dans la nav : bijou papier */
 .site-header .nav .btn-outline{
   background: rgba(255,255,255,.55);
   border: 1px solid rgba(214,194,154,.65);
@@ -74,116 +222,184 @@ section{ padding: 64px 0; }
   background: rgba(214,194,154,.10);
 }
 
-/* 4) Hero : plus “cinématique” et moins glassy */
+/* =========================
+   HERO VIDEO (auto-hébergée)
+   ========================= */
 .hero-video{
-  height: auto;
-  min-height: 0;
+  position:relative;
+  height:auto;
+  min-height:0;
 }
 
 .hero-video video{
-  height: 460px;            /* comme ta capture */
-  width: 100%;
-  object-fit: cover;
+  width:100%;
+  height:460px;
+  object-fit:cover;
+  display:block;
   filter: saturate(0.92) contrast(0.98);
 }
 
-/* overlay minimal */
 .hero-video .overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:24px;
   background: linear-gradient(180deg, rgba(0,0,0,.16), rgba(0,0,0,.10) 40%, rgba(0,0,0,.20));
 }
 
-/* Bloc central plus discret */
+/* Card centrale (tu peux la rendre “glass” si tu veux, mais ici c’est luxe discret) */
 .hero-card{
+  max-width:720px;
+  padding: 0;
   background: transparent;
   border: 0;
   box-shadow: none;
-  padding: 0;
-  max-width: 720px;
 }
 
-/* “Vous êtes invités” : pill bijou */
-.hero-card .pill{
-  background: rgba(0,0,0,.18);
-  border: 1px solid rgba(214,194,154,.45);
-  color:#fff;
-}
-
-/* Titres en “ivoire” doux */
+/* Titres overlay */
 .hero-card h1.script{
   color: rgba(255,255,255,.92);
   text-shadow: 0 18px 45px rgba(0,0,0,.22);
 }
 
 .hero-video .date{
+  margin-top:10px;
   color: rgba(255,255,255,.78);
   letter-spacing:.10em;
+  text-transform:uppercase;
+  font-size:.85rem;
 }
 
-/* 5) CTA bijou (comme ton screenshot) */
-.btn{
-  background: rgba(255,250,245,.86);
-  color: var(--signature);
-  border: 1px solid rgba(214,194,154,.65);
-  box-shadow: 0 10px 30px rgba(0,0,0,.12);
-}
-.btn:hover{
-  background: rgba(255,250,245,.94);
-  border-color: rgba(214,194,154,.85);
-  transform: translateY(-1px);
+/* CTA zone */
+.overlay .cta{
+  margin-top:18px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
-.btn-outline{
-  background: transparent;
-  color: rgba(255,255,255,.92);
-  border: 1px solid rgba(255,255,255,.55);
-  box-shadow:none;
+/* Compteur */
+#countdown{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:16px;
 }
-.btn-outline:hover{
-  background: rgba(255,255,255,.10);
+#countdown .cd-box{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background: rgba(0,0,0,.12);
+  border: 1px solid rgba(214,194,154,.32);
+  border-radius:14px;
+  padding:10px 14px;
+  min-width:78px;
+  text-align:center;
+  color:#fff;
+}
+#countdown .cd-box .num{
+  font-size:26px;
+  font-weight:700;
+  line-height:1;
+  margin-bottom:4px;
+}
+#countdown .cd-box div:last-child{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+  color: rgba(255,255,255,.78);
 }
 
-/* 6) H2 en signature + underline fine */
-h2{
-  color: var(--signature);
-}
-h2::after{
-  height:1px;
-  width:84px;
-  background: rgba(214,194,154,.85);
-}
-
-/* 7) Cards plus “papier” (moins d’ombre, plus de bord) */
-.card{
-  background: rgba(255,255,255,.72);
-  border: 1px solid rgba(214,194,154,.22);
-  box-shadow: none;
-  border-radius: 22px;
-}
-
-/* 8) Timeline comme ton tableau : lignes fines */
+/* =========================
+   TIMELINE (tableau lignes fines)
+   ========================= */
+.timeline{display:grid;gap:0}
 .timeline .item{
-  opacity: 1;
-  transform: none;
-  transition: none;
-  padding: 22px 0;
-  border-top: 1px solid var(--hairline);
+  opacity:1;
+  transform:none;
+  transition:none;
+  padding:22px 0;
+  border-top:1px solid var(--hairline);
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:16px;
+  align-items:start;
 }
-.timeline .item:first-child{ border-top: 0; }
+.timeline .item:first-child{border-top:0}
 
 .timeline .time{
   color: rgba(122,90,95,.78);
-  font-weight: 500;
+  font-weight:500;
 }
 
-/* 9) Mobile : garder le “cadre” */
+/* =========================
+   GALERIE / LIGHTBOX
+   ========================= */
+.gallery img{
+  width:100%;
+  border-radius:12px;
+  display:block;
+  margin-bottom:12px;
+}
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  z-index:90;
+}
+.lightbox.open{display:flex}
+.lightbox img{
+  max-width:92vw;
+  max-height:92vh;
+  border-radius:16px;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+}
+.lightbox .close{
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:999px;
+  padding:6px 10px;
+  font-weight:700;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+@media (max-width: 900px){
+  .header-inner{padding:14px 18px;}
+  .site-header .nav{gap:18px;}
+  .site-header .nav a{font-size:.95rem;}
+  .site-header .brand{font-size:1.25rem; left:16px;}
+  .timeline .item{grid-template-columns:140px 1fr;}
+}
+
 @media(max-width:520px){
   .site-shell{
     width: calc(100% - 20px);
     border-radius: 22px;
   }
-  .hero-video video{
-    height: 420px;
+  .hero-video video{height:420px;}
+  .site-header .nav{
+    gap:12px;
+    flex-wrap:wrap;
+    justify-content:center;
+    width: calc(100% - 32px);
   }
-  .header-inner{ padding: 14px 16px; }
-  .site-header .nav{ gap: 14px; }
+  .timeline .item{grid-template-columns:1fr; gap:8px;}
+  .timeline .time{font-size:.95rem;}
 }
