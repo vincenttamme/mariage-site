@@ -28,13 +28,7 @@
 
     <!-- HERO VIDEO (auto-hébergée) -->
     <section class="hero-video" aria-label="Accueil vidéo">
-      <video
-        autoplay
-        muted
-        playsinline
-        loop
-        preload="auto"
-        aria-label="Vidéo d'accueil">
+      <video autoplay muted playsinline loop preload="auto" aria-label="Vidéo d'accueil">
         <source src="/mariage-site/media/hero.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la lecture vidéo.
       </video>
@@ -43,10 +37,11 @@
         <!-- Cinématique / luxe discret -->
         <div class="hero-card">
           <h1 class="script">
-  Mariage<br>
-  de<br>
-  Léa et Vincent
-</h1>
+            Mariage<br>
+            de<br>
+            Léa et Vincent
+          </h1>
+
           <p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
 
           <div id="countdown" aria-live="polite"></div>
@@ -63,30 +58,54 @@
     <section id="programme">
       <div class="container">
         <h2>Programme du week-end</h2>
+
         <div class="card timeline">
           <div class="item">
             <div class="time">Vendredi — 19:00</div>
-            <div><strong>Accueil &amp; verre de bienvenue</strong><br><span class="muted">Pour celles et ceux qui arrivent la veille</span></div>
+            <div>
+              <strong>Accueil &amp; verre de bienvenue</strong><br>
+              <span class="muted">Pour celles et ceux qui arrivent la veille</span>
+            </div>
           </div>
+
           <div class="item">
             <div class="time">Samedi — 14:00</div>
-            <div><strong>Cérémonie</strong><br><span class="muted">Domaine de Baldassé</span></div>
+            <div>
+              <strong>Cérémonie</strong><br>
+              <span class="muted">Domaine de Baldassé</span>
+            </div>
           </div>
+
           <div class="item">
             <div class="time">Samedi — 16:00</div>
-            <div><strong>Vin d'honneur</strong><br><span class="muted">Terrasse du domaine</span></div>
+            <div>
+              <strong>Vin d'honneur</strong><br>
+              <span class="muted">Terrasse du domaine</span>
+            </div>
           </div>
+
           <div class="item">
             <div class="time">Samedi — 19:30</div>
-            <div><strong>Dîner</strong><br><span class="muted">Salle du domaine</span></div>
+            <div>
+              <strong>Dîner</strong><br>
+              <span class="muted">Salle du domaine</span>
+            </div>
           </div>
+
           <div class="item">
             <div class="time">Samedi — 23:00</div>
-            <div><strong>Soirée</strong><br><span class="muted">DJ jusqu'à tard ✨</span></div>
+            <div>
+              <strong>Soirée</strong><br>
+              <span class="muted">DJ jusqu'à tard ✨</span>
+            </div>
           </div>
+
           <div class="item">
             <div class="time">Dimanche — 11:30</div>
-            <div><strong>Brunch</strong><br><span class="muted">Tenue décontractée, au domaine</span></div>
+            <div>
+              <strong>Brunch</strong><br>
+              <span class="muted">Tenue décontractée, au domaine</span>
+            </div>
           </div>
         </div>
       </div>
@@ -106,8 +125,8 @@
         </div>
 
         <form id="rsvp-form" class="card" autocomplete="on">
-          <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj" />
-          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+          <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj">
+          <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="presence_detail" id="presence-detail">
 
           <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
@@ -140,12 +159,15 @@
             <!-- détails jours (si présence partielle) -->
             <div id="presence-details" style="grid-column:1/-1;display:none">
               <div class="muted" style="margin-bottom:6px">Je serai présent(e) :</div>
+
               <label style="display:block;margin:6px 0">
                 <input type="checkbox" name="jours[]" value="vendredi"> Vendredi (accueil)
               </label>
+
               <label style="display:block;margin:6px 0">
                 <input type="checkbox" name="jours[]" value="samedi"> Samedi (cérémonie + dîner + soirée)
               </label>
+
               <label style="display:block;margin:6px 0">
                 <input type="checkbox" name="jours[]" value="dimanche"> Dimanche (brunch)
               </label>
