@@ -62,18 +62,27 @@ a:hover{text-decoration:underline}
 section{padding:64px 0}
 
 /* =========================
-   SHELL (cadre global)
+   FULL PAGE (bord à bord)
    ========================= */
+
+/* Le cadre ne centre plus la page : il devient full width */
 .site-shell{
-  width:min(1040px, calc(100% - 40px));
-  margin: 18px auto 44px;
-  background: rgba(255,255,255,.55);
-  border: 1px solid var(--shell-border);
-  border-radius: var(--radius-shell);
-  box-shadow: var(--shadow-soft);
-  overflow:hidden; /* indispensable pour full-bleed hero dans le cadre */
+  width: 100%;
+  margin: 0;              /* enlève les marges extérieures */
+  border-radius: 0;       /* optionnel : bord à bord net */
+  border-left: 0;
+  border-right: 0;
 }
 
+/* si tu veux aussi enlever le "padding" ivoire autour sur desktop */
+body{
+  background: var(--bg);
+}
+
+/* Optionnel : si tu veux que le hero dépasse même la "zone contenu" */
+.hero-video{
+  width: 100%;
+}
 /* =========================
    TYPO
    ========================= */
