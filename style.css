@@ -520,3 +520,15 @@ input, select, textarea{ font-family:inherit; }
     flex-wrap:wrap;
   }
 }
+
+/* Container full width (pas de max-width) */
+.container-full{
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px 60px; /* garde un confort de lecture */
+}
+
+@media (max-width: 900px){
+  .container-full{ padding: 20px 18px; }
+}
