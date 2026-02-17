@@ -469,3 +469,39 @@ input, select, textarea{
     justify-content:center;
   }
 }
+
+/* =========================
+   PROGRAMME — jours (luxe discret)
+   ========================= */
+
+.timeline-days .day{
+  padding: 10px 0 6px;
+}
+
+.timeline-days .day + .day{
+  margin-top: 6px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(214,194,154,.22);
+}
+
+/* Titre “Vendredi / Samedi / Dimanche” */
+.timeline-days .day-title{
+  font-family: "Playfair Display", serif;
+  color: rgba(122,90,95,.92);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-size: 13px;
+  margin: 6px 0 12px;
+}
+
+/* Ajuste légèrement les lignes pour respirer */
+.timeline-days .item{
+  padding: 18px 0;
+}
+
+/* “Temps” un peu plus chic */
+.timeline-days .time{
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
