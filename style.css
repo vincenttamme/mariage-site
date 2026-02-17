@@ -229,18 +229,18 @@ h2::after{
 .header-inner{
   display:flex;
   align-items:center;
-  justify-content:center;
-  padding:18px 56px;
-  position:relative;
-  height:100%;
+  justify-content:space-between; /* clé */
+  padding: 22px 60px;            /* respiration luxe */
+}
 }
 
 /* Brand = script bijou (discret) */
 .site-header .brand{
-  position:absolute;
-  left:3px;
-  top:50%;
-  transform:translateY(-50%);
+  position:relative;   /* plus absolute */
+  left:auto;
+  top:auto;
+  transform:none;
+
   font-family:var(--font-script);
   font-weight:400;
   color:var(--signature);
@@ -248,15 +248,17 @@ h2::after{
   letter-spacing:.3px;
   text-decoration:none;
 }
+}
 .site-header .brand:hover{opacity:.92}
 
 .site-header .nav{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
+  position:relative;   /* plus absolute */
+  left:auto;
+  transform:none;
+
   display:flex;
   align-items:center;
-  gap:72px;
+  gap:64px;            /* espacement chic */
 }
 
 .site-header .nav a{
