@@ -181,8 +181,8 @@ h2::after{
 }
 .btn-outline:hover{background:rgba(255,255,255,.10)}
 
-/* Variante outline en nav (fond papier) */
-.site-header .nav .btn-outline{
+/* Variante outline en header (fond papier) */
+.site-header .btn-outline{
   color:var(--signature);
   border:1px solid rgba(214,194,154,.65);
   background:rgba(255,255,255,.55);
@@ -190,7 +190,7 @@ h2::after{
   letter-spacing:.02em;
   font-size:13px;
 }
-.site-header .nav .btn-outline:hover{background:rgba(214,194,154,.10)}
+.site-header .btn-outline:hover{background:rgba(214,194,154,.10)}
 
 /* =========================
    CARDS (papier)
@@ -212,7 +212,7 @@ h2::after{
 }
 
 /* =========================
-   HEADER (sticky) — FIXED + LUXE
+   HEADER (sticky) — Brand gauche / Nav centre / RSVP droite
    ========================= */
 .site-header{
   position:sticky;
@@ -225,17 +225,19 @@ h2::after{
   height:var(--header-h);
 }
 
+/* NOTE: On passe en GRID => gauche / centre / droite */
 .header-inner{
   height:100%;
-  display:flex;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
   align-items:center;
-  justify-content:space-between;
-  padding: 22px 60px; /* respiration luxe */
+  padding:22px 60px;          /* respiration luxe */
+  column-gap:28px;
 }
 
 /* Brand = script bijou (gauche) */
 .site-header .brand{
-  position:relative;
+  justify-self:start;
   font-family:var(--font-script);
   font-weight:400;
   color:var(--signature);
@@ -243,11 +245,13 @@ h2::after{
   letter-spacing:.3px;
   text-decoration:none;
   line-height:1;
+  white-space:nowrap;
 }
 .site-header .brand:hover{opacity:.92}
 
-/* Nav = droite */
+/* Nav = centré */
 .site-header .nav{
+  justify-self:center;
   display:flex;
   align-items:center;
   gap:64px; /* espacement chic */
@@ -259,12 +263,18 @@ h2::after{
   font-weight:400;             /* luxe = plus léger */
   letter-spacing:.02em;
   text-decoration:none;
+  white-space:nowrap;
 }
 .site-header .nav a:hover{color:var(--signature);opacity:.92}
-
 .site-header .nav a.active{
   text-decoration:underline;
   text-underline-offset:6px;
+}
+
+/* RSVP = tout à droite (sera sur l'élément .header-rsvp) */
+.header-rsvp{
+  justify-self:end;
+  white-space:nowrap;
 }
 
 /* =========================
@@ -479,7 +489,13 @@ input, select, textarea{ font-family:inherit; }
   :root{ --header-h: 66px; }
 
   .header-inner{ padding:16px 18px; }
-  .site-header .nav{ gap:16px; flex-wrap:wrap; }
+
+  .site-header .nav{
+    gap:16px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+
   .site-header .nav a{ font-size:0.98rem; }
   .site-header .brand{ font-size:1.35rem; }
 
@@ -492,8 +508,15 @@ input, select, textarea{ font-family:inherit; }
   section{ padding:56px 0; }
   .container{ padding:20px; }
 
+  /* Sur mobile, on évite que le centre explose */
+  .header-inner{
+    grid-template-columns:auto 1fr auto;
+    column-gap:14px;
+    padding:14px 14px;
+  }
+
   .site-header .nav{
-    width:calc(100% - 32px);
-    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
   }
 }
