@@ -37,7 +37,7 @@
   --header-h: 74px;
 
   /* =========================
-     TYPO TOKENS (important)
+     TYPO TOKENS
      ========================= */
   --font-body: "Mulish", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --font-serif: "Playfair Display", serif;
@@ -212,7 +212,7 @@ h2::after{
 }
 
 /* =========================
-   HEADER (sticky)
+   HEADER (sticky) — FIXED + LUXE
    ========================= */
 .site-header{
   position:sticky;
@@ -222,43 +222,35 @@ h2::after{
   backdrop-filter:blur(10px) saturate(1.1);
   -webkit-backdrop-filter:blur(10px) saturate(1.1);
   border-bottom:1px solid rgba(214,194,154,.25);
-
   height:var(--header-h);
 }
 
 .header-inner{
+  height:100%;
   display:flex;
   align-items:center;
-  justify-content:space-between; /* clé */
-  padding: 22px 60px;            /* respiration luxe */
-}
+  justify-content:space-between;
+  padding: 22px 60px; /* respiration luxe */
 }
 
-/* Brand = script bijou (discret) */
+/* Brand = script bijou (gauche) */
 .site-header .brand{
-  position:relative;   /* plus absolute */
-  left:auto;
-  top:auto;
-  transform:none;
-
+  position:relative;
   font-family:var(--font-script);
   font-weight:400;
   color:var(--signature);
   font-size:1.65rem;
   letter-spacing:.3px;
   text-decoration:none;
-}
+  line-height:1;
 }
 .site-header .brand:hover{opacity:.92}
 
+/* Nav = droite */
 .site-header .nav{
-  position:relative;   /* plus absolute */
-  left:auto;
-  transform:none;
-
   display:flex;
   align-items:center;
-  gap:64px;            /* espacement chic */
+  gap:64px; /* espacement chic */
 }
 
 .site-header .nav a{
@@ -269,6 +261,7 @@ h2::after{
   text-decoration:none;
 }
 .site-header .nav a:hover{color:var(--signature);opacity:.92}
+
 .site-header .nav a.active{
   text-decoration:underline;
   text-underline-offset:6px;
@@ -324,7 +317,7 @@ h2::after{
   max-width:780px;
 }
 
-/* HERO title : encore plus “bijou” */
+/* HERO title : bijou */
 .hero-card h1.script{
   color:rgba(255,255,255,.94);
   text-shadow:0 18px 45px rgba(0,0,0,.22);
@@ -488,7 +481,7 @@ input, select, textarea{ font-family:inherit; }
   .header-inner{ padding:16px 18px; }
   .site-header .nav{ gap:16px; flex-wrap:wrap; }
   .site-header .nav a{ font-size:0.98rem; }
-  .site-header .brand{ font-size:1.35rem; left:16px; }
+  .site-header .brand{ font-size:1.35rem; }
 
   .timeline .item{ grid-template-columns:1fr; gap:8px; }
 }
