@@ -8,6 +8,13 @@ const onScroll = () => header && header.classList.toggle('scrolled', window.scro
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const heroVideo = document.querySelector('.hero-video video');
+if (prefersReducedMotion && heroVideo) {
+  heroVideo.removeAttribute('autoplay');
+  heroVideo.pause();
+}
+
 /* =========================
    Countdown (homepage only)
    ========================= */
@@ -74,6 +81,10 @@ lb.addEventListener('click', (e) => {
   if (e.target === lb || e.target.classList.contains('close')) lb.classList.remove('open');
 });
 
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') lb.classList.remove('open');
+});
+
 document.querySelectorAll('.gallery img').forEach((img) => {
   img.loading = 'lazy';
   img.style.cursor = 'zoom-in';
@@ -102,6 +113,11 @@ document.querySelectorAll('.gallery img').forEach((img) => {
   const adultsInput = form.querySelector('#adults');
   const kidsInput = form.querySelector('#kids');
   const guestsWrap = document.getElementById('guests-wrap');
+  const endpointInput = form.querySelector('#fs-endpoint');
+  const submitButton = form.querySelector('#rsvp-submit');
+  const note = document.getElementById('rsvp-note');
+  const ring = document.getElementById('ring');
+  const toast = document.getElementById('toast');
 
   // Champ hidden résumé présence partielle
   let presenceDetailInput = form.querySelector('#presence-detail');
@@ -280,12 +296,55 @@ document.querySelectorAll('.gallery img').forEach((img) => {
   kidsInput?.addEventListener('input', renderGuests);
 
   // Avant envoi, on force la mise à jour + validations
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     buildPresenceDetail();
     renderGuests();
     if (!validateBeforeSubmit()) {
       e.preventDefault();
       return;
+    }
+
+    if (!endpointInput?.value) return;
+
+    e.preventDefault();
+    submitButton && (submitButton.disabled = true);
+
+    const data = new FormData(form);
+    data.append('_subject', 'RSVP Mariage - Nouvelle reponse');
+
+    try {
+      const res = await fetch(endpointInput.value, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      if (!res.ok) throw new Error('Erreur envoi');
+
+      if (toast) {
+        toast.textContent = 'Merci ! Votre reponse est enregistree.';
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+      }
+      if (note) note.style.display = 'block';
+
+      form.reset();
+      updatePresenceUI();
+      buildPresenceDetail();
+      renderGuests();
+    } catch (err) {
+      if (toast) {
+        toast.textContent = "Oups, impossible d'envoyer. Reessayez ou contactez-nous.";
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2600);
+      }
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+      if (ring) {
+        ring.classList.remove('show');
+        ring.offsetHeight;
+        ring.classList.add('show');
+        setTimeout(() => ring.classList.remove('show'), 1200);
+      }
     }
   });
 
