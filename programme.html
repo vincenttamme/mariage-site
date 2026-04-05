@@ -3,16 +3,18 @@
 <title>Programme — Mariage de Léa et Vincent</title>
 <link rel="stylesheet" href="/mariage-site/style.css">
 </head><body class="page">
-<header class="site-header"><div class="container header-inner">
+<a class="skip-link" href="#main-content">Aller au contenu</a>
+<header class="site-header" role="navigation" aria-label="Navigation principale"><div class="container header-inner">
 <a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
-<nav class="nav">
-<a class="active" href="/mariage-site/programme.html">Programme</a>
+<nav class="nav" aria-label="Menu principal">
+<a class="active" aria-current="page" href="/mariage-site/programme.html">Programme</a>
 <a href="/mariage-site/lieu.html">Lieu</a>
 <a href="/mariage-site/infos.html">Infos</a>
 <a href="/mariage-site/galerie.html">Galerie</a>
 <a class="btn btn-outline" href="/mariage-site/rsvp.html">RSVP</a>
 </nav></div></header>
 
+<main id="main-content">
 <section><div class="container">
 <h2>Programme du week‑end</h2>
 <div class="card timeline">
@@ -24,6 +26,7 @@
 <div class="item"><div class="time">Dimanche — 11:30</div><div><strong>Brunch</strong><br><span class="muted">Tenue décontractée, au domaine</span></div></div>
 </div>
 </div></section>
+ </main>
 <footer class="footer"><div class="container">© <span id="year"></span> Léa & Vincent</div></footer>
 <script src="/mariage-site/script.js"></script>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>

@@ -3,29 +3,31 @@
 <title>Infos pratiques — Mariage de Léa et Vincent</title>
 <link rel="stylesheet" href="/mariage-site/style.css">
 </head><body class="page">
+<a class="skip-link" href="#main-content">Aller au contenu</a>
 <header class="site-header" role="navigation" aria-label="Navigation principale">
   <div class="container header-inner">
     <!-- Titre/logo textuel identique à la home -->
     <a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
 
-    <nav class="nav">
+    <nav class="nav" aria-label="Menu principal">
       <a href="/mariage-site/#programme">Programme</a>
       <a href="/mariage-site/lieu.html">Lieu</a>
-      <a href="/mariage-site/infos.html">Infos</a>
+      <a aria-current="page" href="/mariage-site/infos.html">Infos</a>
       <a href="/mariage-site/galerie.html">Galerie</a>
       <a class="btn btn-outline" href="/mariage-site/#rsvp">RSVP</a>
     </nav>
   </div>
 </header>
 
+<main id="main-content">
 <section><div class="container grid cols-2">
 <div class="card">
 <h2>Hébergements & trajets</h2>
 <ul>
-<li>Hôtels & gîtes à proximité : <a href="#">suggestions à venir</a></li>
+<li>Hôtels & gîtes à proximité : <span class="placeholder-text">suggestions à venir</span></li>
 <li>Gares proches : à préciser</li>
 <li>Aéroport : à préciser</li>
-<li>Covoiturage : créez/joignez un trajet <a href="#">ici</a></li>
+<li>Covoiturage : lien à venir</li>
 </ul>
 </div>
 <div class="card">
@@ -37,6 +39,7 @@
 </ul>
 </div>
 </div></section>
+</main>
 <footer class="footer"><div class="container">© <span id="year"></span> Léa & Vincent</div></footer>
 <script src="/mariage-site/script.js"></script>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
