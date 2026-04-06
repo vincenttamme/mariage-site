@@ -4,6 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RSVP — Mariage de Léa et Vincent</title>
+  <meta name="description" content="Confirmez votre présence au mariage de Léa et Vincent au Domaine de Baldassé.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/mariage-site/style.css">
 </head>
 
@@ -36,8 +40,9 @@
       </div>
 
       <form id="rsvp-form" class="card" autocomplete="on">
-        <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj" />
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="presence_detail" id="presence-detail">
 
         <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
           <label>Prénom<br>
@@ -55,7 +60,6 @@
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
 
-          <!-- ✅ Présence (standard week-end) -->
           <label style="grid-column:1/-1">Votre présence<br>
             <select id="presence" name="presence" required
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
@@ -66,35 +70,33 @@
             </select>
           </label>
 
-          <!-- ✅ Détails si "partiel" -->
           <div id="presence-details" style="grid-column:1/-1;display:none">
             <div class="muted" style="margin-bottom:6px">Je serai présent(e) :</div>
 
             <label style="display:block;margin:6px 0">
-              <input type="checkbox" name="jours[]" value="vendredi">
-              Vendredi (accueil)
+              <input type="checkbox" name="jours[]" value="vendredi"> Vendredi (accueil)
             </label>
 
             <label style="display:block;margin:6px 0">
-              <input type="checkbox" name="jours[]" value="samedi">
-              Samedi (cérémonie + dîner + soirée)
+              <input type="checkbox" name="jours[]" value="samedi"> Samedi (cérémonie + dîner + soirée)
             </label>
 
             <label style="display:block;margin:6px 0">
-              <input type="checkbox" name="jours[]" value="dimanche">
-              Dimanche (brunch)
+              <input type="checkbox" name="jours[]" value="dimanche"> Dimanche (brunch)
             </label>
           </div>
 
-          <label>Nombre de personnes<br>
-            <input name="nb_personnes" type="number" min="1" value="1"
+          <label>Adultes<br>
+            <input id="adults" name="adultes" type="number" min="0" value="1" required
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
 
-          <label>Allergies / régime<br>
-            <input name="allergies" placeholder="ex. végétarien, sans gluten…"
+          <label>Enfants<br>
+            <input id="kids" name="enfants" type="number" min="0" value="0" required
               style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
           </label>
+
+          <div id="guests-wrap" style="grid-column:1/-1;margin-top:6px"></div>
 
           <button id="rsvp-submit" class="btn" style="grid-column:1/-1">
             <span class="label">Envoyer</span><span class="check">✓</span>
