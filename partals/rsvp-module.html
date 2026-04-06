@@ -1,0 +1,157 @@
+<div class="card rsvp-intro">
+  <div class="rsvp-intro-copy">
+    <span class="pill">Réponse au mariage</span>
+    <h2>Confirmer votre présence</h2>
+    <p class="muted">Merci de nous indiquer votre présence ainsi que celle des personnes qui vous accompagnent, afin que nous puissions organiser ce week-end dans les meilleures conditions.</p>
+  </div>
+  <div class="rsvp-intro-meta">
+    <div class="rsvp-meta-block">
+      <span class="rsvp-meta-label">Réponse souhaitée avant</span>
+      <strong>1er mai 2027</strong>
+    </div>
+    <div class="rsvp-meta-block">
+      <span class="pill">Logement sur place prévu pour tous</span>
+    </div>
+  </div>
+</div>
+
+<form id="rsvp-form" class="card rsvp-form" autocomplete="on">
+  <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj">
+  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+  <input type="hidden" name="presence_detail" id="presence-detail">
+
+  <div class="rsvp-stack">
+    <section class="rsvp-section">
+      <div class="rsvp-section-head">
+        <h3>Vos coordonnées</h3>
+        <p class="muted">La personne qui remplit ce formulaire sera automatiquement ajoutée en premier invité, puis vous pourrez renseigner les personnes qui l'accompagnent.</p>
+      </div>
+      <div class="rsvp-fields rsvp-fields-2">
+        <label class="rsvp-field">Prénom
+          <input name="prenom" required placeholder="Votre prénom" class="rsvp-input">
+        </label>
+
+        <label class="rsvp-field">Nom
+          <input name="nom" required placeholder="Votre nom" class="rsvp-input">
+        </label>
+
+        <label class="rsvp-field rsvp-field-full">Email
+          <input name="email" type="email" required placeholder="vous@mail.com" class="rsvp-input">
+          <span class="rsvp-field-message" data-field-note-for="email" aria-live="polite"></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="rsvp-section">
+      <div class="rsvp-section-head">
+        <h3>Votre présence</h3>
+        <p class="muted">Choisissez l'option qui correspond le mieux à votre venue et à celle de vos accompagnants. Vous pourrez préciser ensuite si besoin.</p>
+      </div>
+
+      <div class="rsvp-native-control">
+        <label for="presence">Votre présence</label>
+        <select id="presence" name="presence" required class="rsvp-input">
+          <option value="weekend">Je serai présent(e) tout le week-end</option>
+          <option value="partiel">Je serai présent(e) partiellement</option>
+          <option value="tbd">Je ne sais pas encore</option>
+          <option value="non">Je ne pourrai pas être présent(e)</option>
+        </select>
+      </div>
+
+      <div class="rsvp-presence-options" role="radiogroup" aria-label="Votre présence">
+        <label class="rsvp-choice">
+          <input type="radio" name="presence_choice" value="weekend">
+          <span class="rsvp-choice-card">
+            <strong>Tout le week-end</strong>
+            <span>Profiter pleinement de chaque moment, du premier accueil au dernier au revoir.</span>
+          </span>
+        </label>
+        <label class="rsvp-choice">
+          <input type="radio" name="presence_choice" value="partiel">
+          <span class="rsvp-choice-card">
+            <strong>Présence partielle</strong>
+            <span>Je serai là pour certains temps forts uniquement.</span>
+          </span>
+        </label>
+        <label class="rsvp-choice">
+          <input type="radio" name="presence_choice" value="tbd">
+          <span class="rsvp-choice-card">
+            <strong>Je ne sais pas encore</strong>
+            <span>J'ai besoin d'un peu plus de temps avant de confirmer.</span>
+          </span>
+        </label>
+        <label class="rsvp-choice">
+          <input type="radio" name="presence_choice" value="non">
+          <span class="rsvp-choice-card">
+            <strong>Je ne pourrai pas être présent(e)</strong>
+            <span>Je souhaite tout de même vous répondre pour vous aider dans l'organisation.</span>
+          </span>
+        </label>
+      </div>
+
+      <div id="presence-details" class="rsvp-progressive" style="display:none">
+        <div class="rsvp-subsection-title">Je serai présent(e) :</div>
+        <div class="rsvp-day-options">
+          <label class="rsvp-check">
+            <input type="checkbox" name="jours[]" value="vendredi">
+            <span>Vendredi (accueil)</span>
+          </label>
+          <label class="rsvp-check">
+            <input type="checkbox" name="jours[]" value="samedi">
+            <span>Samedi (cérémonie + dîner + soirée)</span>
+          </label>
+          <label class="rsvp-check">
+            <input type="checkbox" name="jours[]" value="dimanche">
+            <span>Dimanche (brunch)</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="rsvp-section" data-rsvp-attendance-section>
+      <div class="rsvp-section-head">
+        <h3>Composition de votre venue</h3>
+        <p class="muted">Indiquez le nombre de personnes concernées afin que nous puissions préparer au mieux les hébergements et les repas.</p>
+      </div>
+      <div class="rsvp-fields rsvp-fields-2">
+        <label class="rsvp-field">Adultes
+          <input id="adults" name="adultes" type="number" min="0" value="1" required class="rsvp-input">
+        </label>
+
+        <label class="rsvp-field">Enfants
+          <input id="kids" name="enfants" type="number" min="0" value="0" required class="rsvp-input">
+        </label>
+      </div>
+    </section>
+
+    <section class="rsvp-section" data-rsvp-guests-section>
+      <div class="rsvp-section-head">
+        <h3>Détails des invités</h3>
+        <p class="muted">Merci de préciser les prénoms et noms des personnes présentes avec vous. Les informations alimentaires peuvent être ajoutées si nécessaire.</p>
+      </div>
+      <div id="guests-wrap" class="rsvp-guests"></div>
+    </section>
+
+    <section class="rsvp-submit-zone">
+      <div class="rsvp-submit-copy">
+        <h3>Finaliser votre réponse</h3>
+        <p class="muted">Merci de prendre un instant pour nous répondre. Nous avons hâte de partager ce week-end avec vous au Domaine de Baldassé.</p>
+      </div>
+      <div class="rsvp-submit-actions">
+        <button id="rsvp-submit" class="btn rsvp-submit-button" type="submit">
+          <span class="label">Envoyer ma réponse</span>
+          <span class="loader" aria-hidden="true"></span>
+          <span class="check" aria-hidden="true">✓</span>
+        </button>
+      </div>
+      <p id="rsvp-note" class="muted rsvp-note" role="status" aria-live="polite">
+        Nous vous confirmerons ici que nous avons bien reçu votre réponse.
+      </p>
+    </section>
+  </div>
+</form>
+
+<div id="ring" class="ring" aria-hidden="true"></div>
+<div id="toast" class="toast" role="status" aria-live="polite">
+  Merci ! Votre réponse est enregistrée.
+</div>

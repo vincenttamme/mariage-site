@@ -40,13 +40,10 @@ if (cd) {
     const d = Math.floor(ms / 86400000); ms -= d * 86400000;
     const h = Math.floor(ms / 3600000);  ms -= h * 3600000;
     const m = Math.floor(ms / 60000);    ms -= m * 60000;
-    const s = Math.floor(ms / 1000);
-
     cd.innerHTML = `
       <div class="cd-box"><div class="num">${d}</div><div>jours</div></div>
       <div class="cd-box"><div class="num">${pad(h)}</div><div>heures</div></div>
-      <div class="cd-box"><div class="num">${pad(m)}</div><div>min</div></div>
-      <div class="cd-box"><div class="num">${pad(s)}</div><div>sec</div></div>`;
+      <div class="cd-box"><div class="num">${pad(m)}</div><div>min</div></div>`;
   };
 
   tick();
@@ -56,8 +53,10 @@ if (cd) {
 /* =========================
    Timeline reveal
    ========================= */
-const items = document.querySelectorAll('.timeline .item');
-if (items.length) {
+function initTimelineReveal(root = document) {
+  const items = root.querySelectorAll('.timeline .item');
+  if (!items.length) return;
+
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (e.isIntersecting) {
@@ -96,6 +95,44 @@ document.querySelectorAll('.gallery img').forEach((img) => {
   });
 });
 
+function bindNumberWheelGuards(root = document) {
+  root.querySelectorAll('input[type="number"]').forEach((input) => {
+    if (input.dataset.wheelGuardBound === 'true') return;
+
+    input.addEventListener('wheel', (e) => {
+      if (document.activeElement === input) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    input.dataset.wheelGuardBound = 'true';
+  });
+}
+
+bindNumberWheelGuards();
+
+async function mountHtmlComponents() {
+  const hosts = document.querySelectorAll('[data-rsvp-component], [data-programme-component]');
+  if (!hosts.length) return;
+
+  const sources = [...new Set(Array.from(hosts).map((host) => host.dataset.rsvpSource || host.dataset.programmeSource).filter(Boolean))];
+  const templates = new Map();
+
+  await Promise.all(sources.map(async (source) => {
+    const res = await fetch(source);
+    if (!res.ok) {
+      throw new Error(`Impossible de charger le composant HTML: ${source}`);
+    }
+    templates.set(source, await res.text());
+  }));
+
+  hosts.forEach((host) => {
+    const source = host.dataset.rsvpSource || host.dataset.programmeSource;
+    if (!source || !templates.has(source)) return;
+    host.innerHTML = templates.get(source);
+  });
+}
+
 /* =========================
    RSVP helpers (Formspree)
    - Affiche les jours si "partiel"
@@ -103,11 +140,12 @@ document.querySelectorAll('.gallery img').forEach((img) => {
    - Adultes/Enfants -> génère Nom/Prénom/Allergies par invité
    - Validations (standard RSVP)
    ========================= */
-(function initRSVP() {
+function initRSVP() {
   const form = document.getElementById('rsvp-form');
   if (!form) return; // pas de formulaire sur cette page
 
   const presenceSelect = form.querySelector('#presence');
+  const presenceChoiceInputs = form.querySelectorAll('input[name="presence_choice"]');
   const detailsWrap = document.getElementById('presence-details');
   const dayCheckboxes = form.querySelectorAll('input[name="jours[]"]');
 
@@ -115,8 +153,14 @@ document.querySelectorAll('.gallery img').forEach((img) => {
   const adultsInput = form.querySelector('#adults');
   const kidsInput = form.querySelector('#kids');
   const guestsWrap = document.getElementById('guests-wrap');
+  const attendanceSection = form.querySelector('[data-rsvp-attendance-section]');
+  const guestsSection = form.querySelector('[data-rsvp-guests-section]');
+  const firstNameInput = form.querySelector('input[name="prenom"]');
+  const lastNameInput = form.querySelector('input[name="nom"]');
+  const emailFieldNote = form.querySelector('[data-field-note-for="email"]');
   const endpointInput = form.querySelector('#fs-endpoint');
   const submitButton = form.querySelector('#rsvp-submit');
+  const submitLabel = submitButton?.querySelector('.label');
   const note = document.getElementById('rsvp-note');
   const ring = document.getElementById('ring');
   const toast = document.getElementById('toast');
@@ -144,11 +188,21 @@ document.querySelectorAll('.gallery img').forEach((img) => {
     return { a, k, t: a + k };
   }
 
+  function syncPresenceChoicesFromSelect() {
+    if (!presenceChoiceInputs.length || !presenceSelect) return;
+    presenceChoiceInputs.forEach((input) => {
+      input.checked = input.value === presenceSelect.value;
+    });
+  }
+
   function updatePresenceUI() {
     if (!presenceSelect || !detailsWrap) return;
 
     const isPartial = presenceSelect.value === 'partiel';
+    const isAbsent = presenceSelect.value === 'non';
     detailsWrap.style.display = isPartial ? 'block' : 'none';
+    attendanceSection?.classList.toggle('rsvp-hidden', isAbsent);
+    guestsSection?.classList.toggle('rsvp-hidden', isAbsent);
 
     // si on quitte "partiel", on décoche et on vide le résumé
     if (!isPartial) {
@@ -159,11 +213,13 @@ document.querySelectorAll('.gallery img').forEach((img) => {
     }
 
     // Si "non", on force 0 invités et on masque le bloc invités (logique RSVP)
-    if (presenceSelect.value === 'non') {
+    if (isAbsent) {
       if (adultsInput) adultsInput.value = '0';
       if (kidsInput) kidsInput.value = '0';
       renderGuests();
     }
+
+    syncPresenceChoicesFromSelect();
   }
 
   function buildPresenceDetail() {
@@ -183,9 +239,103 @@ document.querySelectorAll('.gallery img').forEach((img) => {
       : 'Présence partielle (jours à préciser)';
   }
 
+  function escapeAttr(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function setSubmitState(state) {
+    if (!submitButton || !submitLabel) return;
+
+    submitButton.classList.remove('is-loading', 'is-success');
+
+    if (state === 'loading') {
+      submitButton.disabled = true;
+      submitButton.classList.add('is-loading');
+      submitLabel.textContent = 'Envoi en cours...';
+      return;
+    }
+
+    if (state === 'success') {
+      submitButton.disabled = true;
+      submitButton.classList.add('is-success');
+      submitLabel.textContent = 'Réponse envoyée';
+      return;
+    }
+
+    submitButton.disabled = false;
+    submitLabel.textContent = 'Envoyer ma réponse';
+  }
+
+  function showSubmitNote(message, type) {
+    if (!note) return;
+
+    note.textContent = message;
+    note.classList.add('is-visible');
+    note.classList.remove('is-success', 'is-error');
+
+    if (type) {
+      note.classList.add(`is-${type}`);
+    }
+  }
+
+  function showInlineFieldMessage(field, message) {
+    if (field.name === 'email' && emailFieldNote) {
+      emailFieldNote.textContent = message;
+    }
+  }
+
+  function clearInlineFieldMessage(field) {
+    if (field.name === 'email' && emailFieldNote) {
+      emailFieldNote.textContent = '';
+    }
+  }
+
+  function getFieldValidationMessage(field) {
+    const labelText = field.closest('label')?.childNodes?.[0]?.textContent?.trim() || 'ce champ';
+
+    if (field.validity.valueMissing) {
+      if (field.name === 'email') return 'Merci de renseigner votre adresse e-mail.';
+      return `Merci de renseigner ${labelText.toLowerCase()}.`;
+    }
+
+    if (field.validity.typeMismatch && field.name === 'email') {
+      return "Merci de vérifier votre adresse e-mail. Le format semble incomplet.";
+    }
+
+    if (field.validity.badInput) {
+      return `Merci de vérifier ${labelText.toLowerCase()}.`;
+    }
+
+    return '';
+  }
+
+  function syncPrimaryGuestIdentity() {
+    if (!guestsWrap) return;
+
+    const guestOneFirstName = guestsWrap.querySelector('input[name="invite_1_prenom"]');
+    const guestOneLastName = guestsWrap.querySelector('input[name="invite_1_nom"]');
+
+    if (guestOneFirstName && firstNameInput) {
+      guestOneFirstName.value = firstNameInput.value;
+    }
+
+    if (guestOneLastName && lastNameInput) {
+      guestOneLastName.value = lastNameInput.value;
+    }
+  }
+
   function renderGuests() {
     // Si pas de champ invités dans cette page, on ne fait rien
     if (!guestsWrap || !adultsInput || !kidsInput) return;
+
+    const existingValues = {};
+    guestsWrap.querySelectorAll('input[name]').forEach((input) => {
+      existingValues[input.name] = input.value;
+    });
 
     const { a, k, t } = totalGuests();
 
@@ -198,7 +348,7 @@ document.querySelectorAll('.gallery img').forEach((img) => {
     // protection saisie absurde
     if (t > 12) {
       guestsWrap.innerHTML = `
-        <p class="muted" style="color:#b42318;margin:8px 0 0">
+        <p class="rsvp-guests-note" style="color:#b42318">
           Valeur anormale. Merci de nous contacter si vous êtes plus de 12.
         </p>`;
       return;
@@ -206,37 +356,47 @@ document.querySelectorAll('.gallery img').forEach((img) => {
 
     if (t === 0) {
       guestsWrap.innerHTML = `
-        <p class="muted" style="margin:8px 0 0">
+        <p class="rsvp-guests-note">
           Merci d’indiquer le nombre d’adultes et d’enfants.
         </p>`;
       return;
     }
 
     let html = `
-      <div class="muted" style="margin:8px 0 10px"><strong>Détails des invités</strong> (prénom, nom, allergies/régime)</div>
-      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+      <p class="rsvp-guests-note"><strong>Détails des invités</strong> : chaque personne apparaît dans une carte dédiée pour une lecture plus simple.</p>
+      <div class="rsvp-guest-grid">
     `;
 
     for (let i = 1; i <= t; i++) {
       const type = (i <= a) ? 'Adulte' : 'Enfant';
+      const firstNameValue = i === 1 && firstNameInput
+        ? firstNameInput.value
+        : (existingValues[`invite_${i}_prenom`] || '');
+      const lastNameValue = i === 1 && lastNameInput
+        ? lastNameInput.value
+        : (existingValues[`invite_${i}_nom`] || '');
+
       html += `
-        <div style="grid-column:1/-1;border:1px solid #eee;border-radius:14px;padding:12px 12px 10px">
-          <div class="muted" style="margin-bottom:8px;font-weight:700">Invité ${i} — ${type}</div>
-          <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
-            <label>Prénom<br>
+        <div class="rsvp-guest-card">
+          <div class="rsvp-guest-head">Invité ${i} — ${type}</div>
+          <div class="rsvp-guest-fields">
+            <label class="rsvp-field">Prénom
               <input name="invite_${i}_prenom" required
+                value="${escapeAttr(firstNameValue)}"
                 placeholder="Prénom"
-                style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+                class="rsvp-input">
             </label>
-            <label>Nom<br>
+            <label class="rsvp-field">Nom
               <input name="invite_${i}_nom" required
+                value="${escapeAttr(lastNameValue)}"
                 placeholder="Nom"
-                style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+                class="rsvp-input">
             </label>
-            <label style="grid-column:1/-1">Allergies / régime / infos<br>
-              <input name="invite_${i}_infos" required
+            <label class="rsvp-field rsvp-field-full">Allergies / régime / infos
+              <input name="invite_${i}_infos"
+                value="${escapeAttr(existingValues[`invite_${i}_infos`] || '')}"
                 placeholder="aucun / végétarien / sans gluten / allergie…"
-                style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
+                class="rsvp-input">
             </label>
             <input type="hidden" name="invite_${i}_type" value="${type}">
           </div>
@@ -246,6 +406,7 @@ document.querySelectorAll('.gallery img').forEach((img) => {
 
     html += `</div>`;
     guestsWrap.innerHTML = html;
+    syncPrimaryGuestIdentity();
   }
 
   function validateBeforeSubmit() {
@@ -269,12 +430,12 @@ document.querySelectorAll('.gallery img').forEach((img) => {
       }
     }
 
-    // 3) Si bloc invités présent => tous les required dans guestsWrap remplis
+    // 3) Si bloc invités présent => prénom et nom requis pour chaque invité
     if (guestsWrap && presenceSelect?.value !== 'non') {
       const requiredInputs = guestsWrap.querySelectorAll('input[required]');
       for (const inp of requiredInputs) {
         if (!inp.value || !inp.value.trim()) {
-          alert("Merci de renseigner le prénom, nom et allergies/régime pour chaque invité.");
+          alert("Merci de renseigner le prénom et le nom de chaque invité.");
           inp.focus();
           inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return false;
@@ -291,16 +452,51 @@ document.querySelectorAll('.gallery img').forEach((img) => {
     buildPresenceDetail();
     renderGuests();
   });
+  presenceChoiceInputs.forEach((input) => input.addEventListener('change', () => {
+    if (!presenceSelect) return;
+    presenceSelect.value = input.value;
+    presenceSelect.dispatchEvent(new Event('change', { bubbles: true }));
+  }));
   dayCheckboxes.forEach((cb) => cb.addEventListener('change', buildPresenceDetail));
 
   // Listeners adultes/enfants
   adultsInput?.addEventListener('input', renderGuests);
   kidsInput?.addEventListener('input', renderGuests);
+  firstNameInput?.addEventListener('input', syncPrimaryGuestIdentity);
+  lastNameInput?.addEventListener('input', syncPrimaryGuestIdentity);
+
+  form.querySelectorAll('input, select, textarea').forEach((field) => {
+    field.addEventListener('invalid', () => {
+      const message = getFieldValidationMessage(field);
+      if (message) {
+        field.setCustomValidity(message);
+        showInlineFieldMessage(field, message);
+        if (field.name !== 'email') {
+          showSubmitNote(message, 'error');
+        }
+      }
+    });
+
+    field.addEventListener('input', () => {
+      field.setCustomValidity('');
+      clearInlineFieldMessage(field);
+      if (note?.classList.contains('is-error')) {
+        note.classList.remove('is-visible', 'is-error');
+      }
+    });
+
+    field.addEventListener('change', () => {
+      field.setCustomValidity('');
+      clearInlineFieldMessage(field);
+      if (note?.classList.contains('is-error')) {
+        note.classList.remove('is-visible', 'is-error');
+      }
+    });
+  });
 
   // Avant envoi, on force la mise à jour + validations
   form.addEventListener('submit', async (e) => {
     buildPresenceDetail();
-    renderGuests();
     if (!validateBeforeSubmit()) {
       e.preventDefault();
       return;
@@ -309,10 +505,11 @@ document.querySelectorAll('.gallery img').forEach((img) => {
     if (!endpointInput?.value) return;
 
     e.preventDefault();
-    submitButton && (submitButton.disabled = true);
+    setSubmitState('loading');
+    showSubmitNote("Votre réponse est en cours d'envoi. Cela ne prend que quelques instants.", 'success');
 
     const data = new FormData(form);
-    data.append('_subject', 'RSVP Mariage - Nouvelle reponse');
+    data.append('_subject', 'Mariage - Nouvelle réponse de présence');
 
     try {
       const res = await fetch(endpointInput.value, {
@@ -327,20 +524,22 @@ document.querySelectorAll('.gallery img').forEach((img) => {
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2200);
       }
-      if (note) note.style.display = 'block';
+      showSubmitNote('Merci, votre réponse a bien été enregistrée. Nous nous réjouissons de partager ce week-end avec vous.', 'success');
+      setSubmitState('success');
 
       form.reset();
       updatePresenceUI();
       buildPresenceDetail();
       renderGuests();
     } catch (err) {
+      setSubmitState('idle');
+      showSubmitNote("Un contretemps est survenu pendant l'envoi. Vous pouvez réessayer dans un instant.", 'error');
       if (toast) {
         toast.textContent = "Oups, impossible d'envoyer. Reessayez ou contactez-nous.";
         toast.classList.add('show');
         setTimeout(() => toast.classList.remove('show'), 2600);
       }
     } finally {
-      if (submitButton) submitButton.disabled = false;
       if (ring) {
         ring.classList.remove('show');
         ring.offsetHeight;
@@ -352,6 +551,20 @@ document.querySelectorAll('.gallery img').forEach((img) => {
 
   // Init
   updatePresenceUI();
+  syncPresenceChoicesFromSelect();
   buildPresenceDetail();
   renderGuests();
+  setSubmitState('idle');
+}
+
+(async function initPage() {
+  try {
+    await mountHtmlComponents();
+  } catch (err) {
+    console.error(err);
+  }
+
+  initTimelineReveal();
+  initRSVP();
+  bindNumberWheelGuards();
 })();
