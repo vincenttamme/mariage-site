@@ -3,128 +3,86 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RSVP — Mariage de Léa et Vincent</title>
+  <title>Confirmer votre présence — Mariage de Léa et Vincent</title>
   <meta name="description" content="Confirmez votre présence au mariage de Léa et Vincent au Domaine de Baldassé.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/mariage-site/style.css">
+  <link rel="stylesheet" href="./style.css">
 </head>
 
 <body class="page">
   <a class="skip-link" href="#main-content">Aller au contenu</a>
   <header class="site-header" role="navigation" aria-label="Navigation principale">
     <div class="container header-inner">
-      <a href="/mariage-site/" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+      <a href="./index.html" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
       <nav class="nav" aria-label="Menu principal">
-        <a href="/mariage-site/programme.html">Programme</a>
-        <a href="/mariage-site/lieu.html">Lieu</a>
-        <a href="/mariage-site/infos.html">Infos</a>
-        <a href="/mariage-site/galerie.html">Galerie</a>
-        <a class="btn btn-outline active" aria-current="page" href="/mariage-site/rsvp.html">RSVP</a>
+        <a href="./programme.html">Programme</a>
+        <a href="./lieu.html">Lieu</a>
+        <a href="./infos.html">Infos</a>
+        <a href="./galerie.html">Galerie</a>
+        <a class="btn btn-outline active" aria-current="page" href="./rsvp.html">Confirmer ma présence</a>
       </nav>
     </div>
   </header>
 
   <main id="main-content">
-  <section>
-    <div class="container">
-      <div class="card" style="margin-bottom:18px">
-        <h2>Confirmer votre présence</h2>
-        <p class="muted" style="margin-bottom:0">
-          Merci de confirmer avant le <strong>1er mai 2027</strong>.
-          Vos données ne sont utilisées que pour l'organisation de l'événement.
-        </p>
-        <p style="margin:14px 0 0">
-          <span class="pill">Logement sur place prévu pour tous</span>
-        </p>
+  <section class="section-plum-3">
+    <div class="container rsvp-shell">
+      <div data-rsvp-component data-rsvp-source="./partals/rsvp-module.html">
+        <div class="card rsvp-loading">Chargement du formulaire...</div>
       </div>
-
-      <form id="rsvp-form" class="card" autocomplete="on" style="width:100%">
-        <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj">
-        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-        <input type="hidden" name="presence_detail" id="presence-detail">
-
-        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start">
-          <div style="grid-column:1/-1" class="muted">Merci de remplir ce formulaire pour nous aider à organiser au mieux votre venue sur tout le week-end.</div>
-          <label>Prénom<br>
-            <input name="prenom" required placeholder="Votre prénom"
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
-
-          <label>Nom<br>
-            <input name="nom" required placeholder="Votre nom"
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
-
-          <label style="grid-column:1/-1">Email<br>
-            <input name="email" type="email" required placeholder="vous@mail.com"
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
-
-          <label style="grid-column:1/-1">Votre présence<br>
-            <select id="presence" name="presence" required
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-              <option value="weekend">Je serai présent(e) tout le week-end</option>
-              <option value="partiel">Je serai présent(e) partiellement</option>
-              <option value="tbd">Je ne sais pas encore</option>
-              <option value="non">Je ne pourrai pas être présent(e)</option>
-            </select>
-          </label>
-
-          <div id="presence-details" style="grid-column:1/-1;display:none">
-            <div class="muted" style="margin-bottom:6px">Je serai présent(e) :</div>
-
-            <label style="display:block;margin:6px 0">
-              <input type="checkbox" name="jours[]" value="vendredi"> Vendredi (accueil)
-            </label>
-
-            <label style="display:block;margin:6px 0">
-              <input type="checkbox" name="jours[]" value="samedi"> Samedi (cérémonie + dîner + soirée)
-            </label>
-
-            <label style="display:block;margin:6px 0">
-              <input type="checkbox" name="jours[]" value="dimanche"> Dimanche (brunch)
-            </label>
-          </div>
-
-          <label>Adultes<br>
-            <input id="adults" name="adultes" type="number" min="0" value="1" required
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
-
-          <label>Enfants<br>
-            <input id="kids" name="enfants" type="number" min="0" value="0" required
-              style="width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px">
-          </label>
-
-          <div id="guests-wrap" style="grid-column:1/-1;margin-top:10px"></div>
-
-          <div style="grid-column:1/-1;display:flex;justify-content:flex-start;margin-top:4px">
-            <button id="rsvp-submit" class="btn" type="submit">
-              <span class="label">Envoyer</span><span class="check">✓</span>
-            </button>
-          </div>
-        </div>
-
-        <p id="rsvp-note" class="muted" style="margin:10px 0 0;display:none">
-          Merci, nous avons bien reçu votre réponse.
-        </p>
-      </form>
-    </div>
-
-    <div id="ring" class="ring" aria-hidden="true"></div>
-    <div id="toast" class="toast" role="status" aria-live="polite">
-      Merci ! Votre réponse est enregistrée.
     </div>
   </section>
   </main>
 
-  <footer class="footer">
-    <div class="container">© <span id="year"></span> Léa &amp; Vincent</div>
+  <footer class="footer" role="contentinfo">
+    <div class="container footer-main">
+      <div class="footer-grid">
+        <div class="footer-brand-block">
+          <p class="footer-kicker">Mariage</p>
+          <p class="footer-brand">Léa &amp; Vincent</p>
+          <p class="footer-date">30 juillet au 1er août 2027</p>
+          <p class="footer-closing">Nous avons hâte de vous retrouver au Domaine de Baldassé pour un week-end de fête, de douceur et de souvenirs partagés.</p>
+        </div>
+
+        <div class="footer-column">
+          <h2 class="footer-title">Le lieu</h2>
+          <p>Domaine de Baldassé</p>
+          <p>Baldasse, 12400 Saint-Affrique</p>
+          <a href="https://www.google.com/maps?q=Baldasse%2C%2012400%20Saint-Affrique" target="_blank" rel="noreferrer">Voir l’itinéraire</a>
+        </div>
+
+        <div class="footer-column">
+          <h2 class="footer-title">Contacts utiles</h2>
+          <ul class="footer-links">
+            <li><a href="tel:+33689347492">06 89 34 74 92</a></li>
+            <li><a href="mailto:vincent.tamme@gmail.com">vincent.tamme@gmail.com</a></li>
+            <li><a href="./rsvp.html">Confirmer ma présence</a></li>
+          </ul>
+          <p class="footer-note">Pour toute question pratique ou pour nous répondre, vous pouvez nous joindre directement ici.</p>
+        </div>
+
+        <div class="footer-column">
+          <h2 class="footer-title">Navigation</h2>
+          <ul class="footer-links">
+            <li><a href="./programme.html">Programme</a></li>
+            <li><a href="./lieu.html">Lieu</a></li>
+            <li><a href="./infos.html">Infos</a></li>
+            <li><a href="./galerie.html">Galerie</a></li>
+            <li><a href="./rsvp.html">Confirmer ma présence</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="year"></span> Léa &amp; Vincent</p>
+        <p>Un même lieu pour se retrouver, célébrer et prolonger l’expérience ensemble.</p>
+      </div>
+    </div>
   </footer>
 
-  <script src="/mariage-site/script.js"></script>
+  <script src="./script.js"></script>
   <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 
 </body>
