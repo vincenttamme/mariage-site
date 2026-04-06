@@ -159,23 +159,25 @@
 
     <!-- RSVP -->
     <section id="rsvp">
-      <div class="container grid cols-2">
-        <div>
+      <div class="container">
+        <div class="card" style="margin-bottom:18px">
           <h2>Confirmer votre présence</h2>
-          <p class="muted">
+          <p class="muted" style="margin-bottom:0">
             Merci de confirmer avant le <strong>1er mai 2027</strong>.
             Vos données ne sont utilisées que pour l'organisation de l'événement.
-            <br><br>
+          </p>
+          <p style="margin:14px 0 0">
             <span class="pill">Logement sur place prévu pour tous — tout le monde est invité à tout</span>
           </p>
         </div>
 
-        <form id="rsvp-form" class="card" autocomplete="on">
+        <form id="rsvp-form" class="card" autocomplete="on" style="width:100%">
           <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj">
           <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
           <input type="hidden" name="presence_detail" id="presence-detail">
 
-          <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+          <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start">
+            <div style="grid-column:1/-1" class="muted">Merci de remplir ce formulaire pour nous aider à organiser au mieux votre venue sur tout le week-end.</div>
 
             <label>Prénom<br>
               <input name="prenom" required placeholder="Votre prénom"
@@ -231,11 +233,13 @@
             </label>
 
             <!-- Champs invités générés par JS -->
-            <div id="guests-wrap" style="grid-column:1/-1;margin-top:6px"></div>
+            <div id="guests-wrap" style="grid-column:1/-1;margin-top:10px"></div>
 
-            <button id="rsvp-submit" class="btn" style="grid-column:1/-1">
-              <span class="label">Envoyer</span><span class="check">✓</span>
-            </button>
+            <div style="grid-column:1/-1;display:flex;justify-content:flex-start;margin-top:4px">
+              <button id="rsvp-submit" class="btn" type="submit">
+                <span class="label">Envoyer</span><span class="check">✓</span>
+              </button>
+            </div>
 
           </div>
 
