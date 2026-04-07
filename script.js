@@ -4,9 +4,14 @@
 
 document.documentElement.classList.add('js');
 
+let motionApi = null;
+let toastHideTimeout = null;
+
 // Header scroll state
-const header = document.querySelector('.site-header');
-const onScroll = () => header && header.classList.toggle('scrolled', window.scrollY > 12);
+const onScroll = () => {
+  const header = document.querySelector('.site-header');
+  header && header.classList.toggle('scrolled', window.scrollY > 12);
+};
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -47,7 +52,7 @@ if (cd) {
   };
 
   tick();
-  setInterval(tick, 1000);
+  setInterval(tick, 60000);
 }
 
 /* =========================
@@ -72,28 +77,31 @@ function initTimelineReveal(root = document) {
 /* =========================
    Lightbox (galerie)
    ========================= */
-const lb = document.createElement('div');
-lb.className = 'lightbox';
-lb.innerHTML = '<button class="close" aria-label="Fermer">Fermer ✕</button><img alt=""/>';
-document.body.appendChild(lb);
+const galleryImages = document.querySelectorAll('.gallery img');
+if (galleryImages.length) {
+  const lb = document.createElement('div');
+  lb.className = 'lightbox';
+  lb.innerHTML = '<button class="close" aria-label="Fermer">Fermer ✕</button><img alt=""/>';
+  document.body.appendChild(lb);
 
-const lbImg = lb.querySelector('img');
-lb.addEventListener('click', (e) => {
-  if (e.target === lb || e.target.classList.contains('close')) lb.classList.remove('open');
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') lb.classList.remove('open');
-});
-
-document.querySelectorAll('.gallery img').forEach((img) => {
-  img.loading = 'lazy';
-  img.style.cursor = 'zoom-in';
-  img.addEventListener('click', () => {
-    lbImg.src = img.src;
-    lb.classList.add('open');
+  const lbImg = lb.querySelector('img');
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb || e.target.classList.contains('close')) lb.classList.remove('open');
   });
-});
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') lb.classList.remove('open');
+  });
+
+  galleryImages.forEach((img) => {
+    img.loading = 'lazy';
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lb.classList.add('open');
+    });
+  });
+}
 
 function bindNumberWheelGuards(root = document) {
   root.querySelectorAll('input[type="number"]').forEach((input) => {
@@ -112,10 +120,15 @@ function bindNumberWheelGuards(root = document) {
 bindNumberWheelGuards();
 
 async function mountHtmlComponents() {
-  const hosts = document.querySelectorAll('[data-rsvp-component], [data-programme-component]');
+  const hosts = document.querySelectorAll('[data-header-component], [data-footer-component], [data-rsvp-component], [data-programme-component]');
   if (!hosts.length) return;
 
-  const sources = [...new Set(Array.from(hosts).map((host) => host.dataset.rsvpSource || host.dataset.programmeSource).filter(Boolean))];
+  const sources = [...new Set(Array.from(hosts).map((host) => (
+    host.dataset.headerSource
+    || host.dataset.footerSource
+    || host.dataset.rsvpSource
+    || host.dataset.programmeSource
+  )).filter(Boolean))];
   const templates = new Map();
 
   await Promise.all(sources.map(async (source) => {
@@ -127,9 +140,133 @@ async function mountHtmlComponents() {
   }));
 
   hosts.forEach((host) => {
-    const source = host.dataset.rsvpSource || host.dataset.programmeSource;
+    const source = host.dataset.headerSource || host.dataset.footerSource || host.dataset.rsvpSource || host.dataset.programmeSource;
     if (!source || !templates.has(source)) return;
     host.innerHTML = templates.get(source);
+  });
+}
+
+function initNavigationState() {
+  const page = document.body.dataset.page;
+  if (!page) return;
+
+  document.querySelectorAll('[data-nav-page]').forEach((link) => {
+    const isCurrent = link.dataset.navPage === page;
+    link.classList.toggle('active', isCurrent);
+
+    if (isCurrent) {
+      link.setAttribute('aria-current', 'page');
+    } else {
+      link.removeAttribute('aria-current');
+    }
+  });
+}
+
+function updateFooterYear(root = document) {
+  root.querySelectorAll('#year').forEach((node) => {
+    node.textContent = new Date().getFullYear();
+  });
+}
+
+function showToastMessage(toast, message, duration = 2200) {
+  if (!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add('show');
+
+  if (toastHideTimeout) {
+    clearTimeout(toastHideTimeout);
+  }
+
+  if (motionApi && !prefersReducedMotion) {
+    motionApi.animate(
+      toast,
+      { opacity: [0, 1], y: [16, 0] },
+      { duration: 0.28, easing: [0.22, 1, 0.36, 1] }
+    );
+  }
+
+  toastHideTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, duration);
+}
+
+async function initMotionEnhancements() {
+  if (prefersReducedMotion) return;
+
+  try {
+    motionApi = await import('https://cdn.jsdelivr.net/npm/motion@12.23.13/+esm');
+  } catch (err) {
+    console.warn('Motion n’a pas pu être chargé.', err);
+    return;
+  }
+
+  const { animate, hover, inView } = motionApi;
+  const easing = [0.22, 1, 0.36, 1];
+
+  const heroCard = document.querySelector('.hero-card');
+  if (heroCard) {
+    animate(
+      heroCard,
+      { opacity: [0, 1], y: [14, 0] },
+      { duration: 0.8, easing, delay: 0.08 }
+    );
+  }
+
+  const revealTargets = [
+    ...document.querySelectorAll('.programme-day'),
+    ...document.querySelectorAll('.card.rsvp-intro, .card.rsvp-form'),
+    ...document.querySelectorAll('main > section .container.grid > .card'),
+  ];
+
+  const uniqueTargets = [...new Set(revealTargets)];
+  uniqueTargets.forEach((element, index) => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(14px)';
+
+    inView(
+      element,
+      () => animate(
+        element,
+        { opacity: 1, y: 0 },
+        { duration: 0.6, delay: Math.min(index * 0.02, 0.08), easing }
+      ),
+      { amount: 0.18, margin: '0px 0px -8% 0px' }
+    );
+  });
+
+  hover('.programme-day, .card.rsvp-intro, .gallery img', (element) => {
+    const enter = animate(
+      element,
+      { y: -2, scale: 1.01 },
+      { duration: 0.18, easing }
+    );
+
+    return () => {
+      enter.stop();
+      animate(
+        element,
+        { y: 0, scale: 1 },
+        { duration: 0.22, easing }
+      );
+    };
+  });
+
+  hover('.site-header .btn-outline, .overlay .btn-outline', (element) => {
+    const enter = animate(
+      element,
+      { y: -1, opacity: 0.98 },
+      { duration: 0.18, easing }
+    );
+
+    return () => {
+      enter.stop();
+      animate(
+        element,
+        { y: 0, opacity: 1 },
+        { duration: 0.22, easing }
+      );
+    };
   });
 }
 
@@ -275,7 +412,7 @@ function initRSVP() {
 
     note.textContent = message;
     note.classList.add('is-visible');
-    note.classList.remove('is-success', 'is-error');
+    note.classList.remove('is-success', 'is-error', 'is-loading', 'is-info');
 
     if (type) {
       note.classList.add(`is-${type}`);
@@ -414,8 +551,9 @@ function initRSVP() {
     if (presenceSelect?.value === 'partiel') {
       const checked = Array.from(dayCheckboxes).some((cb) => cb.checked);
       if (!checked) {
-        alert("Merci de cocher au moins un jour si vous êtes présent(e) partiellement.");
+        showSubmitNote("Merci de cocher au moins un jour si vous êtes présent(e) partiellement.", 'error');
         detailsWrap?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        dayCheckboxes[0]?.focus();
         return false;
       }
     }
@@ -424,7 +562,7 @@ function initRSVP() {
     if (presenceSelect?.value !== 'non' && adultsInput && kidsInput) {
       const { t } = totalGuests();
       if (t < 1) {
-        alert("Merci d’indiquer le nombre d’adultes et d’enfants.");
+        showSubmitNote("Merci d’indiquer le nombre d’adultes et d’enfants.", 'error');
         adultsInput.focus();
         return false;
       }
@@ -435,7 +573,7 @@ function initRSVP() {
       const requiredInputs = guestsWrap.querySelectorAll('input[required]');
       for (const inp of requiredInputs) {
         if (!inp.value || !inp.value.trim()) {
-          alert("Merci de renseigner le prénom et le nom de chaque invité.");
+          showSubmitNote("Merci de renseigner le prénom et le nom de chaque invité.", 'error');
           inp.focus();
           inp.scrollIntoView({ behavior: 'smooth', block: 'center' });
           return false;
@@ -506,7 +644,7 @@ function initRSVP() {
 
     e.preventDefault();
     setSubmitState('loading');
-    showSubmitNote("Votre réponse est en cours d'envoi. Cela ne prend que quelques instants.", 'success');
+    showSubmitNote("Votre réponse est en cours d'envoi. Cela ne prend que quelques instants.", 'loading');
 
     const data = new FormData(form);
     data.append('_subject', 'Mariage - Nouvelle réponse de présence');
@@ -520,9 +658,7 @@ function initRSVP() {
       if (!res.ok) throw new Error('Erreur envoi');
 
       if (toast) {
-        toast.textContent = 'Merci ! Votre reponse est enregistree.';
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2200);
+        showToastMessage(toast, 'Merci ! Votre reponse est enregistree.');
       }
       showSubmitNote('Merci, votre réponse a bien été enregistrée. Nous nous réjouissons de partager ce week-end avec vous.', 'success');
       setSubmitState('success');
@@ -535,9 +671,7 @@ function initRSVP() {
       setSubmitState('idle');
       showSubmitNote("Un contretemps est survenu pendant l'envoi. Vous pouvez réessayer dans un instant.", 'error');
       if (toast) {
-        toast.textContent = "Oups, impossible d'envoyer. Reessayez ou contactez-nous.";
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2600);
+        showToastMessage(toast, "Oups, impossible d'envoyer. Reessayez ou contactez-nous.", 2600);
       }
     } finally {
       if (ring) {
@@ -564,7 +698,11 @@ function initRSVP() {
     console.error(err);
   }
 
+  initNavigationState();
+  updateFooterYear();
+  onScroll();
   initTimelineReveal();
   initRSVP();
   bindNumberWheelGuards();
+  await initMotionEnhancements();
 })();
