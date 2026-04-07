@@ -4,19 +4,13 @@
 <meta name="description" content="Programme du week-end de mariage de Léa et Vincent au Domaine de Baldassé.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600&family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Mulish:wght@300;400;600&family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css">
-</head><body class="page">
+</head><body class="page" data-page="programme">
 <a class="skip-link" href="#main-content">Aller au contenu</a>
-<header class="site-header" role="navigation" aria-label="Navigation principale"><div class="container header-inner">
-<a href="./index.html" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
-<nav class="nav" aria-label="Menu principal">
-<a class="active" aria-current="page" href="./programme.html">Programme</a>
-<a href="./lieu.html">Lieu</a>
-<a href="./infos.html">Infos</a>
-<a href="./galerie.html">Galerie</a>
-<a class="btn btn-outline" href="./rsvp.html">Confirmer ma présence</a>
-</nav></div></header>
+<div data-header-component data-header-source="./partals/header.html">
+<header class="site-header" role="navigation" aria-label="Navigation principale"><div class="container header-inner"><a href="./index.html" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a></div></header>
+</div>
 
 <main id="main-content">
 <section class="section-plum-2">
@@ -27,51 +21,8 @@
   </div>
 </section>
  </main>
-<footer class="footer" role="contentinfo">
-  <div class="container footer-main">
-    <div class="footer-grid">
-      <div class="footer-brand-block">
-        <p class="footer-kicker">Mariage</p>
-        <p class="footer-brand">Léa &amp; Vincent</p>
-        <p class="footer-date">30 juillet au 1er août 2027</p>
-        <p class="footer-closing">Nous avons hâte de vous retrouver au Domaine de Baldassé pour un week-end de fête, de douceur et de souvenirs partagés.</p>
-      </div>
-
-      <div class="footer-column">
-        <h2 class="footer-title">Le lieu</h2>
-        <p>Domaine de Baldassé</p>
-        <p>Baldasse, 12400 Saint-Affrique</p>
-        <a href="https://www.google.com/maps?q=Baldasse%2C%2012400%20Saint-Affrique" target="_blank" rel="noreferrer">Voir l’itinéraire</a>
-      </div>
-
-      <div class="footer-column">
-        <h2 class="footer-title">Contacts utiles</h2>
-        <ul class="footer-links">
-          <li><a href="tel:+33689347492">06 89 34 74 92</a></li>
-          <li><a href="mailto:vincent.tamme@gmail.com">vincent.tamme@gmail.com</a></li>
-          <li><a href="./rsvp.html">Confirmer ma présence</a></li>
-        </ul>
-        <p class="footer-note">Pour toute question pratique ou pour nous répondre, vous pouvez nous joindre directement ici.</p>
-      </div>
-
-      <div class="footer-column">
-        <h2 class="footer-title">Navigation</h2>
-        <ul class="footer-links">
-          <li><a href="./programme.html">Programme</a></li>
-          <li><a href="./lieu.html">Lieu</a></li>
-          <li><a href="./infos.html">Infos</a></li>
-          <li><a href="./galerie.html">Galerie</a></li>
-          <li><a href="./rsvp.html">Confirmer ma présence</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="year"></span> Léa &amp; Vincent</p>
-      <p>Un même lieu pour se retrouver, célébrer et prolonger l’expérience ensemble.</p>
-    </div>
-  </div>
-</footer>
+<div data-footer-component data-footer-source="./partals/footer.html">
+<footer class="footer" role="contentinfo"><div class="container footer-main"></div></footer>
+</div>
 <script src="./script.js"></script>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body></html>
