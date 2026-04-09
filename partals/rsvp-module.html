@@ -17,7 +17,7 @@
 
 <form id="rsvp-form" class="card rsvp-form" autocomplete="on">
   <input type="hidden" id="fs-endpoint" value="https://formspree.io/f/xeeovajj">
-  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+  <input type="text" name="_gotcha" class="rsvp-honeypot" tabindex="-1" autocomplete="off">
   <input type="hidden" name="presence_detail" id="presence-detail">
 
   <div class="rsvp-stack">
@@ -89,7 +89,7 @@
         </label>
       </div>
 
-      <div id="presence-details" class="rsvp-progressive" style="display:none">
+      <div id="presence-details" class="rsvp-progressive is-hidden">
         <div class="rsvp-subsection-title">Je serai présent(e) :</div>
         <div class="rsvp-day-options">
           <label class="rsvp-check">
