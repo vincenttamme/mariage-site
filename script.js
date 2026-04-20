@@ -6,7 +6,7 @@ document.documentElement.classList.add('js');
 
 let motionApi = null;
 let toastHideTimeout = null;
-const COMPONENT_SOURCE_DATA_KEYS = ['headerSource', 'footerSource', 'rsvpSource', 'programmeSource'];
+const COMPONENT_SOURCE_DATA_KEYS = ['headerSource', 'footerSource', 'rsvpSource'];
 const MOTION_REVEAL_SELECTORS = [
   '.card.rsvp-intro, .card.rsvp-form',
   'main > section .container.grid > .card',
@@ -146,7 +146,7 @@ function bindNumberWheelGuards(root = document) {
 }
 
 async function mountHtmlComponents() {
-  const hosts = document.querySelectorAll('[data-header-component], [data-footer-component], [data-rsvp-component], [data-programme-component]');
+  const hosts = document.querySelectorAll('[data-header-component], [data-footer-component], [data-rsvp-component]');
   if (!hosts.length) return;
 
   const sources = [...new Set(Array.from(hosts).map(getComponentSource).filter(Boolean))];
