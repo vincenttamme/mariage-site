@@ -6,7 +6,7 @@ document.documentElement.classList.add('js');
 
 let motionApi = null;
 let toastHideTimeout = null;
-const COMPONENT_SOURCE_DATA_KEYS = ['headerSource', 'footerSource', 'rsvpSource'];
+const COMPONENT_SOURCE_DATA_KEYS = ['headerSource', 'footerSource', 'rsvpSource', 'programmeSource'];
 const MOTION_REVEAL_SELECTORS = [
   '.card.rsvp-intro, .card.rsvp-form',
   'main > section .container.grid > .card',
@@ -103,25 +103,6 @@ if (cd) {
 }
 
 /* =========================
-   Timeline reveal
-   ========================= */
-function initTimelineReveal(root = document) {
-  const items = root.querySelectorAll('.timeline .item');
-  if (!items.length) return;
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('revealed');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  items.forEach((i) => io.observe(i));
-}
-
-/* =========================
    Lightbox (galerie)
    ========================= */
 const galleryImages = document.querySelectorAll('.gallery img');
@@ -165,14 +146,14 @@ function bindNumberWheelGuards(root = document) {
 }
 
 async function mountHtmlComponents() {
-  const hosts = document.querySelectorAll('[data-header-component], [data-footer-component], [data-rsvp-component]');
+  const hosts = document.querySelectorAll('[data-header-component], [data-footer-component], [data-rsvp-component], [data-programme-component]');
   if (!hosts.length) return;
 
   const sources = [...new Set(Array.from(hosts).map(getComponentSource).filter(Boolean))];
   const templates = new Map();
 
   await Promise.all(sources.map(async (source) => {
-    const res = await fetch(source, { cache: 'no-store' });
+    const res = await fetch(source, { cache: 'default' });
     if (!res.ok) {
       throw new Error(`Impossible de charger le composant HTML: ${source}`);
     }
@@ -563,9 +544,10 @@ function initRSVP() {
 
     const isPartial = presenceSelect.value === 'partiel';
     const isAbsent = presenceSelect.value === 'non';
+    const isTbd = presenceSelect.value === 'tbd';
     detailsWrap.classList.toggle('is-hidden', !isPartial);
-    attendanceSection?.classList.toggle('rsvp-hidden', isAbsent);
-    guestsSection?.classList.toggle('rsvp-hidden', isAbsent);
+    attendanceSection?.classList.toggle('rsvp-hidden', isAbsent || isTbd);
+    guestsSection?.classList.toggle('rsvp-hidden', isAbsent || isTbd);
 
     // si on quitte "partiel", on décoche et on vide le résumé
     if (!isPartial) {
@@ -575,8 +557,8 @@ function initRSVP() {
       buildPresenceDetail(); // recalcul direct
     }
 
-    // Si "non", on force 0 invités et on masque le bloc invités (logique RSVP)
-    if (isAbsent) {
+    // Si "non" ou "tbd", on force 0 invités et on vide le bloc invités
+    if (isAbsent || isTbd) {
       if (adultsInput) adultsInput.value = '0';
       if (kidsInput) kidsInput.value = '0';
       renderGuests();
@@ -700,7 +682,7 @@ function initRSVP() {
       existingValues[input.name] = input.value;
     });
 
-    const { a, k, t } = totalGuests();
+    const { a, t } = totalGuests();
 
     // Si présence = non, pas d'invités
     if (presenceSelect?.value === 'non') {
@@ -927,7 +909,6 @@ function initRSVP() {
   initNavigationState();
   updateFooterYear();
   onScroll();
-  initTimelineReveal();
   initRSVP();
   bindNumberWheelGuards();
   await initMotionEnhancements();
