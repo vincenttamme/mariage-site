@@ -545,7 +545,7 @@ function initRSVP() {
     const isPartial = presenceSelect.value === 'partiel';
     const isAbsent = presenceSelect.value === 'non';
     const isTbd = presenceSelect.value === 'tbd';
-    detailsWrap.classList.toggle('is-hidden', !isPartial);
+    detailsWrap.classList.toggle('rsvp-hidden', !isPartial);
     attendanceSection?.classList.toggle('rsvp-hidden', isAbsent || isTbd);
     guestsSection?.classList.toggle('rsvp-hidden', isAbsent || isTbd);
 

@@ -217,6 +217,13 @@ video:focus-visible{
 /* Sections respirent */
 section{padding:64px 0}
 
+/* Fonds de section — guide d'utilisation :
+   section-main  → ivoire neutre  (#FFFAF5)  — fond par défaut, sections libres
+   section-alt-1 → crème chaud    (#FCF6EF)  — alternance légère (programme home, lieu, infos)
+   section-alt-2 → crème soutenu  (#F7F1E7)  — contraste plus marqué (non utilisé)
+   section-plum-1 → voile bordeaux .04 — pages secondaires (galerie, infos hero)
+   section-plum-2 → voile bordeaux .06 — pages principales (programme, lieu, rsvp home)
+   section-plum-3 → voile bordeaux .08 — formulaires (rsvp page dédiée) */
 .section-main{ background:var(--bg-main); }
 .section-alt-1{ background:var(--bg-alt-1); }
 .section-alt-2{ background:var(--bg-alt-2); }
@@ -2141,7 +2148,7 @@ main{
   display:none !important;
 }
 
-.rsvp-progressive.is-hidden{
+.rsvp-progressive.rsvp-hidden{
   display:none;
 }
 
