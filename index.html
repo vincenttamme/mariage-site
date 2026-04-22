@@ -19,8 +19,8 @@
   <link rel="preload" href="./media/hero-poster.png" as="image" type="image/png">
   <link rel="prefetch" href="./partials/rsvp-module.html">
   <link rel="prefetch" href="./partials/footer.html">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Mulish:wght@300;400;600&family=Playfair+Display:wght@400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./style.css?v=20260408b">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Mulish:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css?v=20260421">
 </head>
 
 <body data-page="home">
@@ -49,11 +49,13 @@
         <!-- Cinématique / luxe discret -->
         <div class="hero-card">
           <p class="hero-kicker">Vous êtes invités</p>
-          <h1 class="script">
-            Mariage<br>
-            de<br>
-            Léa et Vincent
-          </h1>
+          <img
+            src="./media/logo.png"
+            alt="Le mariage de Léa &amp; Vincent"
+            class="hero-logo"
+            width="3284"
+            height="3284"
+          >
 
           <p class="date">30 juillet → 1 août 2027 · Domaine de Baldassé</p>
 
@@ -61,321 +63,26 @@
 
           <div class="cta">
             <a class="btn" href="#rsvp">Confirmer ma présence</a>
-            <a class="btn btn-outline" href="#programme">Découvrir le week-end</a>
+            <a class="btn btn-outline" href="./programme.html">Découvrir le week-end</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PROGRAMME -->
+    <!-- ESPRIT DU WEEK-END -->
 <section id="programme" class="section-alt-1">
   <div class="container programme-shell">
-    <div class="programme-intro">
-      <span class="pill">Domaine de Baldassé</span>
-      <h2 class="programme-page-title">Programme du week-end</h2>
-      <p class="muted">Trois jours pour se retrouver, célébrer et profiter pleinement du Domaine de Baldassé, au rythme des temps forts, des instants de fête et des moments plus doux.</p>
-    </div>
+    <article class="weekend-spirit" aria-labelledby="weekend-spirit-title">
+      <span class="weekend-spirit-tag">Le thème</span>
+      <p class="weekend-spirit-kicker">L'ESPRIT DU WEEK-END</p>
+      <h2 id="weekend-spirit-title">Élégance classique et nature raffinée</h2>
+      <div class="weekend-spirit-copy">
+        <p>Un équilibre entre la noblesse intemporelle du classique et la justesse d'une nature travaillée avec finesse, dans un cadre pensé pour sublimer l'essentiel, où le raffinement se révèle dans les détails, et jamais dans l'excès.</p>
+        <p>Dans cette même harmonie, les tenues s'inscrivent naturellement dans cet esprit, avec une élégance sobre et des tonalités en accord avec le cadre du domaine.</p>
+      </div>
+      <a href="./programme.html" class="btn btn-outline" style="margin-top:32px">Voir le programme complet</a>
+    </article>
 
-    <div class="programme-days">
-      <article class="card programme-day">
-        <header class="programme-day-head">
-          <div class="programme-day-copy">
-            <p class="programme-day-name">Vendredi</p>
-            <h3>Accueil, cérémonie et première soirée</h3>
-            <p class="muted">L’ouverture du week-end, entre arrivée au domaine, premières émotions et instants partagés dans une atmosphère élégante.</p>
-          </div>
-          <div class="programme-day-marker">
-            <span>Jour 1</span>
-          </div>
-        </header>
-
-        <div class="programme-list" aria-label="Déroulé du vendredi">
-          <article class="programme-event programme-event-soft">
-            <div class="programme-panel">
-              <div class="programme-time">À partir de 14h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--home" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M5 11.5 12 6l7 5.5V19H5z"></path>
-                    <path d="M10 19v-4h4v4"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Accueil au domaine et installation dans vos hébergements</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">16h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--rings" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="9" cy="14" r="4.5"></circle>
-                    <circle cx="15" cy="10" r="4.5"></circle>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Cérémonie au cœur du domaine</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-minimal">
-            <div class="programme-panel">
-              <div class="programme-time">17h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--camera" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M5 8h14v10H5z"></path>
-                    <path d="M9 8l1.5-2h3L15 8"></path>
-                    <circle cx="12" cy="13" r="3.2"></circle>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Séance photo dans les jardins</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">17h30</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--glass" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M8 5h8l-1.2 5.6A4 4 0 0 1 11 13H13a4 4 0 0 1-3.8-2.4L8 5z"></path>
-                    <path d="M12 13v5"></path>
-                    <path d="M9.5 18h5"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Vin d’honneur en extérieur</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">19h30</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--dining" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="6.2"></circle>
-                    <circle cx="12" cy="12" r="2.4"></circle>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Dîner de réception</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-soft">
-            <div class="programme-panel">
-              <div class="programme-time">22h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--cake" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M6 11h12v7H6z"></path>
-                    <path d="M8 11V9.4c0-1 .7-1.9 1.6-1.9.8 0 1.4.6 1.4 1.5 0 .8.6 1.5 1.4 1.5.9 0 1.6-.8 1.6-1.9V7.8"></path>
-                    <path d="M12 7V5"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Gâteau et premières surprises de la soirée</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">23h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--music" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M10 5v10"></path>
-                    <path d="M10 5c1.2 1.3 3 2 4.8 1.8V14"></path>
-                    <path d="M10 15c0 2-1.6 4-4 4"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Soirée dansante</strong>
-                  <span class="programme-meta">à l’Orangerie</span>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-        </div>
-      </article>
-
-      <article class="card programme-day">
-        <header class="programme-day-head">
-          <div class="programme-day-copy">
-            <p class="programme-day-name">Samedi</p>
-            <h3>Brunch, détente et moments partagés</h3>
-            <p class="muted">Une journée à vivre au rythme du domaine, entre détente, échanges et instants suspendus sous le soleil d’été.</p>
-          </div>
-          <div class="programme-day-marker">
-            <span>Jour 2</span>
-          </div>
-        </header>
-
-        <div class="programme-list" aria-label="Déroulé du samedi">
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">11h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--breakfast" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M8 6v7"></path>
-                    <path d="M10 6v7"></path>
-                    <path d="M12 6v7"></path>
-                    <path d="M10 13v5"></path>
-                    <path d="M15 6v12"></path>
-                    <path d="M15 6c2 0 3 1.7 3 3.6S17 13 15 13"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Brunch au domaine</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-minimal">
-            <div class="programme-panel">
-              <div class="programme-time">Après-midi</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--leisure" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M12 4v4"></path>
-                    <path d="M12 16v4"></path>
-                    <path d="M4 12h4"></path>
-                    <path d="M16 12h4"></path>
-                    <circle cx="12" cy="12" r="4.5"></circle>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Temps libre pour profiter du domaine et de ses activités</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-soft">
-            <div class="programme-panel">
-              <div class="programme-time">19h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--dining" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="6.2"></circle>
-                    <circle cx="12" cy="12" r="2.4"></circle>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Dîner convivial</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">23h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--music" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M10 5v10"></path>
-                    <path d="M10 5c1.2 1.3 3 2 4.8 1.8V14"></path>
-                    <path d="M10 15c0 2-1.6 4-4 4"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Soirée dansante</strong>
-                  <span class="programme-meta">à l’Orangerie</span>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-        </div>
-      </article>
-
-      <article class="card programme-day">
-        <header class="programme-day-head">
-          <div class="programme-day-copy">
-            <p class="programme-day-name">Dimanche</p>
-            <h3>Derniers instants ensemble</h3>
-            <p class="muted">Un dernier moment à partager ensemble, avant de quitter le domaine en douceur.</p>
-          </div>
-          <div class="programme-day-marker">
-            <span>Jour 3</span>
-          </div>
-        </header>
-
-        <div class="programme-list" aria-label="Déroulé du dimanche">
-          <article class="programme-event programme-event-soft">
-            <div class="programme-panel">
-              <div class="programme-time">9h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--breakfast" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M8 6v7"></path>
-                    <path d="M10 6v7"></path>
-                    <path d="M12 6v7"></path>
-                    <path d="M10 13v5"></path>
-                    <path d="M15 6v12"></path>
-                    <path d="M15 6c2 0 3 1.7 3 3.6S17 13 15 13"></path>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Petit déjeuner au domaine</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-
-          <article class="programme-event programme-event-highlight">
-            <div class="programme-panel">
-              <div class="programme-time">11h</div>
-              <div class="programme-content">
-                <span class="programme-icon programme-icon--departure" aria-hidden="true">
-                  <svg viewBox="0 0 24 24">
-                    <path d="M6 15h10"></path>
-                    <path d="M7 15V9h8l3 3v3"></path>
-                    <circle cx="9" cy="17" r="1.6"></circle>
-                    <circle cx="16" cy="17" r="1.6"></circle>
-                  </svg>
-                </span>
-                <div class="programme-copy">
-                  <strong>Départ des invités</strong>
-                </div>
-              </div>
-            </div>
-            <div class="programme-axis" aria-hidden="true"><span class="programme-node"></span></div>
-          </article>
-        </div>
-      </article>
-    </div>
   </div>
 </section>
 

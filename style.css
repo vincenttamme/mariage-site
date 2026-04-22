@@ -2,13 +2,21 @@
    style.css — LUXE ROMANTIQUE DISCRET (final)
    Palette:
    - Ivoire: #FFFAF5
-   - Or champagne: #D6C29A
+   - Or champagne: #E0C08F
    - Bordeaux grège: #7A5A5F
    Typo:
    - Body: Mulish (lecture / UI)
-   - Serif: Cormorant Garamond (chapitres édito)
+   - Titres: Arsenica (H1 / H2 / H3 / visuels)
    - Script: Great Vibes (bijou : hero + brand)
    ========================= */
+
+@font-face{
+  font-family:"Arsenica";
+  src:url("./fonts/Arsenica-Trial-Regular.woff2") format("woff2");
+  font-weight:400 500;
+  font-style:normal;
+  font-display:swap;
+}
 
 /* =========================
    TABLE DES MATIERES
@@ -51,7 +59,7 @@
   --blur-signature:blur(10px);
   --txt:#2a2a2a;
   --muted:rgba(42,42,42,.62);
-  --link-color:#4D1C32;
+  --link-color:#49182F;
   --focus-outline:rgba(122,90,95,.5);
   --focus-ring:rgba(214,194,154,.22);
   --border-soft:rgba(214,194,154,.22);
@@ -59,7 +67,7 @@
   --surface-header:rgba(255,250,245,.78);
   --surface-header-strong:rgba(255,250,245,.94);
   --surface-footer:rgba(122,90,95,.05);
-  --footer-bg:#4D1C32;
+  --footer-bg:#49182F;
   --footer-text:#FFFAF5;
   --footer-muted:rgba(255,250,245,.74);
   --footer-border:rgba(214,194,154,.28);
@@ -71,11 +79,11 @@
   --input-bg:#fff;
   --input-border:rgba(122,90,95,.16);
   --input-placeholder:rgba(42,42,42,.42);
-  --btn-primary-bg:#4D1C32;
+  --btn-primary-bg:#49182F;
   --btn-primary-text:rgba(255,255,255,.96);
   --btn-primary-border:rgba(122,90,95,.92);
   --btn-secondary-bg:rgba(255,250,245,.58);
-  --btn-secondary-text:#4D1C32;
+  --btn-secondary-text:#49182f;
   --btn-secondary-border:rgba(214,194,154,.65);
   --btn-hero-secondary-text:rgba(255,255,255,.92);
   --btn-hero-secondary-border:rgba(255,255,255,.55);
@@ -83,31 +91,31 @@
   --toast-bg:rgba(255,250,245,.9);
   --shadow-elevated:0 24px 56px rgba(23,35,56,.06);
 
-  --gold:#D6C29A;               /* champagne */
-  --accent-gold:#D6C29A;
+  --gold:#E0C08F;               /* champagne */
+  --accent-gold:#E0C08F;
   --gold-2:#C5AE7B;
 
-  --signature:#7A5A5F;          /* bordeaux grège */
-  --signature-ink:#4D1C32;      /* encre texte */
+  --signature:#49182F;          /* bordeaux grège */
+  --signature-ink:#49182F;      /* encre texte */
   --accent-plum:#7A5A5F;
 
   /* =========================
      REGLAGE SIMPLE DES COULEURS DE POLICE
      Modifier ici si tu veux ajuster rapidement les encres du site
      ========================= */
-  --text-ink-primary:#4D1C32;
-  --text-ink-primary-soft:rgba(77,28,50,.94);
-  --text-ink-primary-muted:rgba(77,28,50,.86);
-  --text-ink-primary-subtle:rgba(77,28,50,.78);
-  --text-ink-primary-faint:rgba(77,28,50,.72);
-  --text-ink-primary-kicker:rgba(77,28,50,.64);
+  --text-ink-primary:#49182F;
+  --text-ink-primary-soft:rgba(73,24,47,.94);
+  --text-ink-primary-muted:rgba(73,24,47,.86);
+  --text-ink-primary-subtle:rgba(73,24,47,.78);
+  --text-ink-primary-faint:rgba(73,24,47,.72);
+  --text-ink-primary-kicker:rgba(73,24,47,.64);
 
-  --programme-ink-title:rgba(77,28,50,.8);
-  --programme-ink-event:rgba(77,28,50,.96);
-  --programme-ink-event-soft:rgba(77,28,50,.9);
-  --programme-ink-time:rgba(77,28,50,.78);
-  --programme-ink-time-strong:rgba(77,28,50,.84);
-  --programme-ink-time-soft:rgba(77,28,50,.72);
+  --programme-ink-title:rgba(73,24,47,.8);
+  --programme-ink-event:rgba(73,24,47,.96);
+  --programme-ink-event-soft:rgba(73,24,47,.9);
+  --programme-ink-time:rgba(73,24,47,.78);
+  --programme-ink-time-strong:rgba(73,24,47,.84);
+  --programme-ink-time-soft:rgba(73,24,47,.72);
   --paper:#ffffff;
 
   --hairline:rgba(122,90,95,.12);
@@ -131,12 +139,31 @@
      TYPO TOKENS
      ========================= */
   --font-body: "Mulish", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  --font-serif: "Cormorant Garamond", "Playfair Display", serif;
+  --font-serif: "Arsenica", "Cormorant Garamond", serif;
   --font-script: "Great Vibes", cursive;
 
   /* micro-rythme luxe */
   --body-lh: 1.68;
   --body-tracking: .01em;
+}
+
+/* =========================
+   PAGE TRANSITIONS
+   ========================= */
+html.js body{
+  animation:page-enter .38s ease both;
+}
+
+@keyframes page-enter{
+  from{ opacity:0; transform:translateY(7px) }
+  to{   opacity:1; transform:translateY(0)   }
+}
+
+html.js body.is-leaving{
+  opacity:0;
+  transform:translateY(-5px);
+  transition:opacity .24s ease, transform .24s ease;
+  pointer-events:none;
 }
 
 /* =========================
@@ -215,7 +242,7 @@ video:focus-visible{
 @media(max-width:900px){.grid.cols-2{grid-template-columns:1fr}}
 
 /* Sections respirent */
-section{padding:64px 0}
+section{padding: 64px;px 0}
 
 /* Fonds de section — guide d'utilisation :
    section-main  → ivoire neutre  (#FFFAF5)  — fond par défaut, sections libres
@@ -230,6 +257,19 @@ section{padding:64px 0}
 .section-plum-1{ background:var(--bg-plum-tint-1); }
 .section-plum-2{ background:var(--bg-plum-tint-2); }
 .section-plum-3{ background:var(--bg-plum-tint-3); }
+
+/* Texture décorative — section RSVP (home + page dédiée) */
+#rsvp,
+section.rsvp-page-section{
+  background:
+    linear-gradient(
+      var(--bg-alt-1) 0%,
+      rgba(252,246,239,.82) 14%,
+      rgba(252,246,239,.82) 86%,
+      var(--bg-alt-1) 100%
+    ),
+    url('./media/texture-programme.jpg') center / cover no-repeat;
+}
 
 :is(.section-plum-1, .section-plum-2, .section-plum-3) .card{
   background:var(--surface-glass-soft);
@@ -277,14 +317,22 @@ h1.script{
 }
 
 /* Titres édito */
-h2{
+h1:not(.script),h2,h3{
   font-family:var(--font-serif);
+}
+
+h2{
   font-weight:500;                 /* luxe = pas 700 */
   font-size:clamp(28px,3.2vw,40px);
   position:relative;
   margin-bottom:18px;
   color:var(--text-ink-primary);
   letter-spacing:.01em;
+}
+
+h3{
+  font-weight:500;
+  color:var(--text-ink-primary);
 }
 
 h2::after{
@@ -553,9 +601,10 @@ h2::after{
 
 .site-header .nav a{
   color:var(--muted);
+  font-family:var(--font-serif);
   font-size:1rem;
-  font-weight:400;             /* luxe = plus léger */
-  letter-spacing:.03em;
+  font-weight:400;
+  letter-spacing:.04em;
   text-decoration:none;
   white-space:nowrap;
 }
@@ -653,7 +702,7 @@ main{
 .hero-video{
   padding:0;
   position:relative;
-  background:#7A5A5F;
+  background:#000;
   overflow:hidden;
 
   height:calc(100vh - var(--header-h));
@@ -670,6 +719,9 @@ main{
   object-fit:cover;
   border:0;
   filter:saturate(0.92) contrast(0.98);
+  transform:translateZ(0);
+  backface-visibility:hidden;
+  will-change:transform;
 }
 
 /* Overlay */
@@ -699,6 +751,9 @@ main{
   max-width:780px;
   position:relative;
   isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
 .hero-card::before{
@@ -729,8 +784,18 @@ main{
   text-shadow:0 18px 45px rgba(0,0,0,.22);
 }
 
+/* Hero logo (remplace le titre texte) */
+.hero-logo{
+  display:block;
+  width:clamp(540px,90vw,1600px);
+  max-height:90vh;
+  height:auto;
+  object-fit:contain;
+  filter:brightness(0) invert(1);
+}
+
 .hero-kicker{
-  margin:0 0 14px;
+  margin:0 0 -80px;
   color:rgba(255,250,245,.84);
   font-family:var(--font-body);
   font-size:14px;
@@ -741,7 +806,7 @@ main{
 
 /* Hero meta */
 .hero-video .date{
-  margin-top:12px;
+  margin-top:-150px;
   color:rgba(255,255,255,.78);
   letter-spacing:.12em;
   text-transform:uppercase;
