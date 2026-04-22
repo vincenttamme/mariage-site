@@ -67,6 +67,13 @@ const heroVideo = document.querySelector('.hero-video video');
 if (prefersReducedMotion && heroVideo) {
   heroVideo.removeAttribute('autoplay');
   heroVideo.pause();
+} else if (heroVideo) {
+  heroVideo.removeAttribute('loop');
+  heroVideo.addEventListener('timeupdate', () => {
+    if (heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 0.18) {
+      heroVideo.currentTime = 0;
+    }
+  });
 }
 
 /* =========================
@@ -103,50 +110,50 @@ if (cd) {
 }
 
 /* =========================
-   Timeline reveal
-   ========================= */
-function initTimelineReveal(root = document) {
-  const items = root.querySelectorAll('.timeline .item');
-  if (!items.length) return;
-
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('revealed');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  items.forEach((i) => io.observe(i));
-}
-
-/* =========================
    Lightbox (galerie)
    ========================= */
 const galleryImages = document.querySelectorAll('.gallery img');
 if (galleryImages.length) {
   const lb = document.createElement('div');
   lb.className = 'lightbox';
-  lb.innerHTML = '<button class="close" aria-label="Fermer">Fermer ✕</button><img alt=""/>';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Photo en grand format');
+  lb.innerHTML = '<button class="close" aria-label="Fermer la photo">✕</button><img alt=""/>';
   document.body.appendChild(lb);
 
+  const lbClose = lb.querySelector('.close');
   const lbImg = lb.querySelector('img');
+  let lbTrigger = null;
+
+  function openLightbox(img) {
+    lbImg.src = img.src;
+    lbImg.alt = img.alt || '';
+    lbTrigger = img;
+    lb.classList.add('open');
+    lbClose.focus();
+  }
+
+  function closeLightbox() {
+    lb.classList.remove('open');
+    lbTrigger?.focus();
+    lbTrigger = null;
+  }
+
   lb.addEventListener('click', (e) => {
-    if (e.target === lb || e.target.classList.contains('close')) lb.classList.remove('open');
+    if (e.target === lb || e.target === lbClose) closeLightbox();
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') lb.classList.remove('open');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') { closeLightbox(); return; }
+    if (e.key === 'Tab') e.preventDefault();
   });
 
   galleryImages.forEach((img) => {
     img.loading = 'lazy';
     img.style.cursor = 'zoom-in';
-    img.addEventListener('click', () => {
-      lbImg.src = img.src;
-      lb.classList.add('open');
-    });
+    img.addEventListener('click', () => openLightbox(img));
   });
 }
 
@@ -172,7 +179,7 @@ async function mountHtmlComponents() {
   const templates = new Map();
 
   await Promise.all(sources.map(async (source) => {
-    const res = await fetch(source, { cache: 'no-store' });
+    const res = await fetch(source, { cache: 'default' });
     if (!res.ok) {
       throw new Error(`Impossible de charger le composant HTML: ${source}`);
     }
@@ -563,9 +570,10 @@ function initRSVP() {
 
     const isPartial = presenceSelect.value === 'partiel';
     const isAbsent = presenceSelect.value === 'non';
-    detailsWrap.classList.toggle('is-hidden', !isPartial);
-    attendanceSection?.classList.toggle('rsvp-hidden', isAbsent);
-    guestsSection?.classList.toggle('rsvp-hidden', isAbsent);
+    const isTbd = presenceSelect.value === 'tbd';
+    detailsWrap.classList.toggle('rsvp-hidden', !isPartial);
+    attendanceSection?.classList.toggle('rsvp-hidden', isAbsent || isTbd);
+    guestsSection?.classList.toggle('rsvp-hidden', isAbsent || isTbd);
 
     // si on quitte "partiel", on décoche et on vide le résumé
     if (!isPartial) {
@@ -575,8 +583,8 @@ function initRSVP() {
       buildPresenceDetail(); // recalcul direct
     }
 
-    // Si "non", on force 0 invités et on masque le bloc invités (logique RSVP)
-    if (isAbsent) {
+    // Si "non" ou "tbd", on force 0 invités et on vide le bloc invités
+    if (isAbsent || isTbd) {
       if (adultsInput) adultsInput.value = '0';
       if (kidsInput) kidsInput.value = '0';
       renderGuests();
@@ -700,7 +708,7 @@ function initRSVP() {
       existingValues[input.name] = input.value;
     });
 
-    const { a, k, t } = totalGuests();
+    const { a, t } = totalGuests();
 
     // Si présence = non, pas d'invités
     if (presenceSelect?.value === 'non') {
@@ -917,6 +925,55 @@ function initRSVP() {
   setSubmitState('idle');
 }
 
+function initMobileNav() {
+  const toggle = document.querySelector('.nav-toggle');
+  const header = document.querySelector('.site-header');
+  const panel = document.getElementById('mobile-nav');
+  if (!toggle || !header || !panel) return;
+
+  function openMenu() {
+    header.classList.add('menu-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'Fermer le menu');
+    panel.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeMenu() {
+    header.classList.remove('menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Ouvrir le menu');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+
+  toggle.addEventListener('click', () => {
+    header.classList.contains('menu-open') ? closeMenu() : openMenu();
+  });
+
+  panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && header.classList.contains('menu-open')) {
+      closeMenu();
+      toggle.focus();
+    }
+  });
+}
+
+function initPageTransitions() {
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || link.target) return;
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = href; }, 260);
+    });
+  });
+  window.addEventListener('pageshow', e => {
+    if (e.persisted) document.body.classList.remove('is-leaving');
+  });
+}
+
 (async function initPage() {
   try {
     await mountHtmlComponents();
@@ -925,11 +982,12 @@ function initRSVP() {
   }
 
   initNavigationState();
+  initMobileNav();
   updateFooterYear();
   onScroll();
-  initTimelineReveal();
   initRSVP();
   bindNumberWheelGuards();
   await initMotionEnhancements();
   initLieuGallery();
+  initPageTransitions();
 })();
