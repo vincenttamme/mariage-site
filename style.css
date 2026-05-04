@@ -410,6 +410,21 @@ h2::after{
 }
 .site-header .btn-outline:hover{background:var(--surface-panel-strong)}
 
+/* Variante champagne (footer cagnotte) */
+.btn-champagne{
+  background:var(--accent-gold);
+  color:var(--signature);
+  border-color:var(--accent-gold);
+  box-shadow:0 8px 22px rgba(73,24,47,.16);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+.btn-champagne:hover{
+  background:var(--gold-2);
+  border-color:var(--gold-2);
+  color:var(--signature);
+}
+
 /* Variante outline sur fond clair (hors header) */
 .btn-outline-on-light{
   color:var(--text-ink-primary);
@@ -418,6 +433,19 @@ h2::after{
   box-shadow:none;
 }
 .btn-outline-on-light:hover{background:var(--surface-panel-strong)}
+
+/* Variante outline sur fond bordeaux */
+.btn-outline-on-dark{
+  color:#FFFAF5;
+  border:1px solid rgba(255,250,245,.40);
+  background:transparent;
+  box-shadow:none;
+}
+.btn-outline-on-dark:hover{
+  background:rgba(255,250,245,.08);
+  border-color:rgba(224,192,143,.70);
+  color:#FFFAF5;
+}
 
 /* =========================
    CARDS (papier)
@@ -568,14 +596,42 @@ h2::after{
   gap:48px;
   align-items:start;
 }
+.footer-cagnotte{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+  margin-top:32px;
+  padding:24px 0;
+  border-top:1px solid var(--footer-border);
+  border-bottom:1px solid var(--footer-border);
+}
+.footer-cagnotte-copy{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.footer-cagnotte-title{
+  margin:0;
+  font-family:var(--font-serif);
+  font-size:17px;
+  font-weight:400;
+  color:var(--footer-text);
+}
+.footer-cagnotte-text{
+  margin:0;
+  font-size:14px;
+  color:var(--footer-muted);
+  max-width:54ch;
+  line-height:1.6;
+}
 .footer-bottom-light{
-  margin-top:34px;
-  padding-top:18px;
+  margin-top:20px;
+  padding-top:16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   color:rgba(255,250,245,.62);
-  border-top:1px solid var(--footer-border);
 }
 .footer-mini-nav{
   display:flex;
@@ -1464,6 +1520,164 @@ main{
 }
 
 /* =========================
+   PORTRAIT ÉDITORIAL — LES FUTURS MARIÉS
+   ========================= */
+.couple-intro-section{
+  padding:72px 0 80px;
+}
+
+.couple-intro-grid{
+  display:grid;
+  grid-template-columns:0.92fr 1.08fr;
+  gap:48px;
+  align-items:center;
+}
+
+.couple-intro-visual{
+  margin:0;
+  padding:10px;
+  border-radius:28px;
+  position:relative;
+  background:linear-gradient(
+    180deg,
+    rgba(255,250,245,.82),
+    rgba(247,241,231,.68)
+  );
+  border:1px solid rgba(224,192,143,.12);
+  box-shadow:0 24px 70px rgba(73,24,47,.08);
+}
+
+.couple-intro-visual::after{
+  content:"";
+  position:absolute;
+  inset:10px;
+  border-radius:22px;
+  pointer-events:none;
+  z-index:1;
+  background:
+    linear-gradient(to right,  rgba(252,246,239,.92) 0%, transparent 22%),
+    linear-gradient(to left,   rgba(252,246,239,.92) 0%, transparent 22%),
+    linear-gradient(to bottom, rgba(252,246,239,.86) 0%, transparent 18%),
+    linear-gradient(to top,    rgba(252,246,239,.86) 0%, transparent 18%),
+    radial-gradient(ellipse at 0% 0%,     rgba(252,246,239,.96) 0%, transparent 32%),
+    radial-gradient(ellipse at 100% 0%,   rgba(252,246,239,.96) 0%, transparent 32%),
+    radial-gradient(ellipse at 0% 100%,   rgba(252,246,239,.96) 0%, transparent 32%),
+    radial-gradient(ellipse at 100% 100%, rgba(252,246,239,.96) 0%, transparent 32%);
+}
+
+.couple-intro-visual img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:22px;
+}
+
+.couple-intro-kicker{
+  font-family:var(--font-body);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(73,24,47,.64);
+  margin:0 0 16px;
+}
+
+.couple-intro-copy h2{
+  font-family:var(--font-serif);
+  font-size:clamp(42px,4.1vw,62px);
+  font-weight:400;
+  line-height:1.08;
+  letter-spacing:-.01em;
+  color:var(--text-ink-primary);
+  margin:0;
+  max-width:12.5ch;
+}
+
+.couple-intro-lead{
+  margin:22px 0 0;
+  color:rgba(73,24,47,.76);
+  font-family:"Cormorant Garamond", serif;
+  font-size:clamp(20px,2vw,26px);
+  line-height:1.42;
+}
+
+.couple-intro-text{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:24px;
+  margin-bottom:0;
+}
+
+.couple-intro-text p{
+  font-size:16px;
+  line-height:1.72;
+  color:rgba(73,24,47,.70);
+}
+
+.couple-intro-cta{
+  margin-top:24px;
+  color:var(--signature);
+  border-color:rgba(224,192,143,.72);
+  background:rgba(255,250,245,.42);
+}
+
+.couple-intro-cta:hover{
+  background:rgba(224,192,143,.14);
+  border-color:rgba(224,192,143,.88);
+}
+
+@media(min-width:901px){
+  .couple-intro-visual{
+    transform:translateY(18px);
+  }
+}
+
+
+/* =========================
+   À RETENIR — SECTION BORDEAUX
+   ========================= */
+.retenir-section{
+  background:var(--signature);
+  padding:44px 0;
+}
+
+.retenir-section .retenir-label{
+  color:var(--accent-gold);
+}
+
+.retenir-section .retenir-fact-key{
+  color:rgba(224,192,143,.68);
+}
+
+.retenir-section .retenir-fact strong{
+  color:#FFFAF5;
+}
+
+.retenir-section .retenir-divider{
+  background:rgba(224,192,143,.22);
+}
+
+.retenir-section .cal-dropdown-menu{
+  background:var(--signature);
+  border-color:rgba(224,192,143,.30);
+  box-shadow:0 12px 40px rgba(0,0,0,.30);
+}
+
+.retenir-section .cal-dropdown-item{
+  color:#FFFAF5;
+}
+
+.retenir-section .cal-dropdown-item:hover,
+.retenir-section .cal-dropdown-item:focus-visible{
+  background:rgba(255,250,245,.08);
+}
+
+.retenir-section .cal-dropdown-item + .cal-dropdown-item{
+  border-top-color:rgba(224,192,143,.16);
+}
+
+/* =========================
    À RETENIR BAR (accueil)
    ========================= */
 .retenir-bar{
@@ -1635,6 +1849,30 @@ main{
 .home-accordion-content .btn{
   display:inline-block;
   margin-top:14px;
+}
+
+/* Accordéon à item unique (cagnotte index) */
+.home-accordion--single{
+  max-width:660px;
+  margin:0 auto;
+}
+
+/* Cagnotte card (infos.html) */
+.cagnotte-card{
+  max-width:600px;
+}
+.cagnotte-card h2{
+  margin:10px 0 16px;
+}
+.cagnotte-card p{
+  color:var(--muted);
+  max-width:var(--measure-copy-medium);
+  line-height:var(--body-lh);
+  margin:0;
+}
+.cagnotte-cta{
+  margin-top:24px;
+  display:inline-block;
 }
 
 /* Lien textuel (utilisé dans accordion et contenu éditorial) */
@@ -2348,6 +2586,75 @@ main{
 }
 
 /* =========================
+   RSVP RAPPEL (accueil — remplace le formulaire)
+   ========================= */
+.rsvp-reminder-section{
+  padding:64px 0;
+}
+
+.rsvp-reminder{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:32px;
+  flex-wrap:wrap;
+}
+
+.rsvp-reminder-kicker{
+  font-family:var(--font-body);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--signature);
+  margin:0 0 12px;
+}
+
+.rsvp-reminder-heading{
+  font-family:var(--font-serif);
+  font-size:clamp(1.8rem,3vw,2.4rem);
+  font-weight:400;
+  line-height:1.1;
+  color:var(--text-ink-primary);
+  margin:0 0 10px;
+}
+
+.rsvp-reminder-deadline{
+  font-size:14px;
+  color:var(--text-ink-secondary);
+  margin:0;
+}
+
+/* =========================
+   RSVP FALLBACK CONTACT (rsvp.html)
+   ========================= */
+.rsvp-fallback-section{
+  padding:32px 0 40px;
+  border-top:1px solid var(--border-soft);
+}
+
+.rsvp-fallback{
+  max-width:560px;
+}
+
+.rsvp-fallback-label{
+  font-family:var(--font-body);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:var(--text-ink-secondary);
+  margin:0 0 8px;
+}
+
+.rsvp-fallback-text{
+  font-size:15px;
+  line-height:1.7;
+  color:var(--text-ink-secondary);
+  margin:0;
+}
+
+/* =========================
    RSVP
    ========================= */
 .rsvp-shell{
@@ -2954,16 +3261,58 @@ button{
     grid-column:1 / -1;
   }
 
+  .footer-cagnotte{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+  }
+  .footer-cagnotte .btn-champagne{
+    width:100%;
+    text-align:center;
+  }
+
   .footer-bottom{
     flex-direction:column;
     align-items:flex-start;
   }
 
+  .couple-intro-section{
+    padding:56px 0 64px;
+  }
+
+  .couple-intro-grid{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+
+  .couple-intro-visual{
+    transform:none;
+    max-width:520px;
+    margin:0 auto;
+  }
+
+  .couple-intro-copy h2{
+    max-width:none;
+  }
+
   .timeline .item{ grid-template-columns:1fr; gap:8px; }
   .hero-video{
-    min-height:560px;
-    height:auto;
+    height:calc(100svh - 60px);
+    min-height:500px;
   }
+
+  .hero-logo{
+    width:clamp(280px,58vw,520px);
+    max-height:50vh;
+  }
+
+  .hero-card{
+    max-width:min(86vw,660px);
+    transform:translateY(-1vh);
+  }
+
+  .hero-video .date{ margin-top:14px; }
+  .overlay .cta{ margin-top:14px; }
 
   .weekend-spirit{
     max-width:900px;
@@ -3179,12 +3528,12 @@ button{
 
   .hero-card{
     max-width:92vw;
-    transform:translateY(-1vh);
+    transform:translateY(0);
   }
 
   .hero-logo{
-    width:min(92vw, 420px);
-    max-height:42vh;
+    width:min(88vw, 370px);
+    max-height:38vh;
   }
 
   .hero-kicker{
@@ -3206,12 +3555,12 @@ button{
   }
 
   #countdown .cd-box{
-    min-width:62px;
-    padding:7px 10px;
+    min-width:58px;
+    padding:7px 9px;
   }
 
   #countdown .cd-box .num{
-    font-size:21px;
+    font-size:20px;
   }
 
   #countdown .cd-box div:last-child{
@@ -3234,6 +3583,53 @@ button{
 
   .rsvp-submit-button{
     width:100%;
+  }
+
+  .rsvp-reminder{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:24px;
+  }
+
+  .rsvp-reminder-cta{
+    width:100%;
+    text-align:center;
+  }
+
+  .couple-intro-visual{
+    padding:8px;
+    border-radius:22px;
+  }
+
+  .couple-intro-visual::after{
+    inset:8px;
+    border-radius:18px;
+  }
+
+  .couple-intro-visual img{
+    border-radius:18px;
+  }
+
+  .couple-intro-copy h2{
+    font-size:clamp(34px,10vw,44px);
+    max-width:none;
+  }
+
+  .couple-intro-lead{
+    font-size:clamp(18px,5vw,22px);
+  }
+
+  .couple-intro-text{
+    gap:12px;
+  }
+
+  .couple-intro-text p{
+    font-size:15.5px;
+  }
+
+  .couple-intro-cta{
+    width:100%;
+    text-align:center;
   }
 
   .retenir-bar{
@@ -3404,9 +3800,24 @@ button{
     height:108px;
   }
 
+  .hero-logo{
+    width:min(82vw, 300px);
+    max-height:34vh;
+  }
+
+  .hero-kicker{
+    font-size:10px;
+    letter-spacing:.18em;
+    margin-bottom:7px;
+  }
+
   #countdown .cd-box{
-    min-width:72px;
-    padding:10px 14px;
+    min-width:54px;
+    padding:6px 8px;
+  }
+
+  #countdown .cd-box .num{
+    font-size:19px;
   }
 
   .map{
@@ -3583,6 +3994,57 @@ button{
     padding:18px 16px 24px;
   }
 
+}
+
+/* =========================
+   PAYSAGE MOBILE (hauteur réduite)
+   ========================= */
+@media (max-height:480px) and (max-width:1024px){
+  .hero-video{
+    min-height:340px;
+  }
+  .hero-logo{
+    max-height:30vh;
+    width:min(50vh,340px);
+  }
+  .hero-card{ transform:translateY(0); }
+  .hero-kicker{
+    margin-bottom:5px;
+    font-size:10px;
+    letter-spacing:.18em;
+  }
+  .hero-video .date{
+    margin-top:7px;
+    font-size:9.5px;
+    letter-spacing:.09em;
+  }
+  #countdown{
+    margin-top:7px;
+    gap:5px;
+  }
+  #countdown .cd-box{
+    min-width:50px;
+    padding:5px 8px;
+    border-radius:10px;
+  }
+  #countdown .cd-box .num{
+    font-size:16px;
+    margin-bottom:2px;
+  }
+  #countdown .cd-box div:last-child{
+    font-size:8px;
+  }
+  .overlay .cta{
+    flex-direction:row;
+    margin-top:10px;
+    gap:8px;
+  }
+  .overlay .cta .btn{
+    width:auto;
+    max-width:none;
+    padding:9px 18px;
+    font-size:12px;
+  }
 }
 
 /* =========================

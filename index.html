@@ -17,7 +17,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="./media/hero-poster.png" as="image" type="image/png">
-  <link rel="prefetch" href="./partials/rsvp-module.html">
   <link rel="prefetch" href="./partials/footer.html">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Mulish:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./style.css?v=202605012128">
@@ -63,15 +62,39 @@
           <div id="countdown" aria-live="polite"></div>
 
           <div class="cta">
-            <a class="btn" href="#rsvp">Confirmer ma présence</a>
+            <a class="btn" href="./rsvp.html">Confirmer ma présence</a>
             <a class="btn btn-outline" href="./programme.html">Découvrir le week-end</a>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- PORTRAIT ÉDITORIAL — LES FUTURS MARIÉS -->
+    <section class="section-alt-1 couple-intro-section">
+      <div class="container couple-intro-grid">
+        <figure class="couple-intro-visual">
+          <img
+            src="./media/couple-illustration.png"
+            alt="Portrait illustré de Léa et Vincent"
+            loading="eager"
+          >
+        </figure>
+        <article class="couple-intro-copy">
+          <p class="couple-intro-kicker">Les futurs mariés</p>
+          <h2>Une histoire à deux, un week-end à partager avec vous</h2>
+          <p class="couple-intro-lead">Un moment imaginé à notre image : simple, élégant et entouré de ceux que nous aimons.</p>
+          <div class="couple-intro-text">
+            <p>Depuis quelque temps déjà, nous avançons ensemble avec bonheur, complicité et beaucoup de joie.</p>
+            <p>Ce mariage est l'occasion de célébrer ce lien qui nous unit, entourés des personnes qui comptent le plus pour nous.</p>
+            <p>Nous avons imaginé ce week-end comme un moment chaleureux, élégant et tourné vers le partage.</p>
+          </div>
+          <a href="./programme.html" class="btn btn-outline-on-light couple-intro-cta">Découvrir le week-end</a>
+        </article>
+      </div>
+    </section>
+
     <!-- À RETENIR -->
-    <section class="section-plum-1">
+    <section class="retenir-section">
       <div class="container">
         <div class="retenir-bar">
           <p class="retenir-label">À retenir</p>
@@ -87,9 +110,9 @@
             </div>
           </div>
           <div class="retenir-actions">
-            <a class="btn btn-outline-on-light" href="https://www.google.com/maps/search/?api=1&query=Domaine%20de%20Baldass%C3%A9%2C%20Baldasse%2C%2012400%20Saint-Affrique" target="_blank" rel="noopener noreferrer">Ouvrir l'itinéraire</a>
+            <a class="btn btn-champagne" href="https://www.google.com/maps/search/?api=1&query=Domaine%20de%20Baldass%C3%A9%2C%20Baldasse%2C%2012400%20Saint-Affrique" target="_blank" rel="noopener noreferrer">Ouvrir l'itinéraire</a>
             <details class="cal-dropdown">
-              <summary class="btn btn-outline-on-light">Ajouter au calendrier</summary>
+              <summary class="btn btn-outline-on-dark">Ajouter au calendrier</summary>
               <div class="cal-dropdown-menu" role="menu">
                 <a class="cal-dropdown-item" href="https://www.google.com/calendar/render?action=TEMPLATE&text=Mariage+de+L%C3%A9a+%26+Vincent&dates=20270730T120000Z%2F20270801T090000Z&details=Programme+complet+%3A+https%3A%2F%2Fvincenttamme.github.io%2Fmariage-site%2F&location=Domaine+de+Baldass%C3%A9%2C+Baldass%C3%A9%2C+12400+Saint-Affrique" target="_blank" rel="noopener noreferrer" role="menuitem">Google Calendar</a>
                 <a class="cal-dropdown-item" href="./mariage-lea-vincent.ics" download role="menuitem">Apple Calendar / Outlook</a>
@@ -117,91 +140,15 @@
   </div>
 </section>
 
-    <!-- QUESTIONS PRATIQUES -->
-    <section id="questions-pratiques" class="section-alt-1 home-faq-section">
-  <div class="container">
-    <div class="home-faq-head">
-      <p class="pill">Questions pratiques</p>
-      <h2>Les réponses utiles avant le week-end</h2>
-      <p class="muted">
-        Quelques repères simples pour préparer votre venue et profiter pleinement du mariage.
-      </p>
-    </div>
-
-    <div class="home-accordion">
-      <details class="home-accordion-item" name="home-faq" open>
-        <summary>L'arrivée au domaine</summary>
-        <div class="home-accordion-content">
-          <p>
-            L'accueil au domaine est prévu le vendredi à partir de 14h.
-            La cérémonie commencera à 16h. Nous vous conseillons d'arriver un peu avant afin de vous installer tranquillement.
-          </p>
+    <!-- RSVP — RAPPEL -->
+    <section class="section-plum-2 rsvp-reminder-section">
+      <div class="container rsvp-reminder">
+        <div class="rsvp-reminder-copy">
+          <p class="rsvp-reminder-kicker">Confirmation de présence</p>
+          <h2 class="rsvp-reminder-heading">Serez-vous des nôtres&nbsp;?</h2>
+          <p class="rsvp-reminder-deadline">Réponse souhaitée avant le 1<sup>er</sup>&nbsp;mai&nbsp;2027</p>
         </div>
-      </details>
-
-      <details class="home-accordion-item" name="home-faq">
-        <summary>Un week-end au même endroit</summary>
-        <div class="home-accordion-content">
-          <p>
-            Tout le week-end se déroule au Domaine de Baldassé, à Saint-Affrique.
-            La cérémonie, les repas, les soirées et les hébergements sont prévus sur place.
-          </p>
-          <a class="text-link" href="./lieu.html">Voir le lieu</a>
-        </div>
-      </details>
-
-      <details class="home-accordion-item" name="home-faq">
-        <summary>Dormir au domaine</summary>
-        <div class="home-accordion-content">
-          <p>
-            Les hébergements sont prévus directement au domaine afin que chacun puisse profiter du week-end sur place.
-            La répartition des logements vous sera communiquée avant votre arrivée.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-accordion-item" name="home-faq">
-        <summary>L'esprit des tenues</summary>
-        <div class="home-accordion-content">
-          <p>
-            Nous imaginons une ambiance élégante, classique et naturelle.
-            Privilégiez une tenue sobre, raffinée, dans des tons doux ou naturels.
-            Pensez aussi à des chaussures confortables pour profiter des extérieurs.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-accordion-item" name="home-faq">
-        <summary>Les petites choses à prévoir</summary>
-        <div class="home-accordion-content">
-          <p>
-            Prévoyez vos affaires pour dormir sur place, une tenue confortable pour le lendemain,
-            et éventuellement une veste légère pour la soirée.
-            Les informations complémentaires sur les logements seront précisées à l'approche du mariage.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-accordion-item" name="home-faq">
-        <summary>Votre réponse</summary>
-        <div class="home-accordion-content">
-          <p>
-            Vous pouvez confirmer votre présence directement via le formulaire RSVP.
-            Merci de nous répondre avant le 1er mai 2027.
-          </p>
-          <a class="btn btn-outline-on-light" href="#rsvp">Aller au formulaire</a>
-        </div>
-      </details>
-    </div>
-  </div>
-</section>
-
-    <!-- RSVP -->
-    <section id="rsvp" class="section-plum-2">
-      <div class="container rsvp-shell">
-        <div data-rsvp-component data-rsvp-source="./partials/rsvp-module.html">
-          <div class="card rsvp-loading">Chargement du formulaire...</div>
-        </div>
+        <a href="./rsvp.html" class="btn rsvp-reminder-cta">Confirmer ma présence</a>
       </div>
     </section>
 
