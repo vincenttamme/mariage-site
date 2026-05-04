@@ -892,9 +892,9 @@ function initRSVP() {
       if (!res.ok) throw new Error('Erreur envoi');
 
       if (toast) {
-        showToastMessage(toast, 'Merci ! Votre reponse est enregistree.');
+        showToastMessage(toast, 'Merci, votre réponse a bien été envoyée.');
       }
-      showSubmitNote('Merci, votre réponse a bien été enregistrée. Nous nous réjouissons de partager ce week-end avec vous.', 'success');
+      showSubmitNote('Merci, votre réponse a bien été envoyée. Nous vous recontacterons si nous avons besoin d\'une précision concernant les hébergements, repas ou informations pratiques.', 'success');
       setSubmitState('success');
 
       form.reset();
@@ -974,6 +974,26 @@ function initPageTransitions() {
   });
 }
 
+function initHomeAccordion() {
+  document.querySelectorAll('.home-accordion-item[name]').forEach(el => {
+    el.addEventListener('toggle', () => {
+      if (!el.open) return;
+      const name = el.getAttribute('name');
+      document.querySelectorAll(`.home-accordion-item[name="${CSS.escape(name)}"]`).forEach(other => {
+        if (other !== el) other.open = false;
+      });
+    });
+  });
+}
+
+function initCalDropdowns() {
+  document.addEventListener('click', e => {
+    document.querySelectorAll('.cal-dropdown[open]').forEach(el => {
+      if (!el.contains(e.target)) el.removeAttribute('open');
+    });
+  });
+}
+
 (async function initPage() {
   try {
     await mountHtmlComponents();
@@ -989,5 +1009,7 @@ function initPageTransitions() {
   bindNumberWheelGuards();
   await initMotionEnhancements();
   initLieuGallery();
+  initHomeAccordion();
+  initCalDropdowns();
   initPageTransitions();
 })();

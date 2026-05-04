@@ -443,8 +443,8 @@ h2::after{
 }
 
 .footer-main{
-  padding-top:56px;
-  padding-bottom:28px;
+  padding-top:44px;
+  padding-bottom:24px;
 }
 
 .footer-grid{
@@ -469,7 +469,7 @@ h2::after{
 .footer-brand{
   margin:0 0 10px;
   font-family:var(--font-script);
-  font-size:clamp(38px,4.6vw,54px);
+  font-size:clamp(36px,4vw,50px);
   line-height:1;
   color:var(--footer-text);
 }
@@ -488,13 +488,16 @@ h2::after{
   line-height:1.75;
 }
 
+.footer-closing,
+.footer-note{ display:none; }
+
 .footer-column{
   display:grid;
-  gap:12px;
+  gap:10px;
 }
 
 .footer-title{
-  margin:0;
+  margin:0 0 4px;
   color:rgba(214,194,154,.96);
   font-family:var(--font-serif);
   font-size:18px;
@@ -508,6 +511,7 @@ h2::after{
 .footer-column p{
   margin:0;
   color:var(--footer-muted);
+  line-height:1.55;
 }
 
 .footer-note{
@@ -529,7 +533,7 @@ h2::after{
 
 .footer-links{
   display:grid;
-  gap:8px;
+  gap:7px;
   margin:0;
   padding:0;
   list-style:none;
@@ -553,6 +557,37 @@ h2::after{
 
 .footer-bottom p{
   margin:0;
+}
+
+/* =========================
+   FOOTER — structure 3 colonnes
+   ========================= */
+.footer-light-grid{
+  display:grid;
+  grid-template-columns:1.3fr 1fr 1fr;
+  gap:48px;
+  align-items:start;
+}
+.footer-bottom-light{
+  margin-top:34px;
+  padding-top:18px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:rgba(255,250,245,.62);
+  border-top:1px solid var(--footer-border);
+}
+.footer-mini-nav{
+  display:flex;
+  gap:22px;
+  flex-wrap:wrap;
+}
+.footer-mini-nav a{
+  color:var(--footer-muted);
+  font-size:14px;
+}
+.footer-mini-nav a:hover{
+  color:var(--footer-text);
 }
 
 /* =========================
@@ -1216,28 +1251,17 @@ main{
   display:none;
 }
 
+.programme-axis span,
+.programme-axis::after{
+  display:none;
+}
+
 .programme-node{
-  position:absolute;
-  top:calc((var(--programme-time-line) / 2) - (var(--programme-node-size) / 2) + var(--programme-node-offset-y));
-  left:50%;
-  transform:translateX(-50%);
-  z-index:2;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  width:11px;
-  height:11px;
-  border-radius:999px;
-  border:1px solid rgba(122,90,95,.24);
-  background:rgba(255,250,245,.98);
-  box-shadow:0 0 0 5px rgba(255,250,245,.96);
+  display:none;
 }
 
 .programme-event-highlight .programme-node{
-  width:14px;
-  height:14px;
-  border-color:rgba(122,90,95,.34);
-  background:rgba(255,250,245,.98);
+  display:none;
 }
 
 .programme-event-highlight{
@@ -1437,6 +1461,194 @@ main{
 .programme-event-soft .programme-time,
 .programme-event-minimal .programme-time{
   color:var(--programme-ink-time-soft);
+}
+
+/* =========================
+   À RETENIR BAR (accueil)
+   ========================= */
+.retenir-bar{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  flex-wrap:wrap;
+  padding:6px 0;
+}
+.retenir-label{
+  font-family:var(--font-body);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.20em;
+  text-transform:uppercase;
+  color:var(--text-ink-primary-kicker);
+  margin:0;
+  white-space:nowrap;
+}
+.retenir-facts{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  flex:1;
+  flex-wrap:wrap;
+}
+.retenir-fact{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+}
+.retenir-fact-key{
+  font-family:var(--font-body);
+  font-size:9.5px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  color:rgba(73,24,47,.46);
+}
+.retenir-fact strong{
+  font-size:13.5px;
+  font-weight:600;
+  color:var(--text-ink-primary);
+}
+.retenir-divider{
+  width:1px;
+  height:30px;
+  background:rgba(122,90,95,.16);
+  flex-shrink:0;
+}
+.retenir-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0;
+  flex-wrap:wrap;
+}
+
+/* Dropdown calendrier */
+.cal-dropdown{
+  position:relative;
+}
+.cal-dropdown > summary{
+  list-style:none;
+  cursor:pointer;
+}
+.cal-dropdown > summary::-webkit-details-marker{
+  display:none;
+}
+.cal-dropdown-menu{
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  min-width:220px;
+  background:var(--bg);
+  border:1px solid var(--border-strong);
+  border-radius:12px;
+  box-shadow:0 8px 28px rgba(23,35,56,.12);
+  overflow:hidden;
+  z-index:50;
+}
+.cal-dropdown-item{
+  display:block;
+  padding:11px 16px;
+  font-size:13.5px;
+  font-family:var(--font-body);
+  color:var(--text-ink-primary);
+  text-decoration:none;
+  transition:background .15s;
+}
+.cal-dropdown-item:hover,
+.cal-dropdown-item:focus-visible{
+  background:var(--bg-alt-1);
+  outline:none;
+}
+.cal-dropdown-item + .cal-dropdown-item{
+  border-top:1px solid var(--border-soft);
+}
+
+/* =========================
+   HOME FAQ / ACCORDION
+   ========================= */
+.home-faq-head{
+  text-align:center;
+  max-width:52ch;
+  margin:0 auto 48px;
+}
+.home-faq-head h2{
+  margin:12px 0 10px;
+}
+.home-accordion{
+  max-width:660px;
+  margin:0 auto;
+}
+.home-accordion-item{
+  border-bottom:1px solid var(--border-soft);
+}
+.home-accordion-item:first-child{
+  border-top:1px solid var(--border-soft);
+}
+.home-accordion-item > summary{
+  list-style:none;
+  cursor:pointer;
+  padding:18px 0;
+  font-family:var(--font-serif);
+  font-size:17px;
+  color:var(--text-ink-primary);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:16px;
+  user-select:none;
+  transition:color .18s;
+}
+.home-accordion-item > summary::-webkit-details-marker{ display:none; }
+.home-accordion-item > summary::after{
+  content:'';
+  display:inline-block;
+  width:9px;
+  height:9px;
+  border-right:1.5px solid var(--text-ink-primary-kicker);
+  border-bottom:1.5px solid var(--text-ink-primary-kicker);
+  transform:rotate(45deg) translateY(-3px);
+  flex-shrink:0;
+  transition:transform .25s ease, border-color .18s;
+}
+.home-accordion-item[open] > summary::after{
+  transform:rotate(-135deg) translateY(-3px);
+}
+.home-accordion-item > summary:hover{
+  color:var(--signature);
+}
+.home-accordion-content{
+  padding:2px 0 22px;
+  animation:accordion-open .22s ease both;
+}
+@keyframes accordion-open{
+  from{ opacity:0; transform:translateY(-6px); }
+  to{   opacity:1; transform:translateY(0); }
+}
+.home-accordion-content p{
+  color:var(--muted);
+  line-height:var(--body-lh);
+  margin:0 0 10px;
+  max-width:var(--measure-copy-medium);
+}
+.home-accordion-content p:last-child{ margin:0; }
+.home-accordion-content .text-link,
+.home-accordion-content .btn{
+  display:inline-block;
+  margin-top:14px;
+}
+
+/* Lien textuel (utilisé dans accordion et contenu éditorial) */
+.text-link{
+  color:var(--link-color);
+  font-size:13.5px;
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-color:rgba(73,24,47,.28);
+  transition:text-decoration-color .18s;
+}
+.text-link:hover{
+  text-decoration-color:rgba(73,24,47,.82);
 }
 
 /* =========================
@@ -2534,6 +2746,7 @@ main{
 
 .rsvp-submit-button{
   min-width:220px;
+  padding:13px 24px;
   justify-content:center;
   align-items:center;
   display:inline-flex;
@@ -2606,6 +2819,13 @@ main{
   color:#8c3b42;
   background:rgba(140,59,66,.08);
   border-color:rgba(140,59,66,.18);
+}
+
+.rsvp-privacy{
+  margin:10px 0 0;
+  font-size:11.5px;
+  color:rgba(73,24,47,.38);
+  text-align:center;
 }
 
 /* RSVP — palette raffinée */
@@ -2722,6 +2942,15 @@ button{
 
   .footer-brand-block{
     max-width:none;
+    grid-column:1 / -1;
+  }
+
+  .footer-light-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:24px 22px;
+  }
+
+  .footer-light-grid .footer-brand-block{
     grid-column:1 / -1;
   }
 
@@ -2934,8 +3163,14 @@ button{
    RESPONSIVE <= 600px — hero mobile
    ========================= */
 @media (max-width: 600px){
+  /* Rétablit une valeur numérique pour que calc() fonctionne
+     (--header-h:auto hérité depuis <=900px invalide les calc) */
+  :root{ --header-h: 56px; }
+
   .hero-video{
-    min-height:calc(100svh - var(--header-h));
+    height:calc(100vh - var(--header-h));
+    height:calc(100svh - var(--header-h));
+    min-height:560px;
   }
 
   .hero-video .overlay{
@@ -2948,35 +3183,35 @@ button{
   }
 
   .hero-logo{
-    width:min(92vw, 430px);
-    max-height:44vh;
+    width:min(92vw, 420px);
+    max-height:42vh;
   }
 
   .hero-kicker{
-    margin-bottom:12px;
+    margin:0 0 10px;
     font-size:11px;
     letter-spacing:.20em;
   }
 
   .hero-video .date{
-    margin-top:14px;
+    margin-top:12px;
     font-size:10.5px;
     letter-spacing:.10em;
     line-height:1.45;
   }
 
   #countdown{
-    margin-top:12px;
-    gap:8px;
+    margin-top:10px;
+    gap:7px;
   }
 
   #countdown .cd-box{
-    min-width:64px;
-    padding:8px 10px;
+    min-width:62px;
+    padding:7px 10px;
   }
 
   #countdown .cd-box .num{
-    font-size:22px;
+    font-size:21px;
   }
 
   #countdown .cd-box div:last-child{
@@ -2987,13 +3222,42 @@ button{
     width:100%;
     flex-direction:column;
     align-items:center;
-    margin-top:16px;
+    margin-top:14px;
+    gap:10px;
   }
 
   .overlay .cta .btn{
     width:100%;
     max-width:280px;
     text-align:center;
+  }
+
+  .rsvp-submit-button{
+    width:100%;
+  }
+
+  .retenir-bar{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:14px;
+  }
+  .retenir-divider{ display:none; }
+  .retenir-actions{
+    width:100%;
+    flex-direction:column;
+  }
+  .retenir-actions .btn,
+  .retenir-actions .cal-dropdown{
+    width:100%;
+  }
+  .retenir-actions .cal-dropdown > summary{
+    width:100%;
+    text-align:center;
+  }
+  .cal-dropdown-menu{
+    left:0;
+    right:0;
+    min-width:0;
   }
 }
 
@@ -3154,9 +3418,18 @@ button{
     padding-bottom:24px;
   }
 
-  .footer-grid{
+  .footer-grid,
+  .footer-light-grid{
     grid-template-columns:1fr;
     gap:22px;
+  }
+
+  .footer-light-grid .footer-brand-block{
+    grid-column:auto;
+  }
+
+  .footer-mini-nav{
+    gap:14px;
   }
 
   .footer-brand{
@@ -3265,16 +3538,8 @@ button{
     font-size:13px;
   }
 
-  .programme-node{
-    width:11px;
-    height:11px;
-    box-shadow:0 0 0 4px rgba(255,250,245,.9);
-  }
-
-  .programme-event-highlight .programme-node{
-    width:13px;
-    height:13px;
-  }
+  .programme-node{ display:none; }
+  .programme-event-highlight .programme-node{ display:none; }
 
   .programme-icon,
   .programme-icon svg{
@@ -3337,10 +3602,7 @@ button{
     transition-duration:0.01ms !important;
   }
 }
-  .programme-node{
-    left:11px;
-    transform:translateX(-50%);
-  }
+  .programme-node{ display:none; }
 
 /* =========================
    UTILITAIRES
