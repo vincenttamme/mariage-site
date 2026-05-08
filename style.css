@@ -882,7 +882,7 @@ main{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  transform:translateY(-2vh);
+  transform:translateY(2vh);
 }
 
 .hero-card::before{
@@ -916,17 +916,17 @@ main{
 /* Hero logo (remplace le titre texte) */
 .hero-logo{
   display:block;
-  width:clamp(560px,49vw,780px);
-  max-height:62vh;
+  width:clamp(616px,54vw,858px);
+  max-height:68vh;
   height:auto;
   object-fit:contain;
   filter:brightness(0) invert(1);
-  margin-top:-9%;
-  margin-bottom:-9%;
+  margin-top:-10%;
+  margin-bottom:-10%;
 }
 
 .hero-kicker{
-  margin:0 0 18px;
+  margin:0 0 8px;
   color:rgba(255,250,245,.84);
   font-family:var(--font-body);
   font-size:13px;
@@ -945,10 +945,10 @@ main{
   line-height:1.4;
 }
 .hero-video .date-above{
-  margin:0 0 14px;
+  margin:0 0 28px;
 }
 .hero-video .date-below{
-  margin:14px 0 0;
+  margin:28px 0 0;
   font-size:11px;
   letter-spacing:.18em;
   color:rgba(255,255,255,.60);
@@ -989,7 +989,7 @@ main{
 }
 
 #countdown .cd-box .num{
-  font-size:24px;
+  font-size:22px;
   font-weight:600;     /* luxe discret */
   line-height:1;
   margin-bottom:3px;
@@ -3340,17 +3340,17 @@ button{
   }
 
   .hero-logo{
-    width:clamp(280px,58vw,520px);
-    max-height:50vh;
+    width:clamp(308px,64vw,572px);
+    max-height:55vh;
   }
 
   .hero-card{
     max-width:min(86vw,660px);
-    transform:translateY(-1vh);
+    transform:translateY(1vh);
   }
 
-  .hero-video .date-above{ margin-bottom:12px; }
-  .hero-video .date-below{ margin-top:12px; }
+  .hero-video .date-above{ margin-bottom:20px; }
+  .hero-video .date-below{ margin-top:20px; }
   .overlay .cta{ margin-top:14px; }
 
   .weekend-spirit{
@@ -3571,12 +3571,12 @@ button{
   }
 
   .hero-logo{
-    width:min(88vw, 370px);
-    max-height:38vh;
+    width:min(88vw, 408px);
+    max-height:42vh;
   }
 
   .hero-kicker{
-    margin:0 0 10px;
+    margin:0 0 5px;
     font-size:11px;
     letter-spacing:.20em;
   }
@@ -3586,8 +3586,8 @@ button{
     letter-spacing:.10em;
     line-height:1.45;
   }
-  .hero-video .date-above{ margin-bottom:10px; }
-  .hero-video .date-below{ margin-top:10px; }
+  .hero-video .date-above{ margin-bottom:16px; }
+  .hero-video .date-below{ margin-top:16px; }
 
   #countdown{
     margin-top:10px;
@@ -3841,8 +3841,8 @@ button{
   }
 
   .hero-logo{
-    width:min(82vw, 300px);
-    max-height:34vh;
+    width:min(82vw, 330px);
+    max-height:37vh;
   }
 
   .hero-kicker{
@@ -4095,13 +4095,13 @@ button{
    ========================= */
 @media (min-width: 901px) and (max-height: 900px){
   .hero-logo{
-    max-height: 40vh;
+    max-height: 44vh;
   }
   .hero-kicker{
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
-  .hero-video .date-above{ margin-bottom:12px; }
-  .hero-video .date-below{ margin-top:12px; }
+  .hero-video .date-above{ margin-bottom:16px; }
+  .hero-video .date-below{ margin-top:16px; }
   #countdown{
     margin-top: 10px;
   }
