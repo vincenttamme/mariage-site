@@ -32,6 +32,13 @@
       <header class="site-header" aria-label="En-tête du site">
         <div class="container header-inner">
           <a href="./index.html" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+          <nav class="nav" aria-label="Menu principal">
+            <a href="./index.html">Accueil</a>
+            <a href="./programme.html">Programme</a>
+            <a href="./lieu.html">Lieu</a>
+            <a href="./infos.html">Infos</a>
+          </nav>
+          <a class="btn btn-outline header-rsvp" href="./rsvp.html">Confirmer ma présence</a>
         </div>
       </header>
     </div>
@@ -40,16 +47,17 @@
     <h1 class="sr-only">Mariage de Léa et Vincent</h1>
     <!-- HERO VIDEO (auto-hébergée) -->
     <section class="hero-video" aria-label="Accueil vidéo">
-      <video autoplay muted playsinline loop preload="metadata" poster="./media/hero-poster.png" aria-label="Vidéo d'accueil du mariage">
+      <video autoplay muted playsinline loop preload="metadata" poster="./media/hero-poster.png" aria-hidden="true">
         <source src="./media/hero.mp4" type="video/mp4">
         Votre navigateur ne supporte pas la lecture vidéo.
       </video>
 
       <div class="overlay">
-        <!-- Cinématique / luxe discret -->
         <div class="hero-card">
-          <p class="hero-kicker">Vous êtes invités</p>
-          <p class="date date-above">30 juillet – 1<sup>er</sup> août 2027</p>
+          <div class="hero-top">
+            <p class="hero-kicker">Vous êtes invités</p>
+            <p class="date date-above">30 juillet – 1<sup>er</sup> août 2027</p>
+          </div>
           <img
             src="./media/logo.png"
             alt="Le mariage de Léa &amp; Vincent"
@@ -57,12 +65,12 @@
             width="3284"
             height="3284"
           >
-          <p class="date date-below">Domaine de Baldassé</p>
-
-          <div id="countdown" aria-live="polite"></div>
-
-          <div class="cta">
-            <a class="btn" href="./rsvp.html">Confirmer ma présence</a>
+          <div class="hero-bottom">
+            <p class="date date-below">Domaine de Baldassé</p>
+            <div id="countdown" aria-live="polite"></div>
+            <div class="cta">
+              <a class="btn" href="./rsvp.html">Confirmer ma présence</a>
+            </div>
           </div>
         </div>
       </div>
@@ -105,6 +113,11 @@
             <div class="retenir-fact">
               <span class="retenir-fact-key">Lieu</span>
               <a class="address-link" href="https://www.google.com/maps/search/?api=1&query=Domaine%20de%20Baldass%C3%A9%2C%20Baldass%C3%A9%2C%2012400%20Saint-Affrique" target="_blank" rel="noopener noreferrer"><strong>Domaine de Baldassé · Saint-Affrique (12)</strong></a>
+            </div>
+            <div class="retenir-divider" aria-hidden="true"></div>
+            <div class="retenir-fact">
+              <span class="retenir-fact-key">Réponse souhaitée</span>
+              <strong>Avant le 1<sup>er</sup>&nbsp;novembre&nbsp;2026</strong>
             </div>
           </div>
           <div class="retenir-actions">
@@ -151,7 +164,28 @@
     </section>
 
     <div data-footer-component data-footer-source="./partials/footer.html">
-      <footer class="footer" role="contentinfo"><div class="container footer-main"></div></footer>
+      <footer class="footer footer-light" role="contentinfo">
+        <div class="container footer-main">
+          <div class="footer-light-grid">
+            <div class="footer-brand-block">
+              <p class="footer-brand">Léa &amp; Vincent</p>
+              <p class="footer-date">30 juillet – 1<sup>er</sup> août 2027</p>
+            </div>
+            <div class="footer-column">
+              <p class="footer-title">Le lieu</p>
+              <p>Domaine de Baldassé<br>Baldassé, 12400 Saint-Affrique</p>
+            </div>
+            <div class="footer-column">
+              <p class="footer-title">Contact &amp; RSVP</p>
+              <ul class="footer-links">
+                <li><a href="tel:+33689347492">06 89 34 74 92</a></li>
+                <li><a href="mailto:vincent.tamme@gmail.com">vincent.tamme@gmail.com</a></li>
+                <li><a href="./rsvp.html">Confirmer ma présence</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
     </main>
 

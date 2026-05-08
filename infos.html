@@ -19,7 +19,16 @@
 <a class="skip-link" href="#main-content">Aller au contenu</a>
 <div data-header-component data-header-source="./partials/header.html">
   <header class="site-header" aria-label="En-tête du site">
-    <div class="container header-inner"><a href="./index.html" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a></div>
+    <div class="container header-inner">
+      <a href="./index.html" class="brand">Léa&nbsp;&amp;&nbsp;Vincent</a>
+      <nav class="nav" aria-label="Menu principal">
+        <a href="./index.html">Accueil</a>
+        <a href="./programme.html">Programme</a>
+        <a href="./lieu.html">Lieu</a>
+        <a href="./infos.html">Infos</a>
+      </nav>
+      <a class="btn btn-outline header-rsvp" href="./rsvp.html">Confirmer ma présence</a>
+    </div>
   </header>
 </div>
 
@@ -127,7 +136,7 @@
       </p>
     </div>
 
-    <div class="home-accordion">
+    <div class="home-accordion" data-exclusive-accordion>
       <details class="home-accordion-item" name="infos-faq" open>
         <summary>L'arrivée au domaine</summary>
         <div class="home-accordion-content">
@@ -194,7 +203,7 @@
           <p>
             Votre présence à nos côtés est déjà essentielle. Pour celles et ceux qui souhaitent nous accompagner davantage, une cagnotte sera prochainement mise en ligne.
           </p>
-          <span class="btn btn-outline-on-light btn-disabled" aria-disabled="true">Cagnotte bientôt disponible</span>
+          <span class="btn btn-outline-on-light is-disabled" aria-disabled="true">Cagnotte bientôt disponible</span>
         </div>
       </details>
 
@@ -213,7 +222,28 @@
 </section>
 </main>
 <div data-footer-component data-footer-source="./partials/footer.html">
-  <footer class="footer" role="contentinfo"><div class="container footer-main"></div></footer>
+  <footer class="footer footer-light" role="contentinfo">
+    <div class="container footer-main">
+      <div class="footer-light-grid">
+        <div class="footer-brand-block">
+          <p class="footer-brand">Léa &amp; Vincent</p>
+          <p class="footer-date">30 juillet – 1<sup>er</sup> août 2027</p>
+        </div>
+        <div class="footer-column">
+          <p class="footer-title">Le lieu</p>
+          <p>Domaine de Baldassé<br>Baldassé, 12400 Saint-Affrique</p>
+        </div>
+        <div class="footer-column">
+          <p class="footer-title">Contact &amp; RSVP</p>
+          <ul class="footer-links">
+            <li><a href="tel:+33689347492">06 89 34 74 92</a></li>
+            <li><a href="mailto:vincent.tamme@gmail.com">vincent.tamme@gmail.com</a></li>
+            <li><a href="./rsvp.html">Confirmer ma présence</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 <script src="./script.js?v=202605012128"></script>
 </body></html>

@@ -15,36 +15,48 @@ const MOTION_HOVER_CARD_SELECTOR = '.programme-day, .card.rsvp-intro, .gallery i
 const MOTION_HOVER_BUTTON_SELECTOR = '.site-header .btn-outline, .overlay .btn-outline';
 const LIEU_GALLERY_SLIDES = [
   {
-    src: './media/photos galerie/domaine-de-baldasse-14.jpg',
-    alt: 'Vue du Domaine de Baldassé dans son écrin naturel',
+    src: './media/photos galerie/200603110931XARlVGBZ.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/domaine-de-baldasse-33.jpg',
-    alt: 'Perspective lumineuse sur le Domaine de Baldassé',
+    src: './media/photos galerie/476679151_1074762971121283_9131240477482457873_n.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/domaine-de-baldasse-36.jpg',
-    alt: 'Terrasses et extérieurs du Domaine de Baldassé',
+    src: './media/photos galerie/477574769_1074763001121280_7526801382150775830_n.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/domaine-de-baldasse-48.jpg',
-    alt: 'Vue du domaine au calme en fin de journée',
+    src: './media/photos galerie/612526752_1328657429065168_8571168590257757738_n.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/domainedebaldasseaveyron7.jpg',
-    alt: 'Paysage autour du Domaine de Baldassé en Aveyron',
+    src: './media/photos galerie/619612460_18090565271019121_6748964027985549920_n.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/340101t30_307588-domaine-de-baldasse-dfranco-171653937710251_2024-05-24-10-32-55.jpg',
-    alt: 'Vue éditoriale du Domaine de Baldassé',
+    src: './media/photos galerie/619902750_18090565259019121_1633879028807065493_n.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/josephinewilliam10_3_307588-169054168564717.jpeg',
-    alt: 'Ambiance élégante du Domaine de Baldassé',
+    src: './media/photos galerie/619963278_18090565268019121_3767116219453764956_n.jpg',
+    alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/domaine-de-baldasse-aveyron-6-3-209839-158512221860705_3_2322-168554282158963.jpeg',
-    alt: 'Vue du Domaine de Baldassé au coeur de son environnement naturel',
+    src: './media/photos galerie/656773738_1388295393101371_5029308126699785590_n.jpg',
+    alt: 'Domaine de Baldassé',
+  },
+  {
+    src: './media/photos galerie/656823201_1388295373101373_1481617699572222498_n.jpg',
+    alt: 'Domaine de Baldassé',
+  },
+  {
+    src: './media/photos galerie/657383891_1388295329768044_6719201482226391294_n.jpg',
+    alt: 'Domaine de Baldassé',
+  },
+  {
+    src: './media/photos galerie/Avant saison - Focus sur lOrangerie ! 🍊Un autre lieu pour vos réunions, réceptions, cérémonies.jpg',
+    alt: "L'Orangerie du Domaine de Baldassé",
   },
 ];
 
@@ -147,7 +159,6 @@ if (galleryImages.length) {
   document.addEventListener('keydown', (e) => {
     if (!lb.classList.contains('open')) return;
     if (e.key === 'Escape') { closeLightbox(); return; }
-    if (e.key === 'Tab') e.preventDefault();
   });
 
   galleryImages.forEach((img) => {
@@ -792,8 +803,8 @@ function initRSVP() {
       }
     }
 
-    // 2) Si présence != non => au moins 1 invité (adultes+enfants)
-    if (presenceSelect?.value !== 'non' && adultsInput && kidsInput) {
+    // 2) Si présence != non et != tbd => au moins 1 invité (adultes+enfants)
+    if (presenceSelect?.value !== 'non' && presenceSelect?.value !== 'tbd' && adultsInput && kidsInput) {
       const { t } = totalGuests();
       if (t < 1) {
         showSubmitNote("Merci d’indiquer le nombre d’adultes et d’enfants.", 'error');
@@ -974,13 +985,19 @@ function initPageTransitions() {
   });
 }
 
-function initHomeAccordion() {
-  document.querySelectorAll('.home-accordion-item[name]').forEach(el => {
-    el.addEventListener('toggle', () => {
-      if (!el.open) return;
-      const name = el.getAttribute('name');
-      document.querySelectorAll(`.home-accordion-item[name="${CSS.escape(name)}"]`).forEach(other => {
-        if (other !== el) other.open = false;
+function initExclusiveAccordions(root = document) {
+  root.querySelectorAll('[data-exclusive-accordion]').forEach((accordion) => {
+    const items = Array.from(accordion.querySelectorAll('details'));
+
+    items.forEach((item) => {
+      item.addEventListener('toggle', () => {
+        if (!item.open) return;
+
+        items.forEach((otherItem) => {
+          if (otherItem !== item) {
+            otherItem.open = false;
+          }
+        });
       });
     });
   });
@@ -999,6 +1016,9 @@ function initCalDropdowns() {
     await mountHtmlComponents();
   } catch (err) {
     console.error(err);
+    document.querySelectorAll('[data-rsvp-component] .rsvp-loading').forEach((el) => {
+      el.textContent = "Le formulaire n'a pas pu être chargé. Utilisez le contact ci-dessous.";
+    });
   }
 
   initNavigationState();
@@ -1009,7 +1029,7 @@ function initCalDropdowns() {
   bindNumberWheelGuards();
   await initMotionEnhancements();
   initLieuGallery();
-  initHomeAccordion();
+  initExclusiveAccordions();
   initCalDropdowns();
   initPageTransitions();
 })();

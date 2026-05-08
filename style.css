@@ -426,11 +426,10 @@ h2::after{
 }
 
 /* Bouton désactivé — visible mais non cliquable */
-.btn-disabled{
+.btn.is-disabled{
   cursor:default;
   pointer-events:none;
-  opacity:.68;
-  user-select:none;
+  opacity:.82;
 }
 
 /* Variante outline sur fond clair (hors header) */
@@ -856,10 +855,11 @@ main{
   position:absolute;
   inset:0;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:32px 24px 48px;
+  padding:5vh 24px 5vh;
   color:#fff;
   background:linear-gradient(
     180deg,
@@ -869,20 +869,37 @@ main{
   );
 }
 
-/* Hero card */
+/* Hero card — 3 blocs : top / logo / bottom */
 .hero-card{
   background:transparent;
   border:0;
   box-shadow:none;
   padding:0;
+  width:100%;
   max-width:760px;
+  flex:1;
   position:relative;
   isolation:isolate;
+  display:grid;
+  justify-items:center;
+  align-content:center;
+  gap:16px;
+  transform:none;
+}
+
+/* Blocs structurels */
+.hero-top{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  transform:translateY(2vh);
+  gap:6px;
+}
+.hero-bottom{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+  margin-top:0;
 }
 
 .hero-card::before{
@@ -916,17 +933,17 @@ main{
 /* Hero logo (remplace le titre texte) */
 .hero-logo{
   display:block;
-  width:clamp(616px,54vw,858px);
-  max-height:68vh;
+  width:clamp(560px,60vw,880px);
+  max-height:66vh;
   height:auto;
   object-fit:contain;
   filter:brightness(0) invert(1);
-  margin-top:-10%;
-  margin-bottom:-10%;
+  margin-top:-5%;
+  margin-bottom:-7%;
 }
 
 .hero-kicker{
-  margin:0 0 8px;
+  margin:0;
   color:rgba(255,250,245,.84);
   font-family:var(--font-body);
   font-size:13px;
@@ -945,10 +962,10 @@ main{
   line-height:1.4;
 }
 .hero-video .date-above{
-  margin:0 0 28px;
+  margin:0;
 }
 .hero-video .date-below{
-  margin:28px 0 0;
+  margin:0;
   font-size:11px;
   letter-spacing:.18em;
   color:rgba(255,255,255,.60);
@@ -956,7 +973,7 @@ main{
 
 /* Hero actions */
 .overlay .cta{
-  margin-top:16px;
+  margin-top:0;
   display:flex;
   gap:12px;
   flex-wrap:wrap;
@@ -972,7 +989,7 @@ main{
   align-items:center;
   gap:10px;
   flex-wrap:wrap;
-  margin-top:14px;
+  margin-top:0;
 }
 
 #countdown .cd-box{
@@ -1572,41 +1589,38 @@ main{
 
 .couple-intro-visual{
   margin:0;
-  padding:10px;
+  padding:0;
   border-radius:28px;
   position:relative;
-  background:linear-gradient(
-    180deg,
-    rgba(255,250,245,.82),
-    rgba(247,241,231,.68)
-  );
-  border:1px solid rgba(224,192,143,.12);
-  box-shadow:0 24px 70px rgba(73,24,47,.08);
+  overflow:hidden;
+  background:transparent;
+  border:1px solid rgba(224,192,143,.16);
+  box-shadow:0 18px 40px rgba(73,24,47,.04);
 }
 
 .couple-intro-visual::after{
   content:"";
   position:absolute;
-  inset:10px;
-  border-radius:22px;
+  inset:0;
+  border-radius:28px;
   pointer-events:none;
   z-index:1;
   background:
-    linear-gradient(to right,  rgba(252,246,239,.92) 0%, transparent 22%),
-    linear-gradient(to left,   rgba(252,246,239,.92) 0%, transparent 22%),
-    linear-gradient(to bottom, rgba(252,246,239,.86) 0%, transparent 18%),
-    linear-gradient(to top,    rgba(252,246,239,.86) 0%, transparent 18%),
-    radial-gradient(ellipse at 0% 0%,     rgba(252,246,239,.96) 0%, transparent 32%),
-    radial-gradient(ellipse at 100% 0%,   rgba(252,246,239,.96) 0%, transparent 32%),
-    radial-gradient(ellipse at 0% 100%,   rgba(252,246,239,.96) 0%, transparent 32%),
-    radial-gradient(ellipse at 100% 100%, rgba(252,246,239,.96) 0%, transparent 32%);
+    radial-gradient(circle at top left,     #FCF6EF 0%, transparent 22%),
+    radial-gradient(circle at top right,    #FCF6EF 0%, transparent 22%),
+    radial-gradient(circle at bottom left,  #FCF6EF 0%, transparent 22%),
+    radial-gradient(circle at bottom right, #FCF6EF 0%, transparent 22%),
+    linear-gradient(to top,    #FCF6EF 0%, transparent 12%),
+    linear-gradient(to bottom, #FCF6EF 0%, transparent 12%),
+    linear-gradient(to left,   #FCF6EF 0%, transparent 10%),
+    linear-gradient(to right,  #FCF6EF 0%, transparent 10%);
 }
 
 .couple-intro-visual img{
   display:block;
   width:100%;
   height:auto;
-  border-radius:22px;
+  border-radius:28px;
 }
 
 .couple-intro-kicker{
@@ -2671,6 +2685,44 @@ main{
   border-top:1px solid var(--border-soft);
 }
 
+/* =========================
+   PAGE 404
+   ========================= */
+.error-page-section{
+  min-height:60vh;
+  display:flex;
+  align-items:center;
+}
+.error-page{
+  text-align:center;
+  max-width:540px;
+  margin:0 auto;
+  padding:80px 0 96px;
+}
+.error-page-kicker{
+  font-family:var(--font-body);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:rgba(73,24,47,.46);
+  margin:0 0 20px;
+}
+.error-page h1{
+  font-family:var(--font-serif);
+  font-size:clamp(32px,5vw,52px);
+  font-weight:400;
+  line-height:1.1;
+  color:var(--text-ink-primary);
+  margin:0 0 20px;
+}
+.error-page-text{
+  font-size:16px;
+  line-height:1.7;
+  color:rgba(73,24,47,.68);
+  margin:0 0 36px;
+}
+
 .rsvp-fallback{
   max-width:560px;
 }
@@ -2885,6 +2937,13 @@ main{
 
 .rsvp-field-full{
   grid-column:1 / -1;
+}
+
+.rsvp-field-optional{
+  font-weight:400;
+  color:rgba(73,24,47,.46);
+  font-size:12px;
+  letter-spacing:.02em;
 }
 
 .rsvp-input{
@@ -3340,18 +3399,15 @@ button{
   }
 
   .hero-logo{
-    width:clamp(308px,64vw,572px);
-    max-height:55vh;
+    width:clamp(280px,56vw,540px);
+    max-height:52vh;
   }
 
   .hero-card{
     max-width:min(86vw,660px);
-    transform:translateY(1vh);
   }
 
-  .hero-video .date-above{ margin-bottom:20px; }
-  .hero-video .date-below{ margin-top:20px; }
-  .overlay .cta{ margin-top:14px; }
+  .overlay .cta{ margin-top:0; }
 
   .weekend-spirit{
     max-width:900px;
@@ -3567,16 +3623,19 @@ button{
 
   .hero-card{
     max-width:92vw;
-    transform:translateY(0);
   }
 
   .hero-logo{
-    width:min(88vw, 408px);
-    max-height:42vh;
+    width:min(86vw, 380px);
+    max-height:40vh;
+  }
+
+  .hero-bottom{
+    margin-top:clamp(10px, 2vh, 28px);
   }
 
   .hero-kicker{
-    margin:0 0 5px;
+    margin:0;
     font-size:11px;
     letter-spacing:.20em;
   }
@@ -3586,9 +3645,6 @@ button{
     letter-spacing:.10em;
     line-height:1.45;
   }
-  .hero-video .date-above{ margin-bottom:16px; }
-  .hero-video .date-below{ margin-top:16px; }
-
   #countdown{
     margin-top:10px;
     gap:7px;
@@ -3634,20 +3690,6 @@ button{
   .rsvp-reminder-cta{
     width:100%;
     text-align:center;
-  }
-
-  .couple-intro-visual{
-    padding:8px;
-    border-radius:22px;
-  }
-
-  .couple-intro-visual::after{
-    inset:8px;
-    border-radius:18px;
-  }
-
-  .couple-intro-visual img{
-    border-radius:18px;
   }
 
   .couple-intro-copy h2{
@@ -3841,14 +3883,14 @@ button{
   }
 
   .hero-logo{
-    width:min(82vw, 330px);
-    max-height:37vh;
+    width:min(82vw, 310px);
+    max-height:36vh;
   }
 
   .hero-kicker{
     font-size:10px;
     letter-spacing:.18em;
-    margin-bottom:7px;
+    margin:0;
   }
 
   #countdown .cd-box{
@@ -4047,9 +4089,9 @@ button{
     max-height:30vh;
     width:min(50vh,340px);
   }
-  .hero-card{ transform:translateY(0); }
+  .hero-card{ gap:8px; }
   .hero-kicker{
-    margin-bottom:5px;
+    margin:0;
     font-size:10px;
     letter-spacing:.18em;
   }
@@ -4057,10 +4099,8 @@ button{
     font-size:9.5px;
     letter-spacing:.09em;
   }
-  .hero-video .date-above{ margin-bottom:7px; }
-  .hero-video .date-below{ margin-top:7px; }
   #countdown{
-    margin-top:7px;
+    margin-top:0;
     gap:5px;
   }
   #countdown .cd-box{
@@ -4077,7 +4117,7 @@ button{
   }
   .overlay .cta{
     flex-direction:row;
-    margin-top:10px;
+    margin-top:0;
     gap:8px;
   }
   .overlay .cta .btn{
@@ -4095,19 +4135,9 @@ button{
    ========================= */
 @media (min-width: 901px) and (max-height: 900px){
   .hero-logo{
-    max-height: 44vh;
+    max-height: 42vh;
   }
-  .hero-kicker{
-    margin-bottom: 6px;
-  }
-  .hero-video .date-above{ margin-bottom:16px; }
-  .hero-video .date-below{ margin-top:16px; }
-  #countdown{
-    margin-top: 10px;
-  }
-  .overlay .cta{
-    margin-top: 12px;
-  }
+  .hero-kicker{ margin:0; }
 }
 
 /* =========================
