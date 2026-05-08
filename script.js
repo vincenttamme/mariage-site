@@ -548,7 +548,7 @@ function initRSVP() {
   const prettyDay = (v) => {
     if (v === 'vendredi') return 'Vendredi';
     if (v === 'samedi') return 'Samedi';
-    if (v === 'dimanche') return 'Dimanche (brunch)';
+    if (v === 'dimanche') return 'Dimanche matin — petit déjeuner';
     return v;
   };
 
