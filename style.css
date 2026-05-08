@@ -425,6 +425,14 @@ h2::after{
   color:var(--signature);
 }
 
+/* Bouton désactivé — visible mais non cliquable */
+.btn-disabled{
+  cursor:default;
+  pointer-events:none;
+  opacity:.68;
+  user-select:none;
+}
+
 /* Variante outline sur fond clair (hors header) */
 .btn-outline-on-light{
   color:var(--text-ink-primary);
@@ -542,6 +550,16 @@ h2::after{
   transition:opacity .18s;
 }
 .footer-title-link:hover{
+  opacity:.72;
+}
+
+.address-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  transition:opacity .18s;
+}
+.address-link:hover{
   opacity:.72;
 }
 
