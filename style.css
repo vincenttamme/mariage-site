@@ -536,6 +536,15 @@ h2::after{
   display:none;
 }
 
+.footer-title-link{
+  display:block;
+  text-decoration:none;
+  transition:opacity .18s;
+}
+.footer-title-link:hover{
+  opacity:.72;
+}
+
 .footer-column p{
   margin:0;
   color:var(--footer-muted);
