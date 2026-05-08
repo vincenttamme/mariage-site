@@ -909,12 +909,20 @@ main{
 
 /* Hero meta */
 .hero-video .date{
-  margin:18px 0 0;
   color:rgba(255,255,255,.78);
   letter-spacing:.13em;
   text-transform:uppercase;
   font-size:12px;
   line-height:1.4;
+}
+.hero-video .date-above{
+  margin:0 0 14px;
+}
+.hero-video .date-below{
+  margin:14px 0 0;
+  font-size:11px;
+  letter-spacing:.18em;
+  color:rgba(255,255,255,.60);
 }
 
 /* Hero actions */
@@ -3312,7 +3320,8 @@ button{
     transform:translateY(-1vh);
   }
 
-  .hero-video .date{ margin-top:14px; }
+  .hero-video .date-above{ margin-bottom:12px; }
+  .hero-video .date-below{ margin-top:12px; }
   .overlay .cta{ margin-top:14px; }
 
   .weekend-spirit{
@@ -3544,11 +3553,12 @@ button{
   }
 
   .hero-video .date{
-    margin-top:12px;
     font-size:10.5px;
     letter-spacing:.10em;
     line-height:1.45;
   }
+  .hero-video .date-above{ margin-bottom:10px; }
+  .hero-video .date-below{ margin-top:10px; }
 
   #countdown{
     margin-top:10px;
@@ -4015,10 +4025,11 @@ button{
     letter-spacing:.18em;
   }
   .hero-video .date{
-    margin-top:7px;
     font-size:9.5px;
     letter-spacing:.09em;
   }
+  .hero-video .date-above{ margin-bottom:7px; }
+  .hero-video .date-below{ margin-top:7px; }
   #countdown{
     margin-top:7px;
     gap:5px;
@@ -4060,9 +4071,8 @@ button{
   .hero-kicker{
     margin-bottom: 10px;
   }
-  .hero-video .date{
-    margin-top: 12px;
-  }
+  .hero-video .date-above{ margin-bottom:12px; }
+  .hero-video .date-below{ margin-top:12px; }
   #countdown{
     margin-top: 10px;
   }
