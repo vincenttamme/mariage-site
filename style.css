@@ -151,7 +151,7 @@
    PAGE TRANSITIONS
    ========================= */
 html.js body{
-  animation:page-enter .32s ease both;
+  animation:page-enter .42s cubic-bezier(0.0,0.0,0.2,1) both;
 }
 
 @keyframes page-enter{
@@ -162,7 +162,7 @@ html.js body{
 html.js body.is-leaving{
   animation:none;
   opacity:0;
-  transition:opacity .22s ease;
+  transition:opacity .18s ease-in;
   pointer-events:none;
 }
 
