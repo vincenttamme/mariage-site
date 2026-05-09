@@ -169,7 +169,7 @@ html,body{
   letter-spacing:var(--body-tracking);
   scroll-behavior:smooth;
 }
-html{ background:#fff; } /* blanc pur visible pendant les transitions de page */
+html{ background:#FFFAF5; } /* ivoire identique au fond des pages */
 
 html:focus-within{
   scroll-behavior:smooth;
