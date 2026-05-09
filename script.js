@@ -79,21 +79,17 @@ const heroVideo = document.querySelector('.hero-video video');
 if (heroVideo) {
   const tryPlay = () => heroVideo.play().catch(() => {});
 
-  const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
-  if (isMobileViewport) {
-    // Charger la version légère et forcer le buffering immédiat
+  // preload="none" garantit que rien n'a été chargé — on peut changer la source en toute sécurité
+  if (window.matchMedia('(max-width: 768px)').matches) {
     const src = heroVideo.querySelector('source');
     if (src) src.src = './media/hero-mobile.mp4';
-    else heroVideo.src = './media/hero-mobile.mp4';
-    heroVideo.preload = 'auto';
-    heroVideo.load();
   }
 
-  // Tenter la lecture immédiatement — iOS met en file d'attente si pas encore bufférisé
+  // play() déclenche la sélection de ressource — iOS choisit la bonne source et lance l'autoplay
   tryPlay();
   heroVideo.addEventListener('canplay', tryPlay, { once: true });
 
-  // Fallback : premier tap/scroll déclenche la lecture si l'autoplay est bloqué
+  // Fallback : premier tap déclenche la lecture si l'autoplay est bloqué par le navigateur
   const heroSection = document.querySelector('.hero-video');
   if (heroSection) {
     heroSection.addEventListener('touchstart', tryPlay, { once: true, passive: true });
