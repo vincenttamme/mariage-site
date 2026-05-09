@@ -789,6 +789,8 @@ main{
   background:var(--surface-header-strong);
   border-top:1px solid var(--border-soft);
   padding:0 20px 20px;
+  max-height:calc(100dvh - var(--header-h));
+  overflow-y:auto;
 }
 .site-header.menu-open .mobile-nav{display:block}
 .mobile-nav a:not(.btn){
