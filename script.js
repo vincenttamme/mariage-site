@@ -80,13 +80,7 @@ if (prefersReducedMotion && heroVideo) {
   heroVideo.removeAttribute('autoplay');
   heroVideo.pause();
 } else if (heroVideo) {
-  heroVideo.removeAttribute('loop');
   heroVideo.play().catch(() => {});
-  heroVideo.addEventListener('timeupdate', () => {
-    if (heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 0.18) {
-      heroVideo.currentTime = 0;
-    }
-  });
 }
 
 /* =========================
