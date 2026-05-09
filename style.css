@@ -180,7 +180,7 @@ html,body{
   letter-spacing:var(--body-tracking);
   scroll-behavior:smooth;
 }
-html{ background:#F9F0E4; } /* fond ivoire visible pendant la transition de page */
+html{ background:var(--bg-main); } /* même teinte que body — fond sans rupture de couleur pendant la transition */
 
 html:focus-within{
   scroll-behavior:smooth;
