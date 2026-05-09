@@ -1242,24 +1242,6 @@ main{
   -webkit-backdrop-filter:blur(6px);
 }
 
-.programme-day::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background-image:url("./media/logo-lv.png");
-  background-repeat:no-repeat;
-  background-position:center center;
-  background-size:88%;
-  opacity:.07;
-  mix-blend-mode:multiply;
-  pointer-events:none;
-  z-index:0;
-}
-
-.programme-day > *{
-  position:relative;
-  z-index:1;
-}
 
 .programme-day + .programme-day{
   margin-top:0;
