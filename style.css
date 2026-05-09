@@ -2058,7 +2058,6 @@ main{
 .infos-stay-grid{
   align-items:center;
   gap:22px;
-  grid-template-columns:1.5fr 1fr;
 }
 
 .infos-stay-copy{
