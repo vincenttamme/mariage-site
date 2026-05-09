@@ -77,29 +77,26 @@ window.addEventListener('scroll', onScroll, { passive: true });
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const heroVideo = document.querySelector('.hero-video video');
 if (heroVideo) {
-  // Sur mobile : charger la version légère (5.9 Mo vs 22 Mo)
+  const tryPlay = () => heroVideo.play().catch(() => {});
+
   const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
   if (isMobileViewport) {
+    // Charger la version légère et forcer le buffering immédiat
     const src = heroVideo.querySelector('source');
     if (src) src.src = './media/hero-mobile.mp4';
     else heroVideo.src = './media/hero-mobile.mp4';
+    heroVideo.preload = 'auto';
     heroVideo.load();
   }
 
-  const tryPlay = () => heroVideo.play().catch(() => {});
+  // Tenter la lecture immédiatement — iOS met en file d'attente si pas encore bufférisé
+  tryPlay();
+  heroVideo.addEventListener('canplay', tryPlay, { once: true });
 
-  if (heroVideo.readyState >= 3) {
-    tryPlay();
-  } else {
-    heroVideo.addEventListener('canplay', tryPlay, { once: true });
-  }
-
-  // Fallback : premier tap sur le hero déclenche la lecture
+  // Fallback : premier tap/scroll déclenche la lecture si l'autoplay est bloqué
   const heroSection = document.querySelector('.hero-video');
   if (heroSection) {
-    const playOnTouch = () => heroVideo.play().catch(() => {});
-    heroSection.addEventListener('touchstart', playOnTouch, { once: true, passive: true });
-    heroSection.addEventListener('click', playOnTouch, { once: true });
+    heroSection.addEventListener('touchstart', tryPlay, { once: true, passive: true });
   }
 }
 
