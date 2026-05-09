@@ -151,7 +151,7 @@
    PAGE TRANSITIONS
    ========================= */
 html.js body{
-  animation:page-enter .22s ease-out both;
+  animation:page-enter .16s ease-out both;
 }
 
 @keyframes page-enter{
@@ -164,27 +164,6 @@ html.js body.is-leaving{
   opacity:0;
   transition:opacity .42s ease;
   pointer-events:none;
-}
-
-/* Voile ivoire + monogramme pendant la sortie */
-.pt-veil{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  background:#F9F0E4;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  pointer-events:none;
-  opacity:0;
-  transition:opacity .42s ease;
-}
-.pt-veil.is-active{ opacity:1; }
-.pt-veil-mono{
-  width:68px;
-  height:auto;
-  opacity:.09;
-  filter:brightness(0);
 }
 
 /* =========================

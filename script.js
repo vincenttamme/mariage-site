@@ -995,13 +995,7 @@ function initPageTransitions() {
 
     e.preventDefault();
 
-    const veil = document.createElement('div');
-    veil.className = 'pt-veil';
-    veil.innerHTML = '<img src="./media/logo-lv.png" class="pt-veil-mono" alt="" aria-hidden="true">';
-    document.body.appendChild(veil);
     document.body.classList.add('is-leaving');
-    requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('is-active')));
-
     setTimeout(() => { location.href = href; }, 430);
   }, { capture: true });
 
