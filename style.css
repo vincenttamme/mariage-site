@@ -2237,9 +2237,11 @@ main{
    ========================= */
 .gallery img{
   width:100%;
+  aspect-ratio:3/2;
   border-radius:14px;
   display:block;
   margin-bottom:12px;
+  object-fit:cover;
 }
 
 .gallery-teaser{
