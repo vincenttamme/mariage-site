@@ -75,6 +75,13 @@ onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Fade-in d'entrée : html était à opacity:0 grâce à l'inline script du <head>
+if (!prefersReducedMotion) {
+  document.documentElement.style.transition = 'opacity .38s ease-out';
+}
+document.documentElement.classList.remove('page-loading');
+
 const heroVideo = document.querySelector('.hero-video video');
 if (heroVideo) {
   const tryPlay = () => heroVideo.play().catch(() => {});
@@ -994,13 +1001,20 @@ function initPageTransitions() {
     if (url.pathname === location.pathname && url.hash) return;
 
     e.preventDefault();
-
-    document.body.classList.add('is-leaving');
-    setTimeout(() => { location.href = href; }, 430);
+    const el = document.documentElement;
+    el.style.transition = 'opacity .42s ease';
+    el.style.opacity = '0';
+    el.style.pointerEvents = 'none';
+    setTimeout(() => { location.href = href; }, 440);
   }, { capture: true });
 
   window.addEventListener('pageshow', e => {
-    if (e.persisted) document.body.classList.remove('is-leaving');
+    if (e.persisted) {
+      const el = document.documentElement;
+      el.style.transition = '';
+      el.style.opacity = '';
+      el.style.pointerEvents = '';
+    }
   });
 }
 

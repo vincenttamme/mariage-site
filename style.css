@@ -150,20 +150,9 @@
 /* =========================
    PAGE TRANSITIONS
    ========================= */
-html.js body{
-  animation:page-enter .16s ease-out both;
-}
-
-@keyframes page-enter{
-  from{ opacity:0 }
-  to{   opacity:1 }
-}
-
-html.js body.is-leaving{
-  animation:none;
+html.page-loading{
   opacity:0;
-  transition:opacity .42s ease;
-  pointer-events:none;
+  /* bloque le rendu jusqu'à ce que JS déclenche le fade-in */
 }
 
 /* =========================
