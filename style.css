@@ -1953,6 +1953,75 @@ main{
   margin:0 auto;
 }
 
+/* =========================
+   FAQ GROUPÉE (infos.html)
+   ========================= */
+
+/* Navigation interne */
+.faq-nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+  max-width:660px;
+  margin:0 auto 48px;
+}
+.faq-nav-link{
+  display:inline-block;
+  padding:7px 18px;
+  border-radius:999px;
+  border:1px solid var(--border-strong);
+  color:var(--text-ink-primary-muted);
+  font-size:.75rem;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:background .18s ease, color .18s ease, border-color .18s ease;
+}
+.faq-nav-link:hover{
+  background:var(--signature);
+  color:#fff;
+  border-color:var(--signature);
+  text-decoration:none;
+}
+.faq-nav-link:focus-visible{
+  outline:2px solid rgba(224,192,143,.75);
+  outline-offset:4px;
+}
+
+/* Wrapper remplaçant .home-accordion */
+.faq-groups{
+  max-width:660px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:48px;
+}
+
+/* Titre de groupe */
+.faq-group-title{
+  font-family:var(--font-body);
+  font-size:.7rem;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent-gold);
+  margin:0 0 4px;
+}
+
+/* Bordure du premier accordéon de chaque groupe */
+.faq-group > details:first-of-type{
+  border-top:1px solid var(--border-soft);
+}
+
+/* Focus accessible — remplace le focus bleu natif */
+.faq-item > summary:focus-visible{
+  outline:2px solid rgba(224,192,143,.75);
+  outline-offset:4px;
+  border-radius:12px;
+}
+
 /* Cagnotte card (infos.html) */
 .cagnotte-card{
   max-width:600px;
@@ -4047,8 +4116,16 @@ button{
   .home-faq-head{
     margin-bottom:30px;
   }
-  .home-accordion{
+  .home-accordion,
+  .faq-groups{
     max-width:none;
+  }
+  .faq-nav{
+    max-width:none;
+    margin-bottom:36px;
+  }
+  .faq-groups{
+    gap:36px;
   }
   .home-accordion-item > summary{
     font-size:15.5px;
