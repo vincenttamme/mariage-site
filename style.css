@@ -162,7 +162,7 @@ html.js body{
 html.js body.is-leaving{
   animation:none;
   opacity:0;
-  transition:opacity .28s ease;
+  transition:opacity .42s ease;
   pointer-events:none;
 }
 
