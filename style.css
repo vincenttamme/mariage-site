@@ -2364,25 +2364,17 @@ main{
 }
 
 .lieu-feature-icon{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:60px;
-  height:60px;
-  color:rgba(73,24,47,.52);
-  flex-shrink:0;
-}
-
-.lieu-feature-icon svg{
   display:block;
   width:60px;
   height:60px;
+  color:var(--gold);
   fill:none;
   stroke:currentColor;
   stroke-width:1.5;
   stroke-linecap:round;
   stroke-linejoin:round;
   overflow:visible;
+  flex-shrink:0;
 }
 
 .lieu-feature-item-park{
@@ -3605,10 +3597,6 @@ button{
     width:48px;
     height:48px;
   }
-  .lieu-feature-icon svg{
-    width:48px;
-    height:48px;
-  }
 }
 
 /* =========================
@@ -3886,10 +3874,6 @@ button{
   }
 
   .lieu-feature-icon{
-    width:42px;
-    height:42px;
-  }
-  .lieu-feature-icon svg{
     width:42px;
     height:42px;
   }
