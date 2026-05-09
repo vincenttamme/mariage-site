@@ -1557,6 +1557,16 @@ main{
   font-style:italic;
 }
 
+.programme-meta a{
+  color:inherit;
+  text-decoration:underline;
+  text-underline-offset:2px;
+}
+
+.programme-meta a:hover{
+  color:var(--accent-gold);
+}
+
 .programme-event-highlight .programme-panel{
   background:none;
   border-color:transparent;
