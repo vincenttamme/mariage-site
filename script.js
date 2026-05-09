@@ -77,17 +77,27 @@ window.addEventListener('scroll', onScroll, { passive: true });
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const heroVideo = document.querySelector('.hero-video video');
 if (heroVideo) {
+  // Sur mobile : charger la version légère (5.9 Mo vs 22 Mo)
+  const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+  if (isMobileViewport) {
+    const src = heroVideo.querySelector('source');
+    if (src) src.src = './media/hero-mobile.mp4';
+    else heroVideo.src = './media/hero-mobile.mp4';
+    heroVideo.load();
+  }
+
   const tryPlay = () => heroVideo.play().catch(() => {});
 
-  tryPlay();
-  heroVideo.addEventListener('canplay', tryPlay, { once: true });
+  if (heroVideo.readyState >= 3) {
+    tryPlay();
+  } else {
+    heroVideo.addEventListener('canplay', tryPlay, { once: true });
+  }
 
-  // Mobile fallback: l'overlay intercepte les taps, on les remonte depuis la section
+  // Fallback : premier tap sur le hero déclenche la lecture
   const heroSection = document.querySelector('.hero-video');
   if (heroSection) {
-    const playOnTouch = () => {
-      heroVideo.play().catch(() => {});
-    };
+    const playOnTouch = () => heroVideo.play().catch(() => {});
     heroSection.addEventListener('touchstart', playOnTouch, { once: true, passive: true });
     heroSection.addEventListener('click', playOnTouch, { once: true });
   }
