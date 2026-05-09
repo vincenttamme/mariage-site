@@ -2845,17 +2845,6 @@ main{
   color:#49182F;
 }
 
-.card.rsvp-intro .rsvp-meta-block:has(.pill){
-  background:transparent;
-  border-color:transparent;
-}
-.card.rsvp-intro .rsvp-meta-block .pill{
-  color:#49182F;
-  background:transparent;
-  border-color:rgba(73,24,47,.10);
-  padding:12px 18px;
-  line-height:1.45;
-}
 
 .card.rsvp-intro .muted{
   color:rgba(73,24,47,.66);
