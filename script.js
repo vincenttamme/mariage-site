@@ -234,7 +234,7 @@ function initLieuGallery() {
   let autoplayTimer = null;
   const slideEasing = [0.78, 0.04, 0.9, 0.3];
   const mediaEasing = [0.32, 0.72, 0, 1];
-  const autoplayDelay = 4200;
+  const autoplayDelay = 3500;
 
   function buildSlide(index) {
     const slide = LIEU_GALLERY_SLIDES[index];

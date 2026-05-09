@@ -3420,6 +3420,9 @@ button{
   .footer-light-grid .footer-brand-block{
     grid-column:1 / -1;
   }
+  .footer-light-grid .footer-brand-block .footer-monogram{
+    height:58px;
+  }
 
   .footer-cagnotte{
     flex-direction:column;
@@ -3995,6 +3998,44 @@ button{
 
   .footer-monogram{
     height:64px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  /* Footer brand block — centré en colonne unique */
+  .footer-light-grid .footer-brand-block{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+  }
+  .footer-kicker{
+    text-align:center;
+  }
+  .footer-date{
+    text-align:center;
+  }
+
+  /* FAQ infos — espacement réduit */
+  .home-faq-head{
+    margin-bottom:30px;
+  }
+  .home-accordion{
+    max-width:none;
+  }
+  .home-accordion-item > summary{
+    font-size:15.5px;
+    padding:16px 0;
+  }
+  .home-accordion-content p{
+    max-width:none;
+    font-size:15px;
+  }
+
+  /* Cagnotte — bouton désactivé pleine largeur */
+  .footer-cagnotte .btn.is-disabled{
+    width:100%;
+    text-align:center;
   }
 
   .programme-day-head{
