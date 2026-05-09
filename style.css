@@ -169,7 +169,7 @@ html,body{
   letter-spacing:var(--body-tracking);
   scroll-behavior:smooth;
 }
-html{ background:var(--bg-main); } /* même teinte que body — fond sans rupture de couleur pendant la transition */
+html{ background:#fff; } /* blanc pur visible pendant les transitions de page */
 
 html:focus-within{
   scroll-behavior:smooth;
