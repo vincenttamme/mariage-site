@@ -1245,15 +1245,11 @@ main{
 .programme-day::before{
   content:"";
   position:absolute;
-  width:100%;
-  aspect-ratio:1;
-  left:0;
-  top:50%;
-  transform:translateY(-50%);
+  inset:0;
   background-image:url("./media/logo-lv.png");
   background-repeat:no-repeat;
-  background-position:center;
-  background-size:contain;
+  background-position:center center;
+  background-size:88%;
   opacity:.07;
   mix-blend-mode:multiply;
   pointer-events:none;
