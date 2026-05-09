@@ -1002,7 +1002,7 @@ function initPageTransitions() {
     document.body.classList.add('is-leaving');
     requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('is-active')));
 
-    setTimeout(() => { location.href = href; }, 250);
+    setTimeout(() => { location.href = href; }, 290);
   }, { capture: true });
 
   window.addEventListener('pageshow', e => {
