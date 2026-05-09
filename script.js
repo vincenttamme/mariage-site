@@ -979,15 +979,32 @@ function initMobileNav() {
 }
 
 function initPageTransitions() {
-  document.querySelectorAll('a[href]').forEach(link => {
+  if (prefersReducedMotion) return;
+
+  document.addEventListener('click', e => {
+    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+    const link = e.target.closest('a[href]');
+    if (!link) return;
     const href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || link.target) return;
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      document.body.classList.add('is-leaving');
-      setTimeout(() => { window.location.href = href; }, 260);
-    });
-  });
+    if (!href || link.target === '_blank' || link.hasAttribute('download')) return;
+    if (/^(mailto:|tel:|#|javascript:)/i.test(href)) return;
+    let url;
+    try { url = new URL(href, location.href); } catch { return; }
+    if (url.origin !== location.origin) return;
+    if (url.pathname === location.pathname && url.hash) return;
+
+    e.preventDefault();
+
+    const veil = document.createElement('div');
+    veil.className = 'pt-veil';
+    veil.innerHTML = '<img src="./media/logo-lv.png" class="pt-veil-mono" alt="" aria-hidden="true">';
+    document.body.appendChild(veil);
+    document.body.classList.add('is-leaving');
+    requestAnimationFrame(() => requestAnimationFrame(() => veil.classList.add('is-active')));
+
+    setTimeout(() => { location.href = href; }, 250);
+  }, { capture: true });
+
   window.addEventListener('pageshow', e => {
     if (e.persisted) document.body.classList.remove('is-leaving');
   });

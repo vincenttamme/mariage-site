@@ -151,19 +151,40 @@
    PAGE TRANSITIONS
    ========================= */
 html.js body{
-  animation:page-enter .38s ease both;
+  animation:page-enter .32s ease both;
 }
 
 @keyframes page-enter{
-  from{ opacity:0; transform:translateY(7px) }
-  to{   opacity:1; transform:translateY(0)   }
+  from{ opacity:0 }
+  to{   opacity:1 }
 }
 
 html.js body.is-leaving{
+  animation:none;
   opacity:0;
-  transform:translateY(-5px);
-  transition:opacity .24s ease, transform .24s ease;
+  transition:opacity .22s ease;
   pointer-events:none;
+}
+
+/* Voile ivoire + monogramme pendant la sortie */
+.pt-veil{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:#F9F0E4;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .22s ease;
+}
+.pt-veil.is-active{ opacity:1; }
+.pt-veil-mono{
+  width:68px;
+  height:auto;
+  opacity:.09;
+  filter:brightness(0);
 }
 
 /* =========================
@@ -180,6 +201,7 @@ html,body{
   letter-spacing:var(--body-tracking);
   scroll-behavior:smooth;
 }
+html{ background:#F9F0E4; } /* fond ivoire visible pendant la transition de page */
 
 html:focus-within{
   scroll-behavior:smooth;
