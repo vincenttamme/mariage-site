@@ -1217,6 +1217,7 @@ main{
   text-transform:uppercase;
   font-weight:500;
   letter-spacing:.18em;
+  color:var(--text-ink-primary);
 }
 
 .programme-intro p{
@@ -2211,7 +2212,7 @@ main{
   margin:0 0 20px;
   font-family:var(--font-script);
   font-weight:400;
-  font-size:clamp(52px, 6.3vw, 86px);
+  font-size:clamp(40px, 4.8vw, 64px);
   line-height:1;
   letter-spacing:.01em;
   color:var(--text-ink-primary);
@@ -2342,36 +2343,46 @@ main{
 }
 
 .lieu-feature-item{
-  position:relative;
-  min-height:188px;
+  min-height:160px;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:18px 14px;
+  padding:24px 16px 20px;
+  gap:14px;
   color:var(--text-ink-primary);
 }
 
 .lieu-feature-item p{
-  position:relative;
-  z-index:1;
   margin:0;
   max-width:14ch;
   font-family:var(--font-body);
-  font-size:clamp(17px, 1.8vw, 22px);
-  line-height:1.32;
+  font-size:clamp(14px, 1.5vw, 17px);
+  line-height:1.38;
   letter-spacing:.01em;
 }
 
 .lieu-feature-icon{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:132px;
-  height:132px;
-  transform:translate(-50%, -50%);
-  color:rgba(42,42,42,.12);
-  pointer-events:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:60px;
+  height:60px;
+  color:rgba(73,24,47,.52);
+  flex-shrink:0;
+}
+
+.lieu-feature-icon svg{
+  display:block;
+  width:60px;
+  height:60px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.5;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  overflow:visible;
 }
 
 .lieu-feature-item-park{
@@ -3554,7 +3565,7 @@ button{
   }
 
   .lieu-intro-title{
-    font-size:clamp(46px, 11vw, 68px);
+    font-size:clamp(36px, 9vw, 52px);
   }
 
   .lieu-intro-card p{
@@ -3591,8 +3602,12 @@ button{
   }
 
   .lieu-feature-icon{
-    width:120px;
-    height:120px;
+    width:48px;
+    height:48px;
+  }
+  .lieu-feature-icon svg{
+    width:48px;
+    height:48px;
   }
 }
 
@@ -3823,7 +3838,7 @@ button{
   }
 
   .lieu-intro-title{
-    font-size:48px;
+    font-size:38px;
   }
 
   .lieu-intro-card p{
@@ -3871,8 +3886,12 @@ button{
   }
 
   .lieu-feature-icon{
-    width:108px;
-    height:108px;
+    width:42px;
+    height:42px;
+  }
+  .lieu-feature-icon svg{
+    width:42px;
+    height:42px;
   }
 
   .hero-logo{
