@@ -76,11 +76,10 @@ window.addEventListener('scroll', onScroll, { passive: true });
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const heroVideo = document.querySelector('.hero-video video');
-if (prefersReducedMotion && heroVideo) {
-  heroVideo.removeAttribute('autoplay');
-  heroVideo.pause();
-} else if (heroVideo) {
-  heroVideo.play().catch(() => {});
+if (heroVideo) {
+  const tryPlay = () => heroVideo.play().catch(() => {});
+  tryPlay();
+  heroVideo.addEventListener('canplay', tryPlay, { once: true });
 }
 
 /* =========================
