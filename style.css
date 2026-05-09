@@ -429,7 +429,8 @@ h2::after{
 .btn.is-disabled{
   cursor:default;
   pointer-events:none;
-  opacity:.82;
+  opacity:.52;
+  filter:saturate(.55);
 }
 
 /* Variante outline sur fond clair (hors header) */
@@ -501,12 +502,14 @@ h2::after{
   font-size:11px;
 }
 
-.footer-brand{
-  margin:0 0 10px;
-  font-family:var(--font-script);
-  font-size:clamp(36px,4vw,50px);
-  line-height:1;
-  color:var(--footer-text);
+.footer-monogram{
+  display:block;
+  height:84px;
+  width:auto;
+  object-fit:contain;
+  margin:6px 0 10px;
+  filter:brightness(0) invert(1);
+  opacity:.90;
 }
 
 .footer-date{
@@ -630,7 +633,6 @@ h2::after{
   margin-top:32px;
   padding:24px 0;
   border-top:1px solid var(--footer-border);
-  border-bottom:1px solid var(--footer-border);
 }
 .footer-cagnotte-copy{
   display:flex;
@@ -648,7 +650,7 @@ h2::after{
   margin:0;
   font-size:14px;
   color:var(--footer-muted);
-  max-width:54ch;
+  max-width:80ch;
   line-height:1.6;
 }
 .footer-bottom-light{
@@ -3400,7 +3402,6 @@ button{
   .header-rsvp{ display:none; }
   .nav-toggle{ display:flex; }
   .site-header .brand{ font-size:1.4rem; }
-
   .footer-grid{
     grid-template-columns:repeat(2, minmax(0, 1fr));
     gap:24px 22px;
@@ -3992,8 +3993,8 @@ button{
     gap:14px;
   }
 
-  .footer-brand{
-    font-size:42px;
+  .footer-monogram{
+    height:64px;
   }
 
   .programme-day-head{
