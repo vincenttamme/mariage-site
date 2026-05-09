@@ -86,17 +86,12 @@ const heroVideo = document.querySelector('.hero-video video');
 if (heroVideo) {
   const tryPlay = () => heroVideo.play().catch(() => {});
 
-  // preload="none" garantit que rien n'a été chargé — on peut changer la source en toute sécurité
-  if (window.matchMedia('(max-width: 768px)').matches) {
-    const src = heroVideo.querySelector('source');
-    if (src) src.src = './media/hero-mobile.mp4';
-  }
-
-  // play() déclenche la sélection de ressource — iOS choisit la bonne source et lance l'autoplay
+  // Les sources mobile/desktop sont sélectionnées via <source media> dans le HTML.
+  // On ne modifie pas src en JS pour préserver le privilège autoplay iOS (attribut HTML).
   tryPlay();
   heroVideo.addEventListener('canplay', tryPlay, { once: true });
 
-  // Fallback : premier tap déclenche la lecture si l'autoplay est bloqué par le navigateur
+  // Fallback : premier tap si le navigateur bloque l'autoplay
   const heroSection = document.querySelector('.hero-video');
   if (heroSection) {
     heroSection.addEventListener('touchstart', tryPlay, { once: true, passive: true });
