@@ -3871,6 +3871,7 @@ button{
   .retenir-actions .btn,
   .retenir-actions .cal-dropdown{
     width:100%;
+    text-align:center;
   }
   .retenir-actions .cal-dropdown > summary{
     width:100%;
