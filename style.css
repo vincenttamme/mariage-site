@@ -177,7 +177,7 @@ html.js body.is-leaving{
   justify-content:center;
   pointer-events:none;
   opacity:0;
-  transition:opacity .22s ease;
+  transition:opacity .42s ease;
 }
 .pt-veil.is-active{ opacity:1; }
 .pt-veil-mono{
