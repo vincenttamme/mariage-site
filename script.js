@@ -78,8 +78,19 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 const heroVideo = document.querySelector('.hero-video video');
 if (heroVideo) {
   const tryPlay = () => heroVideo.play().catch(() => {});
+
   tryPlay();
   heroVideo.addEventListener('canplay', tryPlay, { once: true });
+
+  // Mobile fallback: l'overlay intercepte les taps, on les remonte depuis la section
+  const heroSection = document.querySelector('.hero-video');
+  if (heroSection) {
+    const playOnTouch = () => {
+      heroVideo.play().catch(() => {});
+    };
+    heroSection.addEventListener('touchstart', playOnTouch, { once: true, passive: true });
+    heroSection.addEventListener('click', playOnTouch, { once: true });
+  }
 }
 
 /* =========================

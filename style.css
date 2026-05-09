@@ -3463,6 +3463,11 @@ button{
     height:calc(100svh - 60px);
     min-height:500px;
   }
+  .hero-video video{
+    will-change:auto;
+    transform:none;
+    backface-visibility:visible;
+  }
 
   .hero-logo{
     width:clamp(280px,56vw,540px);
