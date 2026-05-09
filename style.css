@@ -1030,6 +1030,25 @@ main{
   position:relative;
 }
 
+#programme{
+  position:relative;
+  overflow:hidden;
+}
+
+#programme::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background-image:url("./media/logo-lv.png");
+  background-repeat:no-repeat;
+  background-position:center center;
+  background-size:clamp(440px, 62vw, 820px);
+  opacity:.10;
+  mix-blend-mode:multiply;
+  pointer-events:none;
+  z-index:0;
+}
+
 .weekend-spirit{
   position:relative;
   max-width:1040px;
