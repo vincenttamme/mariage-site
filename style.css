@@ -2242,6 +2242,144 @@ main{
   text-underline-offset:2px;
 }
 
+/* === Hero Infos === */
+.infos-hero-grid{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:52px;
+  align-items:center;
+}
+.infos-hero-h2{
+  margin-bottom:20px;
+}
+.infos-hero-desc{
+  margin:0;
+  max-width:var(--measure-copy-wide);
+  line-height:1.86;
+  color:var(--muted);
+}
+.infos-hero-summary{
+  position:relative;
+  padding:32px 28px 28px;
+  overflow:hidden;
+  border-color:var(--border-strong);
+  background:var(--surface-card-strong);
+}
+.infos-summary-monogram{
+  position:absolute;
+  right:-14px;
+  bottom:-14px;
+  height:120px;
+  width:auto;
+  opacity:.06;
+  filter:saturate(0);
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.infos-summary-list{
+  list-style:none;
+  margin:0 0 22px;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+.infos-summary-item{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+}
+.infos-summary-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:36px;
+  height:36px;
+  flex-shrink:0;
+  border-radius:10px;
+  background:rgba(224,192,143,.16);
+  color:var(--gold-2);
+}
+.infos-summary-label{
+  margin:0;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  font-weight:600;
+  color:var(--muted);
+  line-height:1;
+}
+.infos-summary-value{
+  margin:3px 0 0;
+  font-weight:600;
+  color:var(--text-ink-primary);
+  font-size:14px;
+  line-height:1.4;
+}
+.infos-summary-cta{
+  display:block;
+  text-align:center;
+}
+
+/* === À retenir === */
+.infos-highlight-grid{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0,1fr));
+  gap:18px;
+}
+.infos-highlight-card{
+  padding:24px 22px 26px;
+}
+.infos-highlight-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:rgba(224,192,143,.14);
+  color:var(--gold-2);
+  margin-bottom:12px;
+}
+.infos-highlight-label{
+  margin:0 0 6px;
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-weight:600;
+  color:var(--text-ink-primary-kicker);
+}
+.infos-highlight-value{
+  margin:0;
+  font-weight:500;
+  color:var(--txt);
+  line-height:1.55;
+  font-size:15px;
+}
+
+/* === Access cards with icons === */
+.infos-access-icon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  background:rgba(224,192,143,.12);
+  color:var(--gold-2);
+  margin-bottom:14px;
+}
+.infos-access-card{
+  border-color:rgba(214,194,154,.28);
+}
+.infos-itinerary-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:20px;
+}
+
 /* =========================
    LIEU / GALERIE
    ========================= */
@@ -3655,6 +3793,15 @@ button{
     padding:26px 24px 28px;
   }
 
+  .infos-hero-grid{
+    grid-template-columns:1fr;
+    gap:28px;
+  }
+
+  .infos-highlight-grid{
+    grid-template-columns:1fr;
+  }
+
   .rsvp-intro,
   .rsvp-presence-options,
   .rsvp-fields-2,
@@ -3926,6 +4073,14 @@ button{
 
   .infos-journey-grid{
     gap:10px;
+  }
+
+  .infos-highlight-grid{
+    gap:12px;
+  }
+
+  .infos-highlight-card{
+    padding:20px 18px 22px;
   }
 
   .weekend-spirit{
