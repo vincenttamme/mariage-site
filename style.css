@@ -3077,7 +3077,7 @@ main{
 .card.rsvp-intro .rsvp-intro-copy p{
   max-width:var(--measure-copy-wide);
   margin:0;
-  color:rgba(73,24,47,.58);
+  color:rgba(255,250,245,.72);
   font-weight:500;
 }
 
@@ -3104,8 +3104,8 @@ main{
 .card.rsvp-intro .rsvp-meta-block{
   padding:18px 22px;
   border-radius:18px;
-  border:1px solid rgba(73,24,47,.10);
-  background:rgba(255,250,245,.38);
+  border:1px solid rgba(255,250,245,.18);
+  background:rgba(255,250,245,.10);
   backdrop-filter:var(--blur-soft);
   -webkit-backdrop-filter:var(--blur-soft);
 }
@@ -3113,7 +3113,7 @@ main{
 .card.rsvp-intro .rsvp-meta-label{
   display:block;
   margin-bottom:6px;
-  color:rgba(73,24,47,.52);
+  color:rgba(255,250,245,.54);
   text-transform:uppercase;
   letter-spacing:.08em;
   font-size:11px;
@@ -3124,12 +3124,12 @@ main{
 }
 
 .card.rsvp-intro .rsvp-meta-block strong{
-  color:#49182F;
+  color:#FFFAF5;
 }
 
 
 .card.rsvp-intro .muted{
-  color:rgba(73,24,47,.66);
+  color:rgba(255,250,245,.72);
 }
 
 .card.rsvp-form{
@@ -3510,9 +3510,9 @@ main{
 /* RSVP — palette raffinée */
 .card.rsvp-intro,
 .card.rsvp-form{
-  background:rgba(122,90,95,.18);
-  border:1px solid rgba(255,250,245,.28);
-  box-shadow:0 28px 70px rgba(73,24,47,.10);
+  background:rgba(73,24,47,.82);
+  border:1px solid rgba(214,194,154,.28);
+  box-shadow:0 28px 70px rgba(73,24,47,.22);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
 }
@@ -3525,14 +3525,12 @@ main{
 }
 
 .rsvp-section h3,
-.rsvp-submit-zone h3,
-.card.rsvp-intro h2{
+.rsvp-submit-zone h3{
   color:#49182F;
 }
 
 .rsvp-section .muted,
-.rsvp-submit-zone .muted,
-.card.rsvp-intro .muted{
+.rsvp-submit-zone .muted{
   color:rgba(73,24,47,.66);
 }
 
