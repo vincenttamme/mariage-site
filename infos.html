@@ -167,7 +167,7 @@
 </section>
 
 <!-- 4. TEMPS DE TRAJET -->
-<section class="section-plum-1">
+<section class="section-bordeaux">
   <div class="container">
     <article class="card infos-journey-card">
       <div class="infos-section-head infos-section-head-compact">
@@ -207,7 +207,7 @@
 </section>
 
 <!-- 5. FAQ -->
-<section id="questions-pratiques" class="section-alt-1 home-faq-section">
+<section id="questions-pratiques" class="section-main home-faq-section">
   <div class="container">
     <div class="home-faq-head">
       <p class="pill">Questions pratiques</p>
@@ -217,18 +217,13 @@
       </p>
     </div>
 
-    <nav class="faq-nav" aria-label="Catégories de la FAQ">
-      <a class="faq-nav-link" href="#faq-arrivee">Arrivée</a>
-      <a class="faq-nav-link" href="#faq-logements">Logements</a>
-      <a class="faq-nav-link" href="#faq-domaine">Domaine</a>
-      <a class="faq-nav-link" href="#faq-pratique">Questions pratiques</a>
-    </nav>
 
-    <div class="faq-groups" data-exclusive-accordion>
+
+    <div class="faq-groups">
 
       <!-- 1 · Votre arrivée -->
-      <div class="faq-group" id="faq-arrivee">
-        <h3 class="faq-group-title">Votre arrivée</h3>
+      <details class="faq-group" id="faq-arrivee">
+        <summary class="faq-group-title">Votre arrivée</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
           <summary>Arrivées et départs</summary>
@@ -253,11 +248,11 @@
             <p>Cela permettra à chacun de s'organiser plus facilement pour le covoiturage.</p>
           </div>
         </details>
-      </div>
+      </details>
 
       <!-- 2 · Dormir sur place -->
-      <div class="faq-group" id="faq-logements">
-        <h3 class="faq-group-title">Dormir sur place</h3>
+      <details class="faq-group" id="faq-logements">
+        <summary class="faq-group-title">Dormir sur place</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
           <summary>Dormir au domaine</summary>
@@ -282,11 +277,11 @@
             <p>Si vous souhaitez profiter de la piscine ou de l'espace bien-être, pensez à un maillot de bain.</p>
           </div>
         </details>
-      </div>
+      </details>
 
       <!-- 3 · Profiter du domaine -->
-      <div class="faq-group" id="faq-domaine">
-        <h3 class="faq-group-title">Profiter du domaine</h3>
+      <details class="faq-group" id="faq-domaine">
+        <summary class="faq-group-title">Profiter du domaine</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
           <summary>Un week-end au même endroit</summary>
@@ -312,11 +307,11 @@
             <p>Pour préserver la tranquillité et la vie sauvage des animaux, cet espace est fermé de 20h à 7h. Les autres espaces du domaine restent accessibles à tout moment.</p>
           </div>
         </details>
-      </div>
+      </details>
 
       <!-- 4 · Règles et questions pratiques -->
-      <div class="faq-group" id="faq-pratique">
-        <h3 class="faq-group-title">Règles et questions pratiques</h3>
+      <details class="faq-group" id="faq-pratique">
+        <summary class="faq-group-title">Règles et questions pratiques</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
           <summary>L'esprit des tenues</summary>
@@ -387,9 +382,20 @@
             <a class="btn btn-outline-on-light" href="./rsvp.html">Confirmer ma présence</a>
           </div>
         </details>
-      </div>
+      </details>
 
     </div>
+  </div>
+</section>
+
+<section class="section-plum-2 rsvp-reminder-section">
+  <div class="container rsvp-reminder">
+    <div class="rsvp-reminder-copy">
+      <p class="rsvp-reminder-kicker">Confirmation de présence</p>
+      <h2 class="rsvp-reminder-heading">Serez-vous des nôtres&nbsp;?</h2>
+      <p class="rsvp-reminder-deadline">Réponse souhaitée avant le 1<sup>er</sup>&nbsp;novembre&nbsp;2026</p>
+    </div>
+    <a href="./rsvp.html" class="btn rsvp-reminder-cta">Confirmer ma présence</a>
   </div>
 </section>
 </main>

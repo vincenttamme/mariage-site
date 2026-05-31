@@ -247,6 +247,7 @@ section{padding:64px 0}
 .section-plum-1{ background:var(--bg-plum-tint-1); }
 .section-plum-2{ background:var(--bg-plum-tint-2); }
 .section-plum-3{ background:var(--bg-plum-tint-3); }
+.section-bordeaux{ background:var(--signature); }
 
 /* Texture décorative — section RSVP (home + page dédiée) */
 #rsvp,
@@ -272,6 +273,50 @@ section.rsvp-page-section{
 
 .section-plum-3 .card{
   background:var(--surface-glass-premium);
+}
+
+/* Section bordeaux plein — fond #49182F (footer) */
+.section-bordeaux .card{
+  background:rgba(255,250,245,.07);
+  border-color:rgba(214,194,154,.20);
+}
+
+.section-bordeaux h2{
+  color:#FFFAF5;
+}
+
+.section-bordeaux h2::after{
+  background:rgba(214,194,154,.55);
+}
+
+.section-bordeaux .infos-kicker{
+  color:rgba(255,250,245,.54);
+}
+
+.section-bordeaux .lieu-experiences-intro{
+  color:rgba(255,250,245,.76);
+}
+
+.section-bordeaux .lieu-feature-item p{
+  color:rgba(255,250,245,.90);
+}
+
+/* Journey card sur fond bordeaux */
+.section-bordeaux .infos-journey-item{
+  background:rgba(255,250,245,.08);
+  border-color:rgba(214,194,154,.18);
+}
+
+.section-bordeaux .infos-journey-item strong{
+  color:#FFFAF5;
+}
+
+.section-bordeaux .infos-journey-item span{
+  color:rgba(255,250,245,.80);
+}
+
+.section-bordeaux .infos-journey-item small{
+  color:rgba(255,250,245,.50);
 }
 
 /* =========================
@@ -1979,14 +2024,55 @@ main{
   gap:48px;
 }
 
-/* Titre de groupe */
+/* Titre de groupe — double accordéon niveau 1 */
+.faq-group > summary.faq-group-title{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  user-select:none;
+  -webkit-user-select:none;
+  transition:color .18s;
+}
+
+.faq-group > summary.faq-group-title::-webkit-details-marker{ display:none; }
+.faq-group > summary.faq-group-title:focus{ outline:none; }
+.faq-group > summary.faq-group-title:focus-visible{ outline:2px solid rgba(224,192,143,.75); outline-offset:4px; border-radius:4px; }
+
+.faq-group > summary.faq-group-title::after{
+  content:'';
+  display:inline-block;
+  flex-shrink:0;
+  width:7px;
+  height:7px;
+  border-right:1.5px solid rgba(73,24,47,.5);
+  border-bottom:1.5px solid rgba(73,24,47,.5);
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform .25s ease;
+  margin-left:12px;
+}
+
+.faq-group[open] > summary.faq-group-title::after{
+  transform:rotate(-135deg) translateY(1px);
+}
+
+.faq-group > summary.faq-group-title:hover{
+  color:var(--accent-gold);
+}
+
+/* Pas de bordure top supplémentaire sur le 1er item — le summary fait office de séparateur */
+.faq-group > details:first-of-type{
+  border-top:0;
+}
+
 .faq-group-title{
   font-family:var(--font-body);
   font-size:.7rem;
   font-weight:600;
   letter-spacing:.14em;
   text-transform:uppercase;
-  color:var(--accent-gold);
+  color:var(--signature);
   margin:0 0 4px;
 }
 
@@ -2491,13 +2577,13 @@ main{
 }
 
 .lieu-experiences-card{
-  padding:28px 30px 34px;
+  padding:28px 30px 24px;
 }
 
 .lieu-experiences-intro{
   max-width:60ch;
-  margin:0 0 20px;
-  line-height:1.8;
+  margin:0 0 16px;
+  line-height:1.7;
 }
 
 /* Acces au domaine */
@@ -2615,36 +2701,46 @@ main{
 /* Prestations panorama */
 .lieu-features-panorama{
   display:grid;
-  grid-template-columns:repeat(12, minmax(0, 1fr));
-  gap:16px 12px;
+  grid-template-columns:repeat(5, minmax(0, 1fr));
+  gap:8px;
   padding-top:10px;
 }
 
 .lieu-feature-item{
-  min-height:160px;
+  min-height:0;
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding:24px 16px 20px;
-  gap:14px;
+  padding:20px 12px 18px;
+  gap:10px;
   color:var(--text-ink-primary);
+}
+
+.lieu-feature-item-park,
+.lieu-feature-item-lodging,
+.lieu-feature-item-chalets,
+.lieu-feature-item-pool,
+.lieu-feature-item-wellness{
+  grid-column:auto;
+  grid-row:auto;
+  min-height:0;
 }
 
 .lieu-feature-item p{
   margin:0;
   max-width:14ch;
   font-family:var(--font-body);
-  font-size:clamp(14px, 1.5vw, 17px);
+  font-size:clamp(13px, 1.2vw, 15px);
   line-height:1.38;
   letter-spacing:.01em;
 }
 
 .lieu-feature-icon{
   display:block;
-  width:60px;
-  height:60px;
+  width:38px;
+  height:38px;
   color:var(--gold);
   fill:none;
   stroke:currentColor;
@@ -2655,30 +2751,129 @@ main{
   flex-shrink:0;
 }
 
-.lieu-feature-item-park{
-  grid-column:1 / span 4;
-  grid-row:1;
+/* Lieu hero — refonte éditoriale */
+.lieu-hero-inner{
+  display:grid;
+  grid-template-columns:1fr 360px;
+  gap:32px;
+  align-items:center;
 }
 
-.lieu-feature-item-lodging{
-  grid-column:9 / span 4;
-  grid-row:1;
+.lieu-hero-summary{
+  position:relative;
+  padding:32px 28px 28px;
+  overflow:hidden;
+  border-color:var(--border-strong);
+  background:var(--surface-card-strong);
 }
 
-.lieu-feature-item-chalets{
-  grid-column:1 / span 4;
-  grid-row:2;
+/* Galerie standalone — section dédiée */
+.lieu-gallery-standalone{
+  position:relative;
+  border-radius:var(--radius-card);
+  overflow:hidden;
+  border:1px solid var(--border-soft);
 }
 
-.lieu-feature-item-pool{
-  grid-column:8 / span 5;
-  grid-row:2;
+.lieu-gallery-standalone .lieu-gallery{
+  position:relative;
+  min-height:0;
 }
 
-.lieu-feature-item-wellness{
-  grid-column:4 / span 6;
-  grid-row:3;
-  min-height:170px;
+.lieu-gallery-standalone .lieu-gallery-stage{
+  aspect-ratio:16 / 9;
+}
+
+.lieu-hero-copy{
+  display:flex;
+  flex-direction:column;
+  padding:12px 0;
+}
+
+.lieu-hero-copy h2{
+  margin-bottom:24px;
+}
+
+.lieu-hero-desc{
+  margin:0;
+  max-width:var(--measure-copy-wide);
+  line-height:1.82;
+  color:var(--muted);
+}
+
+.lieu-hero-desc + .lieu-hero-desc{
+  margin-top:14px;
+}
+
+.lieu-hero-facts{
+  display:flex;
+  gap:32px;
+  margin-top:28px;
+  padding-top:24px;
+  border-top:1px solid var(--border-soft);
+  flex-wrap:wrap;
+}
+
+.lieu-hero-fact{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.lieu-hero-fact strong{
+  font-family:var(--font-serif);
+  font-size:1.3rem;
+  font-weight:400;
+  color:var(--text-ink-primary);
+  line-height:1.1;
+}
+
+.lieu-hero-fact span{
+  font-size:12px;
+  color:var(--muted);
+  letter-spacing:.03em;
+}
+
+/* Lieu — hébergements texte seul */
+.lieu-stay-wrap{
+  max-width:1060px;
+  margin:0 auto;
+}
+
+.lieu-stay-body{
+  display:grid;
+  gap:14px;
+}
+
+.lieu-stay-body p{
+  margin:0;
+  line-height:1.86;
+}
+
+/* Lieu — grille features uniformes */
+.lieu-features-grid{
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+}
+
+.lieu-feature-card{
+  padding:24px 22px 26px;
+  border-color:rgba(214,194,154,.28);
+}
+
+.lieu-feature-card-label{
+  margin:8px 0 6px;
+  font-family:var(--font-serif);
+  font-size:clamp(16px, 1.5vw, 20px);
+  font-weight:400;
+  color:var(--text-ink-primary);
+  line-height:1.2;
+}
+
+.lieu-feature-card-desc{
+  margin:0;
+  font-size:14px;
+  line-height:1.6;
+  color:var(--muted);
 }
 
 /* Slideshow */
@@ -3238,6 +3433,27 @@ main{
 
 .rsvp-input:hover{
   border-color:rgba(214,194,154,.62);
+}
+
+.rsvp-input.is-error{
+  border-color:rgba(180,35,24,.65);
+  background:rgba(180,35,24,.04);
+}
+
+.rsvp-input.is-valid{
+  border-color:rgba(34,120,60,.38);
+}
+
+.rsvp-guest-card--primary{
+  border-color:rgba(214,194,154,.45);
+  background:rgba(224,192,143,.06);
+}
+
+.rsvp-guest-primary-note{
+  font-size:11px;
+  color:rgba(73,24,47,.48);
+  letter-spacing:.02em;
+  margin-top:2px;
 }
 
 .rsvp-native-control{
@@ -3825,6 +4041,19 @@ button{
       "story";
   }
 
+  .lieu-hero-inner{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+
+  .lieu-hero-summary{
+    padding:24px 22px;
+  }
+
+  .lieu-features-grid{
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+  }
+
   .lieu-gallery-panel{
     justify-content:center;
   }
@@ -3871,24 +4100,12 @@ button{
   }
 
   .lieu-features-panorama{
-    grid-template-columns:repeat(2, minmax(0, 1fr));
-    gap:10px 6px;
-  }
-
-  .lieu-feature-item,
-  .lieu-feature-item-wellness{
-    grid-column:auto;
-    grid-row:auto;
-    min-height:172px;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:8px;
   }
 
   .lieu-feature-item p{
     max-width:15ch;
-  }
-
-  .lieu-feature-icon{
-    width:48px;
-    height:48px;
   }
 }
 
@@ -3902,8 +4119,8 @@ button{
 
   .hero-video{
     height:calc(100vh - var(--header-h));
-    height:calc(100svh - var(--header-h));
-    min-height:560px;
+    height:calc(100dvh - var(--header-h));
+    min-height:500px;
   }
 
   .hero-video .overlay{
@@ -4033,11 +4250,15 @@ button{
    RESPONSIVE <= 520px
    ========================= */
 @media (max-width: 520px){
-  :root{ --header-h: auto; }
+  :root{ --header-h: 46px; }
 
   section{ padding:56px 0; }
   .container{ padding:20px; }
 
+  .hero-video{
+    height:calc(100dvh - var(--header-h));
+    min-height:500px;
+  }
 
   .header-inner{ padding:12px 14px; }
 
@@ -4166,17 +4387,12 @@ button{
   }
 
   .lieu-features-panorama{
-    grid-template-columns:1fr;
-    gap:2px;
-  }
-
-  .lieu-feature-item,
-  .lieu-feature-item-wellness{
-    min-height:154px;
+    grid-template-columns:repeat(2, minmax(0, 1fr));
+    gap:6px;
   }
 
   .lieu-feature-item p{
-    font-size:18px;
+    font-size:15px;
     max-width:16ch;
   }
 
@@ -4345,6 +4561,10 @@ button{
     display:none;
   }
 
+  .programme-event:nth-child(odd) .programme-time::after{
+    display:block;
+  }
+
   .programme-time{
     margin-bottom:6px;
     font-size:10px;
@@ -4423,6 +4643,18 @@ button{
 
   .lieu-gallery-panel{
     padding:18px 16px 24px;
+  }
+
+  .lieu-hero-inner{
+    gap:20px;
+  }
+
+  .lieu-hero-facts{
+    gap:20px;
+  }
+
+  .lieu-features-grid{
+    grid-template-columns:1fr;
   }
 
 }

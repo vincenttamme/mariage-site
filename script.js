@@ -692,15 +692,13 @@ function initRSVP() {
   }
 
   function showInlineFieldMessage(field, message) {
-    if (field.name === 'email' && emailFieldNote) {
-      emailFieldNote.textContent = message;
-    }
+    const note = form.querySelector(`[data-field-note-for="${field.name}"]`);
+    if (note) note.textContent = message;
   }
 
   function clearInlineFieldMessage(field) {
-    if (field.name === 'email' && emailFieldNote) {
-      emailFieldNote.textContent = '';
-    }
+    const note = form.querySelector(`[data-field-note-for="${field.name}"]`);
+    if (note) note.textContent = '';
   }
 
   function getFieldValidationMessage(field) {
@@ -785,9 +783,10 @@ function initRSVP() {
         ? lastNameInput.value
         : (existingValues[`invite_${i}_nom`] || '');
 
+      const isPrimary = i === 1;
       html += `
-        <div class="rsvp-guest-card">
-          <div class="rsvp-guest-head">Invité ${i} — ${type}</div>
+        <div class="rsvp-guest-card${isPrimary ? ' rsvp-guest-card--primary' : ''}">
+          <div class="rsvp-guest-head">Invité ${i} — ${type}${isPrimary ? '<span class="rsvp-guest-primary-note"> · Pré-rempli depuis vos coordonnées</span>' : ''}</div>
           <div class="rsvp-guest-fields">
             <label class="rsvp-field">Prénom
               <input name="invite_${i}_prenom" required
@@ -880,6 +879,8 @@ function initRSVP() {
       const message = getFieldValidationMessage(field);
       if (message) {
         field.setCustomValidity(message);
+        field.classList.add('is-error');
+        field.classList.remove('is-valid');
         showInlineFieldMessage(field, message);
         if (field.name !== 'email') {
           showSubmitNote(message, 'error');
@@ -887,9 +888,30 @@ function initRSVP() {
       }
     });
 
+    field.addEventListener('blur', () => {
+      if (!field.name || field.type === 'hidden' || field.type === 'radio' || field.type === 'checkbox') return;
+      field.setCustomValidity('');
+      if (!field.value.trim() && field.required) {
+        field.classList.add('is-error');
+        field.classList.remove('is-valid');
+        showInlineFieldMessage(field, getFieldValidationMessage(field));
+      } else if (!field.validity.valid) {
+        field.classList.add('is-error');
+        field.classList.remove('is-valid');
+        showInlineFieldMessage(field, getFieldValidationMessage(field));
+      } else if (field.value.trim()) {
+        field.classList.add('is-valid');
+        field.classList.remove('is-error');
+        clearInlineFieldMessage(field);
+      }
+    });
+
     field.addEventListener('input', () => {
       field.setCustomValidity('');
       clearInlineFieldMessage(field);
+      field.classList.remove('is-error');
+      if (field.value.trim() && field.validity.valid) field.classList.add('is-valid');
+      else field.classList.remove('is-valid');
       if (note?.classList.contains('is-error')) {
         note.classList.remove('is-visible', 'is-error');
       }
