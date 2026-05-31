@@ -741,7 +741,9 @@ h2::after{
 
 /* Brand */
 .site-header .brand{
-  justify-self:start;
+  justify-self:end;
+  align-self:stretch;
+  margin-right:40px;
   font-family:var(--font-script);
   font-weight:400;
   color:var(--text-ink-primary);
@@ -750,8 +752,17 @@ h2::after{
   text-decoration:none;
   line-height:1;
   white-space:nowrap;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .site-header .brand:hover{opacity:.92}
+
+.brand-logo{
+  height:54px;
+  width:auto;
+  display:block;
+}
 
 /* Navigation */
 .site-header .nav{
