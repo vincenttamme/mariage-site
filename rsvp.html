@@ -10,8 +10,8 @@
   <meta property="og:locale" content="fr_FR">
   <meta property="og:title" content="Confirmer votre présence — Mariage de Léa et Vincent">
   <meta property="og:description" content="Confirmez votre présence au mariage de Léa et Vincent, 30 juillet–1er août 2027, Domaine de Baldassé.">
-  <meta property="og:url" content="https://vincenttamme.github.io/mariage-site/rsvp.html">
-  <meta property="og:image" content="https://vincenttamme.github.io/mariage-site/media/hero-poster.png">
+  <meta property="og:url" content="https://leaetvincent.fr/rsvp.html">
+  <meta property="og:image" content="https://leaetvincent.fr/media/hero-poster.jpg">
   <link rel="icon" type="image/png" href="./favicon.png">
   <link rel="apple-touch-icon" href="./favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,28 +63,54 @@
 
   <div data-footer-component data-footer-source="./partials/footer.html">
     <footer class="footer footer-light" role="contentinfo">
-      <div class="container footer-main">
-        <div class="footer-light-grid">
-          <div class="footer-brand-block">
-            <p class="footer-kicker">Mariage</p>
-            <img src="./media/logo-lv.png" alt="" aria-hidden="true" class="footer-monogram">
-            <p class="footer-date">30 juillet – 1<sup>er</sup> août 2027</p>
-          </div>
-          <div class="footer-column">
-            <p class="footer-title">Le lieu</p>
-            <p>Domaine de Baldassé<br>Baldassé, 12400 Saint-Affrique</p>
-          </div>
-          <div class="footer-column">
-            <p class="footer-title">Contact &amp; RSVP</p>
-            <ul class="footer-links">
-              <li><a href="tel:+33689347492">06 89 34 74 92</a></li>
-              <li><a href="mailto:mariage@leaetvincent.fr">mariage@leaetvincent.fr</a></li>
-              <li><a href="./rsvp.html">Confirmer ma présence</a></li>
-            </ul>
-          </div>
-        </div>
+  <div class="container footer-main">
+    <div class="footer-light-grid">
+      <div class="footer-brand-block">
+        <p class="footer-kicker">Mariage</p>
+        <img src="./media/logo-lv.png" alt="" aria-hidden="true" class="footer-monogram">
+        <p class="footer-date">30 juillet – 1<sup>er</sup> août 2027</p>
       </div>
-    </footer>
+
+      <div class="footer-column">
+        <p class="footer-title">Le lieu</p>
+        <a class="address-link" href="https://www.google.com/maps/search/?api=1&query=Domaine%20de%20Baldass%C3%A9%2C%20Baldass%C3%A9%2C%2012400%20Saint-Affrique" target="_blank" rel="noopener noreferrer">
+          <p>Domaine de Baldassé</p>
+          <p>Baldassé, 12400 Saint-Affrique</p>
+        </a>
+        <a href="https://www.google.com/maps?q=Baldass%C3%A9%2C%2012400%20Saint-Affrique" target="_blank" rel="noreferrer">
+          Voir l'itinéraire
+        </a>
+      </div>
+
+      <div class="footer-column">
+        <a class="footer-title footer-title-link" href="./infos.html#questions-pratiques">Une question ?</a>
+        <ul class="footer-links">
+          <li><a href="tel:+33689347492">06 89 34 74 92</a></li>
+          <li><a href="mailto:mariage@leaetvincent.fr">mariage@leaetvincent.fr</a></li>
+          <li><a href="./rsvp.html">Confirmer ma présence</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-cagnotte">
+      <div class="footer-cagnotte-copy">
+        <p class="footer-cagnotte-title">Une attention pour la suite</p>
+        <p class="footer-cagnotte-text">Votre présence est déjà le plus beau des cadeaux. Pour celles et ceux qui souhaitent nous accompagner davantage, une cagnotte sera prochainement mise en ligne.</p>
+      </div>
+      <span class="btn btn-champagne is-disabled" aria-disabled="true">Cagnotte bientôt disponible</span>
+    </div>
+
+    <div class="footer-bottom footer-bottom-light">
+      <p>© <span id="year"></span> Léa &amp; Vincent</p>
+      <nav class="footer-mini-nav" aria-label="Navigation secondaire">
+        <a href="./programme.html">Programme</a>
+        <a href="./lieu.html">Lieu</a>
+        <a href="./infos.html">Infos pratiques</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
   </div>
 
   <script src="./script.js?v=20260510"></script>

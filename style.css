@@ -301,7 +301,8 @@ section.rsvp-page-section{
   color:rgba(255,250,245,.90);
 }
 
-/* Journey card sur fond bordeaux */
+/* Items "À votre disposition" + "Temps de trajet" sur fond bordeaux : même boîte translucide */
+.section-bordeaux .lieu-feature-item,
 .section-bordeaux .infos-journey-item{
   background:rgba(255,250,245,.08);
   border-color:rgba(214,194,154,.18);
@@ -735,6 +736,7 @@ h2::after{
   display:grid;
   grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
   align-items:center;
+  align-content:center;
   padding:20px 64px;
   column-gap:40px;
 }
@@ -911,12 +913,20 @@ main{
   text-align:center;
   padding:5vh 24px 5vh;
   color:#fff;
-  background:linear-gradient(
-    180deg,
-    rgba(0,0,0,.18),
-    rgba(0,0,0,.10) 42%,
-    rgba(0,0,0,.22)
-  );
+  /* Calque stylisé SUR la vidéo (derrière texte/logo/icônes, qui sont des enfants) :
+     grain filmique léger + vignette douce → masque la mollesse de l'upscaling. */
+  background-color:transparent;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse at 50% 44%, rgba(0,0,0,0) 50%, rgba(0,0,0,.22) 100%),
+    linear-gradient(
+      180deg,
+      rgba(0,0,0,.18),
+      rgba(0,0,0,.10) 42%,
+      rgba(0,0,0,.22)
+    );
+  background-repeat:repeat, no-repeat, no-repeat;
+  background-size:180px 180px, cover, cover;
 }
 
 /* Hero card — 3 blocs : top / logo / bottom */
@@ -983,8 +993,8 @@ main{
 /* Hero logo (remplace le titre texte) */
 .hero-logo{
   display:block;
-  width:clamp(560px,60vw,880px);
-  max-height:66vh;
+  width:clamp(560px,60vw,840px);
+  max-height:62vh;
   height:auto;
   object-fit:contain;
   filter:brightness(0) invert(1);
@@ -994,13 +1004,34 @@ main{
 
 .hero-kicker{
   margin:0;
-  color:rgba(255,250,245,.84);
   font-family:var(--font-body);
   font-size:13px;
   font-weight:600;
   letter-spacing:.24em;
   line-height:1.2;
   text-transform:uppercase;
+  /* Reflet subtil qui balaie le texte (couleur de repli ci-dessous) */
+  color:rgba(255,250,245,.84);
+  background:linear-gradient(
+    100deg,
+    rgba(255,250,245,.70) 0%,
+    rgba(255,250,245,.70) 40%,
+    rgba(255,255,255,1) 50%,
+    rgba(255,250,245,.70) 60%,
+    rgba(255,250,245,.70) 100%
+  );
+  background-size:220% 100%;
+  background-position:150% 0;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:hero-kicker-shine 6.5s ease-in-out infinite;
+}
+
+@keyframes hero-kicker-shine{
+  0%   { background-position:150% 0; }
+  55%  { background-position:-60% 0; }
+  100% { background-position:-60% 0; }
 }
 
 /* Hero meta */
@@ -1015,7 +1046,7 @@ main{
   margin:0;
 }
 .hero-video .date-below{
-  margin:0;
+  margin:-32px 0 0;
   font-size:11px;
   letter-spacing:.18em;
   color:rgba(255,255,255,.60);
@@ -1023,7 +1054,7 @@ main{
 
 /* Hero actions */
 .overlay .cta{
-  margin-top:0;
+  margin-top:20px;
   display:flex;
   gap:12px;
   flex-wrap:wrap;
@@ -1039,7 +1070,7 @@ main{
   align-items:center;
   gap:10px;
   flex-wrap:wrap;
-  margin-top:0;
+  margin-top:12px;
 }
 
 #countdown .cd-box{
@@ -1049,9 +1080,9 @@ main{
   justify-content:center;
   background:rgba(0,0,0,.18);
   border:1px solid rgba(214,194,154,.40);
-  border-radius:999px;
-  padding:12px 22px;
-  min-width:80px;
+  border-radius:50%;
+  padding:14px 26px;
+  min-width:92px;
   color:#fff;
 }
 
@@ -1108,22 +1139,6 @@ main{
   isolation:isolate;
 }
 
-.weekend-spirit::before{
-  content:"";
-  position:absolute;
-  inset:12px 0;
-  border-radius:32px;
-  background:linear-gradient(
-    180deg,
-    rgba(255,250,245,.62),
-    rgba(255,250,245,.74)
-  );
-  border:1px solid rgba(214,194,154,.14);
-  filter:blur(8px);
-  opacity:.92;
-  z-index:-2;
-}
-
 .weekend-spirit::after{
   content:"";
   position:absolute;
@@ -1142,22 +1157,6 @@ main{
   filter:blur(24px);
   z-index:-1;
   pointer-events:none;
-}
-
-.weekend-spirit-tag{
-  position:absolute;
-  top:0;
-  right:18px;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:auto;
-  padding:0;
-  color:rgba(42,42,42,.58);
-  font-size:11px;
-  font-weight:600;
-  letter-spacing:.18em;
-  text-transform:uppercase;
 }
 
 .weekend-spirit-kicker{
@@ -1283,9 +1282,9 @@ main{
 
 .programme-page-title{
   font-family:var(--font-serif);
-  text-transform:uppercase;
   font-weight:500;
-  letter-spacing:.18em;
+  font-size:clamp(28px,3.2vw,40px);
+  letter-spacing:.01em;
   color:var(--text-ink-primary);
 }
 
@@ -1360,18 +1359,9 @@ main{
   font-family:var(--font-script);
   font-weight:400;
   color:var(--programme-ink-title);
-  font-size:clamp(32px,3.8vw,46px);
-  line-height:1.06;
+  font-size:clamp(42px,5.2vw,62px);
+  line-height:1.0;
   white-space:normal;
-}
-
-.programme-day-name{
-  margin:0;
-  color:var(--muted);
-  text-transform:uppercase;
-  letter-spacing:.22em;
-  font-size:14px;
-  font-weight:600;
 }
 
 .programme-day-head p.muted{
@@ -1408,7 +1398,7 @@ main{
   gap:12px 24px;
   align-items:start;
   position:relative;
-  padding:14px 0;
+  padding:7px 0;
   border-top:0;
   background:transparent;
   border-radius:0;
@@ -1726,25 +1716,26 @@ main{
 }
 
 .couple-intro-lead{
-  margin:22px 0 0;
-  color:rgba(73,24,47,.76);
+  margin:18px 0 0;
+  color:rgba(73,24,47,.84);
   font-family:"Cormorant Garamond", serif;
   font-size:clamp(20px,2vw,26px);
-  line-height:1.42;
+  line-height:1.5;
 }
 
 .couple-intro-text{
   display:flex;
   flex-direction:column;
-  gap:14px;
-  margin-top:24px;
+  gap:18px;
+  margin-top:22px;
   margin-bottom:0;
 }
 
 .couple-intro-text p{
+  margin:0;
   font-size:16px;
   line-height:1.72;
-  color:rgba(73,24,47,.70);
+  color:rgba(73,24,47,.72);
 }
 
 .couple-intro-cta{
@@ -2588,7 +2579,7 @@ main{
 }
 
 .lieu-experiences-card{
-  padding:28px 30px 24px;
+  padding:30px 28px 32px;
 }
 
 .lieu-experiences-intro{
@@ -2599,7 +2590,7 @@ main{
 
 /* Acces au domaine */
 .lieu-access-grid{
-  align-items:start;
+  align-items:center;
   gap:22px;
 }
 
@@ -2713,7 +2704,7 @@ main{
 .lieu-features-panorama{
   display:grid;
   grid-template-columns:repeat(5, minmax(0, 1fr));
-  gap:8px;
+  gap:14px;
   padding-top:10px;
 }
 
@@ -2722,11 +2713,14 @@ main{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
   text-align:center;
   padding:20px 12px 18px;
-  gap:10px;
+  gap:12px;
   color:var(--text-ink-primary);
+  border-radius:18px;
+  border:1px solid rgba(214,194,154,.16);
+  background:rgba(255,250,245,.46);
 }
 
 .lieu-feature-item-park,
@@ -2752,7 +2746,7 @@ main{
   display:block;
   width:38px;
   height:38px;
-  color:var(--gold);
+  color:rgba(255,250,245,.92);
   fill:none;
   stroke:currentColor;
   stroke-width:1.5;
@@ -2958,7 +2952,7 @@ main{
 
 .lieu-gallery-dots{
   display:flex;
-  gap:10px;
+  gap:12px;
   width:100%;
   overflow-x:auto;
   padding-bottom:2px;
@@ -2974,9 +2968,9 @@ main{
 
 .lieu-gallery-dot{
   position:relative;
-  flex:0 0 52px;
-  width:52px;
-  height:52px;
+  flex:0 0 62px;
+  width:62px;
+  height:62px;
   overflow:hidden;
   border:1px solid rgba(255,250,245,.24);
   border-radius:12px;
@@ -3771,23 +3765,23 @@ main{
 }
 
 .rsvp-input{
-  background:rgba(255,250,245,.30);
-  border:1px solid rgba(73,24,47,.20);
+  background:rgba(255,250,245,.92);
+  border:1px solid rgba(73,24,47,.22);
   color:#49182F;
 }
 
 .rsvp-input::placeholder{
-  color:rgba(73,24,47,.42);
+  color:rgba(73,24,47,.55);
 }
 
 .rsvp-input:hover{
-  background:rgba(255,250,245,.34);
-  border-color:rgba(73,24,47,.28);
+  background:rgba(255,250,245,.97);
+  border-color:rgba(73,24,47,.30);
 }
 
 .rsvp-input:focus,
 .rsvp-input:focus-visible{
-  background:rgba(255,250,245,.56);
+  background:#fffaf5;
   border-color:rgba(224,192,143,.95);
   outline:none;
   box-shadow:
@@ -3914,16 +3908,13 @@ button{
     max-width:min(86vw,660px);
   }
 
-  .overlay .cta{ margin-top:0; }
+  .overlay .cta{ margin-top:20px; }
 
   .weekend-spirit{
     max-width:900px;
     padding:46px 38px 50px;
   }
 
-  .weekend-spirit::before{
-    inset:12px 0;
-  }
 
   .weekend-spirit-copy{
     max-width:48ch;
@@ -3936,8 +3927,8 @@ button{
   }
 
   .programme-day-head h3{
-    font-size:clamp(36px,7.4vw,48px);
-    line-height:1.04;
+    font-size:clamp(44px,9vw,58px);
+    line-height:1.0;
     white-space:normal;
   }
 
@@ -4180,6 +4171,8 @@ button{
     font-size:9px;
   }
 
+  .hero-video .date-below{ margin-top:0; }
+
   .overlay .cta{
     width:100%;
     flex-direction:column;
@@ -4317,10 +4310,6 @@ button{
     padding:40px 22px 44px;
   }
 
-  .weekend-spirit::before{
-    inset:10px 0;
-    border-radius:24px;
-  }
 
   .weekend-spirit::after{
     width:92%;
@@ -4331,12 +4320,6 @@ button{
     margin-bottom:14px;
     font-size:10px;
     letter-spacing:.2em;
-  }
-
-  .weekend-spirit-tag{
-    right:12px;
-    font-size:10px;
-    letter-spacing:.16em;
   }
 
   .weekend-spirit h2{

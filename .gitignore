@@ -1,3 +1,9 @@
 
 # Local agent workspace
 .claude/
+
+# macOS
+.DS_Store
+
+# Master vidéo non utilisé en prod (gardé en local, jamais commité)
+media/hero-original.mp4
