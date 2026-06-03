@@ -659,7 +659,7 @@ function initRSVP() {
 
     if (field.validity.valueMissing) {
       if (field.name === 'email') return 'Merci de renseigner votre adresse e-mail.';
-      return `Merci de renseigner ${labelText.toLowerCase()}.`;
+      return `Merci de renseigner votre ${labelText.toLowerCase()}.`;
     }
 
     if (field.validity.typeMismatch && field.name === 'email') {
@@ -667,7 +667,7 @@ function initRSVP() {
     }
 
     if (field.validity.badInput) {
-      return `Merci de vérifier ${labelText.toLowerCase()}.`;
+      return `Merci de vérifier votre ${labelText.toLowerCase()}.`;
     }
 
     return '';
@@ -844,18 +844,15 @@ function initRSVP() {
     field.addEventListener('blur', () => {
       if (!field.name || field.type === 'hidden' || field.type === 'radio' || field.type === 'checkbox') return;
       field.setCustomValidity('');
-      if (!field.value.trim() && field.required) {
-        field.classList.add('is-error');
-        field.classList.remove('is-valid');
-        showInlineFieldMessage(field, getFieldValidationMessage(field));
-      } else if (!field.validity.valid) {
-        field.classList.add('is-error');
-        field.classList.remove('is-valid');
-        showInlineFieldMessage(field, getFieldValidationMessage(field));
-      } else if (field.value.trim()) {
+      // On ne signale aucune erreur au blur : les messages n'apparaissent qu'à la
+      // soumission d'un formulaire incomplet. On marque seulement en "valide" (vert)
+      // les champs correctement remplis.
+      if (field.value.trim() && field.validity.valid) {
         field.classList.add('is-valid');
         field.classList.remove('is-error');
         clearInlineFieldMessage(field);
+      } else {
+        field.classList.remove('is-valid');
       }
     });
 
@@ -974,6 +971,9 @@ function initMobileNav() {
 
 function initPageTransitions() {
   if (prefersReducedMotion) return;
+  // Navigateurs gérant les View Transitions cross-document (@view-transition) :
+  // on laisse la transition native opérer, sans fondu manuel ni délai de navigation.
+  if ('CSSViewTransitionRule' in window) return;
 
   document.addEventListener('click', e => {
     if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;

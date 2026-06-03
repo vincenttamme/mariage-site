@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Mulish:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css?v=20260510f">
-  <script>document.documentElement.classList.add("page-loading")</script>
+  <script>if(!('CSSViewTransitionRule' in window))document.documentElement.classList.add("page-loading")</script>
 </head><body class="page" data-page="infos">
 <a class="skip-link" href="#main-content">Aller au contenu</a>
 <div data-header-component data-header-source="./partials/header.html">
@@ -222,7 +222,7 @@
     <div class="faq-groups">
 
       <!-- 1 · Votre arrivée -->
-      <details class="faq-group" id="faq-arrivee">
+      <details class="faq-group" name="faq-group" id="faq-arrivee">
         <summary class="faq-group-title">Votre arrivée</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
@@ -251,7 +251,7 @@
       </details>
 
       <!-- 2 · Dormir sur place -->
-      <details class="faq-group" id="faq-logements">
+      <details class="faq-group" name="faq-group" id="faq-logements">
         <summary class="faq-group-title">Dormir sur place</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
@@ -280,7 +280,7 @@
       </details>
 
       <!-- 3 · Profiter du domaine -->
-      <details class="faq-group" id="faq-domaine">
+      <details class="faq-group" name="faq-group" id="faq-domaine">
         <summary class="faq-group-title">Profiter du domaine</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">
@@ -310,7 +310,7 @@
       </details>
 
       <!-- 4 · Règles et questions pratiques -->
-      <details class="faq-group" id="faq-pratique">
+      <details class="faq-group" name="faq-group" id="faq-pratique">
         <summary class="faq-group-title">Règles et questions pratiques</summary>
 
         <details class="home-accordion-item faq-item" name="infos-faq">

@@ -152,7 +152,25 @@
    ========================= */
 html.page-loading{
   opacity:0;
-  /* bloque le rendu jusqu'à ce que JS déclenche le fade-in */
+  /* bloque le rendu jusqu'à ce que JS déclenche le fade-in (repli sans View Transitions) */
+}
+
+/* View Transitions natives (cross-document) : fondu enchaîné fluide entre les pages,
+   géré par le navigateur (sans délai ni écran blanc). Repli sur les navigateurs non
+   compatibles : navigation instantanée + fondu JS hérité (voir page-loading). */
+@view-transition{ navigation: auto; }
+
+::view-transition-old(root),
+::view-transition-new(root){
+  animation-duration:.45s;
+  animation-timing-function:cubic-bezier(.4, 0, .2, 1);
+}
+
+@media (prefers-reduced-motion: reduce){
+  ::view-transition-old(root),
+  ::view-transition-new(root){
+    animation:none;
+  }
 }
 
 /* =========================
@@ -1267,6 +1285,8 @@ main{
 }
 
 .programme-intro .pill{
+  display:block;
+  margin:0 0 12px;
   padding:0;
   border:0;
   border-radius:0;
@@ -2335,7 +2355,7 @@ main{
   display:grid;
   grid-template-columns:1fr 360px;
   gap:52px;
-  align-items:center;
+  align-items:start;
 }
 .infos-hero-h2{
   margin-bottom:20px;
@@ -2761,7 +2781,7 @@ main{
   display:grid;
   grid-template-columns:1fr 360px;
   gap:32px;
-  align-items:center;
+  align-items:start;
 }
 
 .lieu-hero-summary{
@@ -2792,7 +2812,7 @@ main{
 .lieu-hero-copy{
   display:flex;
   flex-direction:column;
-  padding:12px 0;
+  padding:0;
 }
 
 .lieu-hero-copy h2{
@@ -3820,18 +3840,24 @@ button{
   }
 
   .header-inner{
-    grid-template-columns:1fr auto;
-    justify-items:start;
+    display:flex;
+    justify-content:center;
     align-items:center;
+    position:relative;
     height:auto;
     padding:14px 20px;
-    row-gap:0;
   }
 
   .site-header .nav{ display:none; }
   .header-rsvp{ display:none; }
-  .nav-toggle{ display:flex; }
-  .site-header .brand{ font-size:1.4rem; }
+  .nav-toggle{
+    display:flex;
+    position:absolute;
+    right:20px;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .site-header .brand{ font-size:1.4rem; margin-right:0; }
   .footer-grid{
     grid-template-columns:repeat(2, minmax(0, 1fr));
     gap:24px 22px;
