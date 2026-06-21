@@ -955,12 +955,10 @@ main{
   padding:0;
   width:100%;
   max-width:760px;
-  flex:1;
   position:relative;
   isolation:isolate;
   display:grid;
   justify-items:center;
-  align-content:center;
   gap:16px;
   transform:none;
 }
