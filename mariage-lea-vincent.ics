@@ -4,12 +4,12 @@ PRODID:-//Lea et Vincent//Mariage 2027//FR
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VEVENT
-UID:mariage-lea-vincent-2027@vincenttamme.github.io
+UID:mariage-lea-vincent-2027@leaetvincent.fr
 DTSTART;TZID=Europe/Paris:20270730T140000
 DTEND;TZID=Europe/Paris:20270801T110000
 SUMMARY:Mariage de Léa & Vincent
 LOCATION:Domaine de Baldassé\, Baldassé\, 12400 Saint-Affrique
-DESCRIPTION:Programme complet sur https://vincenttamme.github.io/mariage-site/
+DESCRIPTION:Programme complet sur https://leaetvincent.fr/
 STATUS:CONFIRMED
 END:VEVENT
 END:VCALENDAR
