@@ -4276,12 +4276,12 @@ button{
   :root{ --header-h: 46px; }
 
   .lieu-gallery-dot{
-    flex:0 0 44px;
-    width:44px;
-    height:44px;
-    border-radius:8px;
+    flex:0 0 34px;
+    width:34px;
+    height:34px;
+    border-radius:6px;
   }
-  .lieu-gallery-dots{ gap:8px; }
+  .lieu-gallery-dots{ gap:6px; }
 
   section{ padding:56px 0; }
   .container{ padding:20px; }
@@ -4663,7 +4663,7 @@ button{
   }
 
   .lieu-gallery-panel{
-    padding:18px 16px 24px;
+    padding:6px 12px 14px;
   }
 
   .lieu-hero-inner{
