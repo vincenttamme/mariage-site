@@ -15,10 +15,6 @@ const MOTION_HOVER_CARD_SELECTOR = '.programme-day, .card.rsvp-intro, .gallery i
 const MOTION_HOVER_BUTTON_SELECTOR = '.site-header .btn-outline, .overlay .btn-outline';
 const LIEU_GALLERY_SLIDES = [
   {
-    src: './media/photos galerie/200603110931XARlVGBZ.jpg',
-    alt: 'Domaine de Baldassé',
-  },
-  {
     src: './media/photos galerie/476679151_1074762971121283_9131240477482457873_n.jpg',
     alt: 'Domaine de Baldassé',
   },
@@ -57,6 +53,10 @@ const LIEU_GALLERY_SLIDES = [
   {
     src: './media/photos galerie/Avant saison - Focus sur lOrangerie ! 🍊Un autre lieu pour vos réunions, réceptions, cérémonies.jpg',
     alt: "L'Orangerie du Domaine de Baldassé",
+  },
+  {
+    src: './media/photos galerie/200603110931XARlVGBZ.jpg',
+    alt: 'Domaine de Baldassé',
   },
 ];
 
