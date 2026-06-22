@@ -43,7 +43,7 @@ const LIEU_GALLERY_SLIDES = [
     alt: 'Domaine de Baldassé',
   },
   {
-    src: './media/photos galerie/Avant saison - Focus sur lOrangerie ! 🍊Un autre lieu pour vos réunions, réceptions, cérémonies.jpg',
+    src: './media/photos galerie/orangerie.jpg',
     alt: "L'Orangerie du Domaine de Baldassé",
   },
   {
