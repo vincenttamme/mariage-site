@@ -958,6 +958,7 @@ main{
   position:relative;
   isolation:isolate;
   display:grid;
+  grid-template-columns:minmax(0,1fr);
   justify-items:center;
   gap:16px;
   transform:none;
