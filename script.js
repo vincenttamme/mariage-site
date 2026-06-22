@@ -501,6 +501,41 @@ async function initMotionEnhancements() {
    - Adultes/Enfants -> génère Nom/Prénom/Allergies par invité
    - Validations (standard RSVP)
    ========================= */
+const BREVO_ENDPOINT = 'https://api.leaetvincent.fr/api/rsvp';
+
+function buildRsvpPayload(form) {
+  const get = (name) => form.elements[name]?.value?.trim() || '';
+  const adultes = parseInt(form.elements['adultes']?.value || '1', 10);
+  const enfants = parseInt(form.elements['enfants']?.value || '0', 10);
+
+  const guests = [];
+  for (let i = 1; i <= adultes + enfants; i++) {
+    const prenom = get(`invite_${i}_prenom`);
+    const nom = get(`invite_${i}_nom`);
+    if (prenom || nom) {
+      guests.push({
+        prenom,
+        nom,
+        allergies: get(`invite_${i}_infos`),
+        type: get(`invite_${i}_type`),
+      });
+    }
+  }
+
+  return {
+    _gotcha: get('_gotcha'),
+    prenom: get('prenom'),
+    nom: get('nom'),
+    email: get('email'),
+    telephone: get('telephone'),
+    presence: get('presence'),
+    presence_detail: get('presence_detail'),
+    adultes,
+    enfants,
+    guests,
+  };
+}
+
 function initRSVP() {
   const form = document.getElementById('rsvp-form');
   if (!form) return; // pas de formulaire sur cette page
@@ -894,12 +929,24 @@ function initRSVP() {
     data.append('_subject', 'Mariage - Nouvelle réponse de présence');
 
     try {
-      const res = await fetch(endpointInput.value, {
-        method: 'POST',
-        body: data,
-        headers: { Accept: 'application/json' },
-      });
-      if (!res.ok) throw new Error('Erreur envoi');
+      const jsonPayload = buildRsvpPayload(form);
+
+      const [formspreeResult] = await Promise.allSettled([
+        fetch(endpointInput.value, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        }),
+        fetch(BREVO_ENDPOINT, {
+          method: 'POST',
+          body: JSON.stringify(jsonPayload),
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        }),
+      ]);
+
+      if (formspreeResult.status === 'rejected' || !formspreeResult.value?.ok) {
+        throw new Error('Erreur envoi');
+      }
 
       if (toast) {
         showToastMessage(toast, 'Merci, votre réponse a bien été envoyée.');
