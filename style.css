@@ -2970,7 +2970,6 @@ main{
   width:100%;
   overflow-x:auto;
   padding-bottom:2px;
-  justify-content:center;
   scrollbar-width:none;
   overscroll-behavior-x:contain;
   scroll-behavior:smooth;
