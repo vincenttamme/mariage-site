@@ -15,15 +15,15 @@ const MOTION_HOVER_CARD_SELECTOR = '.programme-day, .card.rsvp-intro, .gallery i
 const MOTION_HOVER_BUTTON_SELECTOR = '.site-header .btn-outline, .overlay .btn-outline';
 const LIEU_GALLERY_SLIDES = [
   {
+    src: './media/photos galerie/612526752_1328657429065168_8571168590257757738_n.jpg',
+    alt: 'Domaine de Baldassé',
+  },
+  {
     src: './media/photos galerie/476679151_1074762971121283_9131240477482457873_n.jpg',
     alt: 'Domaine de Baldassé',
   },
   {
     src: './media/photos galerie/477574769_1074763001121280_7526801382150775830_n.jpg',
-    alt: 'Domaine de Baldassé',
-  },
-  {
-    src: './media/photos galerie/612526752_1328657429065168_8571168590257757738_n.jpg',
     alt: 'Domaine de Baldassé',
   },
   {
