@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Mulish:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./style.css?v=20260510f">
+<link rel="stylesheet" href="./dress-code/simulator.css">
   <script>if(!('CSSViewTransitionRule' in window))document.documentElement.classList.add("page-loading")</script>
 </head><body class="page" data-page="infos">
 <a class="skip-link" href="#main-content">Aller au contenu</a>
@@ -44,6 +45,7 @@
         <p class="infos-kicker">Infos pratiques</p>
         <h2 class="infos-hero-h2">Préparer votre venue</h2>
         <p class="infos-hero-desc">Tout se déroule au Domaine de Baldassé : cérémonie, repas, soirées et hébergements. Vous trouverez ici les repères utiles pour organiser votre arrivée et profiter du week-end sereinement.</p>
+        <a class="btn btn-outline-on-light" href="#dress-code">Imaginer ma tenue</a>
       </div>
       <div class="card infos-hero-summary">
         <img src="./media/logo-lv.png" alt="" aria-hidden="true" class="infos-summary-monogram">
@@ -108,6 +110,17 @@
         <p class="infos-highlight-value">Cérémonie, repas, soirées et hébergements réunis au Domaine de Baldassé</p>
       </article>
     </div>
+  </div>
+</section>
+
+<section id="dress-code" class="section-main dc-section" aria-label="Simulateur de tenues de mariage">
+  <div class="container">
+    <wedding-dress-code>
+      <h2>Trouvez votre tenue idéale</h2>
+      <p>Le blanc, le blanc cassé, l’ivoire et les tons proches, ainsi que le bordeaux et le rouge vin sont à éviter pour tous les rôles. La palette recommandée sera précisée plus tard.</p>
+      <p>Le simulateur vous permettra de composer et comparer les couleurs des tenues.</p>
+      <noscript><p>Activez JavaScript pour explorer les couleurs et les personnages interactifs. Les règles ci-dessus restent disponibles.</p></noscript>
+    </wedding-dress-code>
   </div>
 </section>
 
@@ -317,6 +330,7 @@
           <summary>L'esprit des tenues</summary>
           <div class="home-accordion-content">
             <p>Nous imaginons une ambiance élégante, classique et naturelle. Privilégiez une tenue sobre, raffinée, dans des tons doux ou naturels.</p>
+            <p>Le blanc, l’ivoire et le bordeaux sont à éviter. <a href="#dress-code">Explorez les couleurs avec notre simulateur de tenues.</a></p>
           </div>
         </details>
 
@@ -443,4 +457,5 @@
 
 </div>
 <script src="./script.js?v=20260510"></script>
+<script type="module" src="./dress-code/simulator.js"></script>
 </body></html>
