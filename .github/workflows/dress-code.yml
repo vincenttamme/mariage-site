@@ -1,0 +1,33 @@
+name: Build and verify wedding simulator
+
+on:
+  push:
+    branches:
+      - feat/wedding-dress-code-simulator
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run check
+      - name: Commit rebuilt browser bundle
+        run: |
+          if ! git diff --quiet -- dress-code/scene.bundle.js dress-code/scene.bundle.js.LEGAL.txt dress-code/LICENSE-THREE.txt; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add dress-code/scene.bundle.js dress-code/scene.bundle.js.LEGAL.txt dress-code/LICENSE-THREE.txt
+            git commit -m "build: sync wedding simulator browser bundle"
+            git push
+          fi

@@ -6,18 +6,14 @@ import {
   Group,
   HemisphereLight,
   Mesh,
-  MeshBasicMaterial,
   MeshStandardMaterial,
   NeutralToneMapping,
   PCFShadowMap,
   PerspectiveCamera,
   PlaneGeometry,
   PMREMGenerator,
-  Raycaster,
-  RingGeometry,
   Scene,
   SRGBColorSpace,
-  Vector2,
   Vector3,
   WebGLRenderer,
 } from 'three';
@@ -26,23 +22,19 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { clone as cloneSkeleton } from 'three/addons/utils/SkeletonUtils.js';
 
 /**
- * The scene owns its WebGL resources. Business rules and UI state stay outside it.
- * Assets are cached per URL; only clothing materials and skeletons are cloned.
+ * The scene renders exactly one character. Color rules and UI state stay outside it.
+ * Both existing GLB outfits are cached per URL; only clothing materials and skeletons are cloned.
  * Build this file with npm run build. The UI lazy-loads scene.bundle.js.
  *
  * @typedef {{id:string, label?:string, modelId:string, colorId:string, role?:string}} Participant
  * @typedef {{id:string, label?:string, url:string|null, clothingMaterials:string[], clothingMeshes?:string[], height?:number, rotation?:number}} Model
  * @typedef {{id:string, hex:string}} Swatch
  * @typedef {{models:Model[], colors:Swatch[]}} SceneConfig
- * @typedef {{compliant:Participant[], alternative:Participant[]}} Comparison
  * @typedef {{loaded:number,total:number,bytes:number,characterId:string|null,message:string}} Progress
- * @typedef {{container:HTMLElement,config:SceneConfig,composition:Participant[],onSelect?:(id:string)=>void,onProgress?:(progress:Progress)=>void,onError?:(error:Error,context:{characterId:string,modelId:string})=>void,onContextLost?:()=>void}} SceneOptions
+ * @typedef {{container:HTMLElement,config:SceneConfig,character:Participant,onProgress?:(progress:Progress)=>void,onError?:(error:Error,context:{characterId:string,modelId:string})=>void,onContextLost?:()=>void}} SceneOptions
  */
 
-const COMPARISON_BREAKPOINT = 700;
 const STUDIO_COLOR = '#eae5dd';
-const SELECTED_COLOR = '#735a50';
-const MAX_ROTATION = Math.PI;
 
 /** @param {SceneOptions} options */
 export function createScene(options) {
@@ -59,7 +51,7 @@ export function createScene(options) {
   canvas.className = 'dress-code-canvas';
   canvas.tabIndex = 0;
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', 'Groupe de tenues en trois dimensions. Flèches gauche et droite pour tourner, touches plus et moins pour zoomer, touche Origine pour revenir à la vue de groupe. La sélection et les couleurs sont aussi disponibles dans le panneau.');
+  canvas.setAttribute('aria-label', 'Personnage en trois dimensions. Utilisez les flèches gauche et droite pour le faire tourner.');
   canvas.style.cssText = 'display:block;width:100%;height:100%;touch-action:pan-y;';
 
   // Throw before changing the host if this browser cannot create a WebGL context.
@@ -118,13 +110,6 @@ export function createScene(options) {
   room.dispose();
   environmentGenerator.dispose();
 
-  const selectionGeometry = new RingGeometry(0.33, 0.35, 64);
-  const selectionMaterial = new MeshBasicMaterial({ color: SELECTED_COLOR, transparent: true, opacity: 0.65, depthWrite: false });
-  const selectionRing = new Mesh(selectionGeometry, selectionMaterial);
-  selectionRing.rotation.x = -Math.PI / 2;
-  selectionRing.position.y = 0.004;
-  selectionRing.visible = false;
-  group.add(selectionRing);
 
   const loader = new GLTFLoader();
   /** @type {Map<string, Promise<import('three/addons/loaders/GLTFLoader.js').GLTF>>} */
@@ -133,19 +118,10 @@ export function createScene(options) {
   const sourceScenes = new Set();
   /** @type {Set<AbortController>} */
   const requests = new Set();
-  /** @type {Map<string, {root:Group,modelId:string,width:number,height:number,depth:number,materials:MeshStandardMaterial[],skeletons:Set<import('three').Skeleton>}>} */
-  const instances = new Map();
-  /** @type {Map<string, string>} */
-  const pending = new Map();
-  /** @type {Set<string>} */
-  const failed = new Set();
-  let composition = options.composition.map((character) => ({ ...character }));
-  /** @type {Comparison|null} */
-  let comparison = null;
-  /** @type {'compliant'|'alternative'} */
-  let comparisonSide = 'compliant';
-  /** @type {string|null} */
-  let selectedId = null;
+  /** @type {{root:Group,modelId:string,width:number,height:number,depth:number,materials:MeshStandardMaterial[],skeletons:Set<import('three').Skeleton>}|null} */
+  let instance = null;
+  let character = { ...options.character };
+  let loadVersion = 0;
   let disposed = false;
   let contextLost = false;
   let visible = true;
@@ -153,61 +129,44 @@ export function createScene(options) {
   let frame = 0;
   let width = Math.max(1, container.clientWidth);
   let height = Math.max(1, container.clientHeight || 480);
-  let zoom = 1;
   let yaw = 0;
+  let targetYaw = 0;
   let receivedBytes = 0;
   let renderedFrames = 0;
   let lastFrameMs = 0;
   let slowFrames = 0;
   let pixelRatio = initialPixelRatio;
-  let loading = false;
-  let loadRequested = false;
-  let groupWidth = 4.6;
-  let groupHeight = 1.9;
-  let groupDepth = 1.4;
-
-  const raycaster = new Raycaster();
-  const pointerPosition = new Vector2();
   const target = new Vector3(0, 0.95, 0);
-  /** @type {Map<number,{x:number,y:number,startX:number,startY:number,moved:boolean}>} */
-  const pointers = new Map();
-  let pinchDistance = 0;
-
-  function isSplit() {
-    return comparison !== null && width > COMPARISON_BREAKPOINT;
-  }
+  /** @type {{id:number,x:number,startX:number,startY:number,horizontal:boolean}|null} */
+  let pointer = null;
 
   function scheduleRender() {
     dirty = true;
     if (!disposed && !contextLost && visible && !document.hidden && !frame) frame = requestAnimationFrame(render);
   }
 
-  /** @param {Participant[]} displayed */
-  function applyColors(displayed) {
-    for (const character of displayed) {
-      const instance = instances.get(character.id);
-      const color = colors.get(character.colorId);
-      if (!instance || !color) continue;
-      for (const material of instance.materials) material.color.set(color);
-    }
+  function applyColor() {
+    if (!instance || instance.modelId !== character.modelId) return;
+    const value = colors.get(character.colorId);
+    if (!value) return;
+    for (const material of instance.materials) material.color.set(value);
   }
 
-  /** @param {number} viewportWidth */
-  function frameCamera(viewportWidth) {
-    const aspect = viewportWidth / height;
-    camera.aspect = aspect;
-    // Rotation-safe framing keeps the complete group visible, including during drag.
-    const halfSpan = Math.hypot(groupWidth / 2, groupDepth / 2);
+  function frameCamera() {
+    camera.aspect = width / height;
+    const model = models.get(character.modelId);
+    const modelHeight = instance?.height || model?.height || 1.78;
+    const modelWidth = instance?.width || 1.05;
+    const modelDepth = instance?.depth || 0.8;
     const verticalFov = camera.fov * Math.PI / 180;
-    const distanceForHeight = (groupHeight * 0.72) / Math.tan(verticalFov / 2);
-    const distanceForWidth = (halfSpan * 1.26) / (Math.tan(verticalFov / 2) * aspect);
-    const distance = Math.max(distanceForHeight, distanceForWidth) / zoom;
-    target.set(0, groupHeight * 0.48, 0);
-    const compact = (isSplit() ? width / 2 : width) <= 480 && composition.length > 3;
-    camera.position.set(0, target.y + distance * (compact ? 0.3 : 0.115), distance);
+    const radius = Math.hypot(modelWidth / 2, modelDepth / 2);
+    const verticalDistance = modelHeight * 0.62 / Math.tan(verticalFov / 2);
+    const horizontalDistance = radius * 1.27 / (Math.tan(verticalFov / 2) * camera.aspect);
+    const distance = Math.max(verticalDistance, horizontalDistance);
+    target.set(0, modelHeight * 0.5, 0);
+    camera.position.set(0, target.y + distance * 0.07, distance);
     camera.lookAt(target);
     camera.updateProjectionMatrix();
-    camera.updateMatrixWorld();
   }
 
   function render() {
@@ -215,34 +174,22 @@ export function createScene(options) {
     if (disposed || contextLost || !visible || document.hidden || !dirty) return;
     dirty = false;
     const started = performance.now();
-    renderer.info.reset();
-    group.rotation.y = yaw;
-    if (isSplit() && comparison) {
-      const leftWidth = Math.floor(width / 2);
-      const rightWidth = width - leftWidth;
-      renderer.setScissorTest(true);
-      renderer.setViewport(0, 0, leftWidth, height);
-      renderer.setScissor(0, 0, leftWidth, height);
-      frameCamera(leftWidth);
-      applyColors(comparison.compliant);
-      renderer.render(scene, camera);
-      renderer.setViewport(leftWidth, 0, rightWidth, height);
-      renderer.setScissor(leftWidth, 0, rightWidth, height);
-      frameCamera(rightWidth);
-      applyColors(comparison.alternative);
-      renderer.render(scene, camera);
-      renderer.setScissorTest(false);
-    } else {
-      renderer.setViewport(0, 0, width, height);
-      renderer.setScissorTest(false);
-      frameCamera(width);
-      applyColors(comparison ? comparison[comparisonSide] : composition);
-      renderer.render(scene, camera);
+    if (reducedMotion.matches) yaw = targetYaw;
+    else {
+      const difference = targetYaw - yaw;
+      if (Math.abs(difference) > 0.002) {
+        yaw += difference * 0.32;
+        scheduleRender();
+      } else yaw = targetYaw;
     }
+    group.rotation.y = yaw;
+    renderer.info.reset();
+    renderer.setViewport(0, 0, width, height);
+    frameCamera();
+    applyColor();
+    renderer.render(scene, camera);
     renderedFrames += 1;
     lastFrameMs = performance.now() - started;
-    // Only adapt during actual user activity. No animation loop consumes idle power.
-    // This measures CPU submission time, not a guaranteed GPU frame rate.
     slowFrames = lastFrameMs > 42 ? slowFrames + 1 : Math.max(0, slowFrames - 1);
     if (slowFrames >= 8 && pixelRatio > 1) {
       pixelRatio = Math.max(1, pixelRatio - 0.25);
@@ -258,73 +205,16 @@ export function createScene(options) {
     width = Math.max(1, Math.round(container.clientWidth));
     height = Math.max(1, Math.round(container.clientHeight || 480));
     renderer.setSize(width, height, false);
-    arrangeGroup();
     scheduleRender();
   }
 
-  function arrangeGroup() {
-    const count = composition.length;
-    const compact = (isSplit() ? width / 2 : width) <= 480 && count > 3;
-    // Narrow viewports use two staggered rows. Every face remains visible and both
-    // comparison panels always share the same arrangement and camera settings.
-    const columns = compact ? Math.ceil(count / 2) : count;
-    const widths = composition.map((character) => instances.get(character.id)?.width || 0.7);
-    const depths = composition.map((character) => instances.get(character.id)?.depth || 0.6);
-    const rowDepth = Math.max(0.65, ...depths) + 0.2;
-    let minX = Infinity;
-    let maxX = -Infinity;
-    for (let index = 0; index < count; index += 1) {
-      const character = composition[index];
-      const instance = instances.get(character.id);
-      const offset = index - (count - 1) / 2;
-      const rowStart = Math.floor(index / columns) * columns;
-      const rowWidths = widths.slice(rowStart, rowStart + columns);
-      const rowWidth = rowWidths.reduce((total, item) => total + item, 0) + (rowWidths.length - 1) * 0.15;
-      const precedingWidth = widths.slice(rowStart, index).reduce((total, item) => total + item + 0.15, 0);
-      let x = -rowWidth / 2 + precedingWidth + widths[index] / 2;
-      let z;
-      if (compact) {
-        const front = index < columns;
-        x += front ? -0.17 : 0.17;
-        z = front ? rowDepth / 2 : -rowDepth / 2;
-      } else {
-        z = -Math.abs(offset) * 0.13 + (index % 2 ? 0.025 : -0.025);
-      }
-      minX = Math.min(minX, x - widths[index] / 2);
-      maxX = Math.max(maxX, x + widths[index] / 2);
-      if (!instance) continue;
-      instance.root.position.set(x, 0, z);
-      const model = models.get(character.modelId);
-      instance.root.rotation.y = (model?.rotation || 0) + offset * -0.025;
-    }
-    groupWidth = count ? Math.max(1.1, maxX - minX) : 1.1;
-    groupHeight = Math.max(1.8, ...composition.map((character) => models.get(character.modelId)?.height || 1.78));
-    groupDepth = compact ? rowDepth + Math.max(...depths) : Math.max(0.9, count * 0.13 + Math.max(...depths));
-    updateSelection();
-    renderer.shadowMap.needsUpdate = true;
-  }
-
-  function updateSelection() {
-    const instance = selectedId ? instances.get(selectedId) : undefined;
-    selectionRing.visible = Boolean(instance);
-    if (instance) {
-      selectionRing.position.x = instance.root.position.x;
-      selectionRing.position.z = instance.root.position.z;
-      // Keep the selection visible around wide hems, rather than under the dress.
-      selectionRing.scale.set(
-        Math.max(0.35, instance.width * 0.56) / 0.35,
-        Math.max(0.35, instance.depth * 0.56) / 0.35,
-        1,
-      );
-    }
-  }
-
-  /** @param {string|null} characterId */
-  function reportProgress(characterId = null) {
+  function reportProgress() {
     if (disposed) return;
-    const total = composition.length;
-    const loaded = composition.filter((character) => instances.has(character.id)).length;
-    options.onProgress?.({ loaded, total, bytes: receivedBytes, characterId, message: loaded === total ? 'Les tenues sont prêtes.' : `Chargement des tenues : ${loaded} sur ${total}.` });
+    const loaded = instance?.modelId === character.modelId ? 1 : 0;
+    options.onProgress?.({
+      loaded, total: 1, bytes: receivedBytes, characterId: character.id,
+      message: loaded ? 'La tenue est prête.' : 'Chargement du personnage…',
+    });
   }
 
   /** @param {string} url */
@@ -357,15 +247,14 @@ export function createScene(options) {
     return cached;
   }
 
-  /** @param {Participant} character */
-  async function loadCharacter(character) {
-    const model = models.get(character.modelId);
-    const token = `${character.id}:${character.modelId}`;
-    pending.set(character.id, token);
+
+  /** @param {Participant} selected @param {number} version */
+  async function loadCharacter(selected, version) {
+    const model = models.get(selected.modelId);
     try {
-      if (!model?.url) throw new Error('Cette tenue 3D n’est pas encore disponible. Le nuancier reste accessible.');
+      if (!model?.url) throw new Error('Cette tenue 3D n’est pas encore disponible.');
       const source = await getAsset(model.url);
-      if (disposed || pending.get(character.id) !== token || !composition.some((item) => item.id === character.id && item.modelId === character.modelId)) return;
+      if (disposed || version !== loadVersion) return;
       const object = cloneSkeleton(source.scene);
       const targetMaterials = new Set(model.clothingMaterials);
       const targetMeshes = new Set(model.clothingMeshes || []);
@@ -377,7 +266,6 @@ export function createScene(options) {
         if (!(node instanceof Mesh)) return;
         node.castShadow = true;
         node.receiveShadow = true;
-        node.userData.dressCodeCharacter = character.id;
         if ('isSkinnedMesh' in node && node.isSkinnedMesh && 'skeleton' in node) skeletons.add(/** @type {import('three').SkinnedMesh} */ (node).skeleton);
         /** @param {import('three').Material} material */
         function isolateClothing(material) {
@@ -394,7 +282,7 @@ export function createScene(options) {
       });
       if (clonedMaterials.size === 0) {
         skeletons.forEach((skeleton) => skeleton.dispose());
-        throw new Error('Les matières de cette tenue ne permettent pas encore de personnaliser sa couleur.');
+        throw new Error('Aucun matériau textile recolorable dans ce modèle.');
       }
       object.updateMatrixWorld(true);
       const bounds = new Box3().setFromObject(object, true);
@@ -407,180 +295,107 @@ export function createScene(options) {
       const center = bounds.getCenter(new Vector3());
       object.position.sub(new Vector3(center.x, bounds.min.y, center.z));
       const normalized = new Group();
-      const modelScale = (model.height || 1.78) / size.y;
-      normalized.scale.setScalar(modelScale);
+      const scale = (model.height || 1.78) / size.y;
+      normalized.scale.setScalar(scale);
       normalized.add(object);
       const root = new Group();
       root.add(normalized);
-      removeInstance(character.id);
-      instances.set(character.id, { root, modelId: character.modelId, width: size.x * modelScale, height: size.y * modelScale, depth: size.z * modelScale, materials: [...clonedMaterials.values()], skeletons });
+      removeInstance();
+      instance = {
+        root, modelId: selected.modelId,
+        width: size.x * scale, height: size.y * scale, depth: size.z * scale,
+        materials: [...clonedMaterials.values()], skeletons,
+      };
       group.add(root);
-      arrangeGroup();
+      applyColor();
+      renderer.shadowMap.needsUpdate = true;
       scheduleRender();
-      reportProgress(character.id);
+      reportProgress();
     } catch (error) {
-      if (disposed || pending.get(character.id) !== token || !composition.some((item) => item.id === character.id && item.modelId === character.modelId)) return;
-      failed.add(token);
-      options.onError?.(error instanceof Error ? error : new Error('Impossible de charger cette tenue 3D.'), { characterId: character.id, modelId: character.modelId });
-    } finally {
-      if (pending.get(character.id) === token) pending.delete(character.id);
+      if (disposed || version !== loadVersion) return;
+      options.onError?.(error instanceof Error ? error : new Error('Impossible de charger cette tenue 3D.'), { characterId: selected.id, modelId: selected.modelId });
     }
   }
 
-  /** @param {string} id */
-  function removeInstance(id) {
-    const instance = instances.get(id);
+  function removeInstance() {
     if (!instance) return;
     group.remove(instance.root);
     instance.materials.forEach((material) => material.dispose());
     instance.skeletons.forEach((skeleton) => skeleton.dispose());
-    instances.delete(id);
+    instance = null;
   }
 
-  async function loadGroup() {
-    // Sequential character scheduling gives useful progressive output and avoids a
-    // burst of simultaneous texture decoding on phones. Shared models hit the cache.
-    if (loading) {
-      loadRequested = true;
-      return;
-    }
-    loading = true;
-    try {
-      do {
-        loadRequested = false;
-        for (const character of composition) {
-          if (disposed) return;
-          if (!composition.some((item) => item.id === character.id && item.modelId === character.modelId)) continue;
-          const existing = instances.get(character.id);
-          const token = `${character.id}:${character.modelId}`;
-          if (existing?.modelId === character.modelId || pending.get(character.id) === token || failed.has(token)) continue;
-          await loadCharacter(character);
-        }
-      } while (loadRequested && !disposed);
-    } finally {
-      loading = false;
-    }
-  }
-
-  /** @param {Participant[]} next */
-  function setComposition(next) {
+  /** @param {Participant} next */
+  function setCharacter(next) {
     if (disposed) return;
-    const structureChanged = next.length !== composition.length || next.some((character, index) => character.id !== composition[index]?.id || character.modelId !== composition[index]?.modelId);
-    composition = next.map((character) => ({ ...character }));
-    if (structureChanged) {
-      for (const [id, instance] of instances) {
-        if (!composition.some((character) => character.id === id && character.modelId === instance.modelId)) removeInstance(id);
-      }
-      for (const [id] of pending) {
-        if (!composition.some((character) => character.id === id)) pending.delete(id);
-      }
-      arrangeGroup();
+    if (!models.has(next.modelId)) throw new RangeError('Modèle 3D inconnu.');
+    const requiresLoad = !instance || instance.modelId !== next.modelId;
+    character = { ...next };
+    if (requiresLoad) {
+      const version = ++loadVersion;
+      removeInstance();
       reportProgress();
-      void loadGroup();
+      void loadCharacter({ ...character }, version);
+    } else {
+      applyColor();
+      scheduleRender();
     }
+  }
+
+  /** @param {string} colorId */
+  function setColor(colorId) {
+    if (disposed) return;
+    if (!colors.has(colorId)) throw new RangeError('Couleur inconnue.');
+    character.colorId = colorId;
+    applyColor();
     scheduleRender();
   }
 
   /** @param {number} radians */
   function rotate(radians) {
-    if (disposed) return;
-    yaw = ((yaw + radians + MAX_ROTATION) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2) - MAX_ROTATION;
+    if (disposed || !Number.isFinite(radians)) return;
+    targetYaw += radians;
     renderer.shadowMap.needsUpdate = true;
-    scheduleRender();
-  }
-
-  /** @param {number} factor */
-  function changeZoom(factor) {
-    if (disposed || !Number.isFinite(factor) || factor <= 0) return;
-    zoom = Math.min(1.2, Math.max(0.8, zoom * factor));
     scheduleRender();
   }
 
   function resetView() {
-    if (disposed) return;
-    yaw = 0;
-    zoom = 1;
+    targetYaw = 0;
     renderer.shadowMap.needsUpdate = true;
     scheduleRender();
   }
 
   /** @param {PointerEvent} event */
-  function selectAt(event) {
-    if (disposed || contextLost) return;
-    const rectangle = canvas.getBoundingClientRect();
-    let x = event.clientX - rectangle.left;
-    let viewportWidth = rectangle.width;
-    if (isSplit()) {
-      viewportWidth /= 2;
-      if (x >= viewportWidth) x -= viewportWidth;
-    }
-    pointerPosition.set(x / viewportWidth * 2 - 1, -(event.clientY - rectangle.top) / rectangle.height * 2 + 1);
-    frameCamera(viewportWidth);
-    scene.updateMatrixWorld(true);
-    raycaster.setFromCamera(pointerPosition, camera);
-    const hits = raycaster.intersectObjects([...instances.values()].map((instance) => instance.root), true);
-    const id = hits.find((hit) => typeof hit.object.userData.dressCodeCharacter === 'string')?.object.userData.dressCodeCharacter;
-    if (typeof id === 'string') options.onSelect?.(id);
-  }
-
-  /** @param {PointerEvent} event */
   function onPointerDown(event) {
-    if (event.pointerType === 'mouse' && event.button !== 0) return;
-    pointers.set(event.pointerId, { x: event.clientX, y: event.clientY, startX: event.clientX, startY: event.clientY, moved: false });
-    canvas.setPointerCapture(event.pointerId);
-    if (pointers.size > 1) for (const pointer of pointers.values()) pointer.moved = true;
-    pinchDistance = distanceBetweenPointers();
-  }
-
-  function distanceBetweenPointers() {
-    const points = [...pointers.values()];
-    return points.length === 2 ? Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y) : 0;
+    if (pointer || (event.pointerType === 'mouse' && event.button !== 0)) return;
+    pointer = { id: event.pointerId, x: event.clientX, startX: event.clientX, startY: event.clientY, horizontal: false };
+    if (event.pointerType === 'mouse') canvas.setPointerCapture(event.pointerId);
   }
 
   /** @param {PointerEvent} event */
   function onPointerMove(event) {
-    const pointer = pointers.get(event.pointerId);
-    if (!pointer) return;
-    const dx = event.clientX - pointer.x;
+    if (!pointer || event.pointerId !== pointer.id) return;
+    const x = event.clientX - pointer.startX;
+    const y = event.clientY - pointer.startY;
+    if (!pointer.horizontal && (Math.abs(x) < 6 || Math.abs(x) <= Math.abs(y))) return;
+    pointer.horizontal = true;
+    rotate((event.clientX - pointer.x) * 0.007);
     pointer.x = event.clientX;
-    pointer.y = event.clientY;
-    const travelX = event.clientX - pointer.startX;
-    const travelY = event.clientY - pointer.startY;
-    pointer.moved ||= Math.hypot(travelX, travelY) > 5;
-    if (pointers.size === 2) {
-      const distance = distanceBetweenPointers();
-      if (pinchDistance > 0) changeZoom(distance / pinchDistance);
-      pinchDistance = distance;
-    } else if (pointer.moved && Math.abs(travelX) >= Math.abs(travelY)) {
-      rotate(dx * 0.007);
-    }
   }
 
   /** @param {PointerEvent} event */
   function onPointerUp(event) {
-    const pointer = pointers.get(event.pointerId);
-    pointers.delete(event.pointerId);
-    pinchDistance = 0;
+    if (!pointer || event.pointerId !== pointer.id) return;
+    pointer = null;
     if (canvas.hasPointerCapture(event.pointerId)) canvas.releasePointerCapture(event.pointerId);
-    if (pointer && !pointer.moved && event.type === 'pointerup') selectAt(event);
-  }
-
-  /** @param {WheelEvent} event */
-  function onWheel(event) {
-    if (document.activeElement !== canvas || event.ctrlKey || event.metaKey) return;
-    event.preventDefault();
-    changeZoom(Math.exp(-event.deltaY * 0.001));
   }
 
   /** @param {KeyboardEvent} event */
   function onKeyDown(event) {
     if (event.ctrlKey || event.altKey || event.metaKey) return;
     const actions = {
-      ArrowLeft: () => rotate(-0.14),
-      ArrowRight: () => rotate(0.14),
-      '+': () => changeZoom(1.08),
-      '=': () => changeZoom(1.08),
-      '-': () => changeZoom(1 / 1.08),
+      ArrowLeft: () => rotate(-0.18),
+      ArrowRight: () => rotate(0.18),
       Home: resetView,
     };
     const action = actions[/** @type {keyof typeof actions} */ (event.key)];
@@ -617,12 +432,10 @@ export function createScene(options) {
   canvas.addEventListener('pointermove', onPointerMove);
   canvas.addEventListener('pointerup', onPointerUp);
   canvas.addEventListener('pointercancel', onPointerUp);
-  canvas.addEventListener('wheel', onWheel, { passive: false });
   canvas.addEventListener('keydown', onKeyDown);
   canvas.addEventListener('webglcontextlost', onContextLost);
   canvas.addEventListener('webglcontextrestored', onContextRestored);
   document.addEventListener('visibilitychange', onVisibilityChange);
-  // No automatic movement is performed, including under reduced-motion settings.
   reducedMotion.addEventListener('change', scheduleRender);
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(container);
@@ -639,6 +452,7 @@ export function createScene(options) {
   function dispose() {
     if (disposed) return;
     disposed = true;
+    ++loadVersion;
     cancelAnimationFrame(frame);
     frame = 0;
     resizeObserver.disconnect();
@@ -649,20 +463,16 @@ export function createScene(options) {
     canvas.removeEventListener('pointermove', onPointerMove);
     canvas.removeEventListener('pointerup', onPointerUp);
     canvas.removeEventListener('pointercancel', onPointerUp);
-    canvas.removeEventListener('wheel', onWheel);
     canvas.removeEventListener('keydown', onKeyDown);
     canvas.removeEventListener('webglcontextlost', onContextLost);
     canvas.removeEventListener('webglcontextrestored', onContextRestored);
     requests.forEach((controller) => controller.abort());
     requests.clear();
-    pointers.clear();
-    pending.clear();
-    for (const id of instances.keys()) removeInstance(id);
+    pointer = null;
+    removeInstance();
     disposeSources(sourceScenes);
     sourceScenes.clear();
     assetCache.clear();
-    selectionGeometry.dispose();
-    selectionMaterial.dispose();
     floorGeometry.dispose();
     floorMaterial.dispose();
     environment.dispose();
@@ -674,35 +484,16 @@ export function createScene(options) {
   }
 
   resize();
-  // A microtask lets callers retain the adapter before receiving callbacks.
   queueMicrotask(() => {
-    if (disposed) return;
+    if (disposed || loadVersion > 0) return;
     reportProgress();
-    void loadGroup();
+    void loadCharacter({ ...character }, ++loadVersion);
   });
 
   return {
-    setComposition,
-    /** @param {string|null} id */
-    setSelection(id) {
-      selectedId = id;
-      updateSelection();
-      scheduleRender();
-    },
-    /** @param {Comparison|null} next */
-    setComparison(next) {
-      const previouslySplit = isSplit();
-      comparison = next ? { compliant: next.compliant.map((item) => ({ ...item })), alternative: next.alternative.map((item) => ({ ...item })) } : null;
-      if (previouslySplit !== isSplit()) arrangeGroup();
-      scheduleRender();
-    },
-    /** @param {'compliant'|'alternative'} side */
-    setComparisonSide(side) {
-      comparisonSide = side;
-      scheduleRender();
-    },
+    setCharacter,
+    setColor,
     rotate,
-    zoom: changeZoom,
     resetView,
     resize,
     /** @param {boolean} next */
@@ -717,7 +508,7 @@ export function createScene(options) {
     dispose,
     diagnostics() {
       return {
-        loadedCharacters: instances.size,
+        loadedCharacters: instance ? 1 : 0,
         cachedModels: assetCache.size,
         receivedBytes,
         renderedFrames,
@@ -727,12 +518,10 @@ export function createScene(options) {
         geometries: renderer.info.memory.geometries,
         textures: renderer.info.memory.textures,
         pixelRatio,
-        splitComparison: isSplit(),
-        characters: [...instances].map(([id, instance]) => ({
-          id,
-          modelId: instance.modelId,
-          clothing: instance.materials.map((material) => ({ materialId: material.uuid, color: `#${material.color.getHexString()}` })),
-        })),
+        characters: instance ? [{
+          id: character.id, modelId: instance.modelId,
+          clothing: instance.materials.map((material) => ({ materialId: material.uuid, color: '#' + material.color.getHexString() })),
+        }] : [],
         reducedMotion: reducedMotion.matches,
         contextLost,
         disposed,
