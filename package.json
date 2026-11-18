@@ -1,0 +1,29 @@
+{
+  "name": "lea-vincent-wedding-site",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "build": "node scripts/build.mjs",
+    "lint": "eslint --no-warn-ignored dress-code/*.js scripts/*.mjs tests/*.js playwright.config.js",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.js",
+    "test:browser": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "@types/three": "0.187.0",
+    "esbuild": "0.28.2",
+    "eslint": "10.15.0",
+    "globals": "17.14.0",
+    "typescript": "5.9.3"
+  }
+}

@@ -7,3 +7,11 @@
 
 # Master vidéo non utilisé en prod (gardé en local, jamais commité)
 media/hero-original.mp4
+
+# Local tooling and verification artifacts (the site still serves as static files)
+node_modules/
+dist/
+test-results/
+playwright-report/
+.cache/
+.asset-tools/

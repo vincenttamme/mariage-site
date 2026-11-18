@@ -1,0 +1,162 @@
+[
+  {
+    "id": "suit",
+    "label": "Costume en laine",
+    "bytes": 1587252,
+    "triangles": 47806,
+    "height": 1.8185584126238303,
+    "width": 0.5447374042379928,
+    "bounds": {
+      "min": [
+        -0.27457696480095745,
+        -0.00285711234524004,
+        -0.1311197868460309
+      ],
+      "max": [
+        0.2701604394370353,
+        1.8157013002785902,
+        0.22124629494556666
+      ]
+    },
+    "sourceRevision": "2226df1f50a04c5a8e1c02ea33780d28337dfbb1",
+    "clothingMaterials": [
+      "clothing"
+    ],
+    "appearance": {
+      "gender": 1,
+      "age": 0.25,
+      "muscle": 0.5,
+      "weight": 0.48,
+      "height": 0.62,
+      "proportions": 0.5,
+      "african": 0.1,
+      "asian": 0.1,
+      "caucasian": 0.8,
+      "skin": "young_caucasian_male",
+      "hair": "short02",
+      "hairColor": "#30251d"
+    },
+    "outfit": "toigo_male_suit_3",
+    "provisional": true
+  },
+  {
+    "id": "long-dress",
+    "label": "Robe longue satinée",
+    "bytes": 1387396,
+    "triangles": 40462,
+    "height": 1.6546943366993219,
+    "width": 1.0689877056238861,
+    "bounds": {
+      "min": [
+        -0.5260582160531387,
+        -0.0019611299503594637,
+        -0.48413439528019064
+      ],
+      "max": [
+        0.5429294895707474,
+        1.6527332067489624,
+        0.2782651378300869
+      ]
+    },
+    "sourceRevision": "2226df1f50a04c5a8e1c02ea33780d28337dfbb1",
+    "clothingMaterials": [
+      "clothing"
+    ],
+    "appearance": {
+      "gender": 0,
+      "age": 0.21,
+      "muscle": 0.4,
+      "weight": 0.46,
+      "height": 0.5,
+      "proportions": 0.5,
+      "african": 0.75,
+      "asian": 0.05,
+      "caucasian": 0.2,
+      "skin": "young_african_female",
+      "hair": "ponytail01",
+      "hairColor": "#201b16"
+    },
+    "outfit": "toigo_halter_dress_with_fluted_skirt",
+    "provisional": true
+  },
+  {
+    "id": "short-dress",
+    "label": "Robe courte en soie",
+    "bytes": 1600492,
+    "triangles": 39926,
+    "height": 1.4949772616003887,
+    "width": 0.4572374674330685,
+    "bounds": {
+      "min": [
+        -0.23259261263661252,
+        0.003284666957960966,
+        -0.14224484633066237
+      ],
+      "max": [
+        0.22464485479645596,
+        1.4982619285583496,
+        0.19103422532684672
+      ]
+    },
+    "sourceRevision": "2226df1f50a04c5a8e1c02ea33780d28337dfbb1",
+    "clothingMaterials": [
+      "clothing"
+    ],
+    "appearance": {
+      "gender": 0,
+      "age": 0.25,
+      "muscle": 0.35,
+      "weight": 0.63,
+      "height": 0.4,
+      "proportions": 0.5,
+      "african": 0.05,
+      "asian": 0.85,
+      "caucasian": 0.1,
+      "skin": "young_asian_female",
+      "hair": "toigo_curled_under_bob",
+      "hairColor": "#29201b"
+    },
+    "outfit": "toigo_halter_dress_knee_length",
+    "provisional": true
+  },
+  {
+    "id": "tailored-suit",
+    "label": "Ensemble tailleur",
+    "bytes": 1766120,
+    "triangles": 48216,
+    "height": 1.608169634049862,
+    "width": 0.4689306355554649,
+    "bounds": {
+      "min": [
+        -0.2355865854540859,
+        0.0008144786897010259,
+        -0.11504059735343719
+      ],
+      "max": [
+        0.23334405010137899,
+        1.608984112739563,
+        0.2009193193117197
+      ]
+    },
+    "sourceRevision": "2226df1f50a04c5a8e1c02ea33780d28337dfbb1",
+    "clothingMaterials": [
+      "clothing"
+    ],
+    "appearance": {
+      "gender": 0,
+      "age": 0.52,
+      "muscle": 0.38,
+      "weight": 0.58,
+      "height": 0.47,
+      "proportions": 0.5,
+      "african": 0.15,
+      "asian": 0.05,
+      "caucasian": 0.8,
+      "skin": "middleage_caucasian_female",
+      "hair": "short01",
+      "hairColor": "#63564d"
+    },
+    "outfit": "toigo_female_suit_2",
+    "provisional": true
+  }
+]
