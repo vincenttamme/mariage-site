@@ -22,6 +22,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run check
+      - name: Install Chromium for browser tests
+        run: npx playwright install --with-deps chromium
+      - name: Verify simulator in browser
+        run: npm run test:browser
       - name: Commit rebuilt browser bundle
         run: |
           if ! git diff --quiet -- dress-code/scene.bundle.js dress-code/scene.bundle.js.LEGAL.txt dress-code/LICENSE-THREE.txt; then
