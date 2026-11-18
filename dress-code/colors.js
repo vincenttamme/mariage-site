@@ -62,20 +62,6 @@ export function classifyColorFamilies(hex, config = dressCodeConfig) {
   )).map((family) => family.id);
 }
 
-/** @param {string|DressColor} value @param {DressCodeConfig} config @returns {DressColor} */
-function resolveColor(value, config) {
-  if (typeof value === 'object' && value !== null) {
-    if (!statuses.includes(value.status)) throw new TypeError('Le statut de cette couleur est inconnu.');
-    return { ...value, hex: normalizeHex(value.hex) };
-  }
-  const color = config.colors.find((entry) => entry.id === value);
-  if (color) return { ...color, hex: normalizeHex(color.hex) };
-  if (typeof value !== 'string' || !value.trim().startsWith('#')) throw new RangeError('Cette couleur ne figure pas dans la palette.');
-  const hex = normalizeHex(value);
-  const existing = config.colors.find((entry) => normalizeHex(entry.hex) === hex);
-  return existing ? { ...existing, hex } : { id: hex, label: hex, hex, status: 'allowed', demonstration: false };
-}
-
 
 /**
  * The palette is closed: free-form colors and role exceptions are not supported.
